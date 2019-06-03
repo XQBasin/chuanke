@@ -1,0 +1,124 @@
+<template>
+  <view>
+    <!-- 自定义导航栏 -->
+    <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}">
+        <ui-row height="{{DEFAULT_HEADER_HEIGHT}}" class="nav_bar">
+            <ui-col vertical-align="middle" class="nav-bar-col" align="left" width="100px" bindtap="navigateBack">
+                <view class="containertitle">
+                    <view class='dingwei'>
+                        <ui-icon type="zuojiantou" color="#333333" size="20px;"></ui-icon>
+                    </view>
+                </view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col">
+                <view class="nav-bar-title">搜索</view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col" align="right"  width="100px">
+            </ui-col>
+        </ui-row>
+    </ui-nav-bar>
+    <view style="height:{{NAV_HEIGHT}}"></view>
+    <!-- 搜索栏 -->
+    <view class="search">
+        <ui-icon type="sousuo" color="#848484" size="13px;"></ui-icon>
+        <input type='text' placeholder="搜索资料" placeholder-style="color:#848484;" confirm-type='search' bindconfirm="search">
+    </view>
+    <!-- 搜索历史 -->
+    <view class="history">
+        <view class="title">搜索历史</view>
+        <view class="tab-panel-item">
+            <view class="item_list">
+                <view class="item_left">
+                    <ui-icon type="shijian" color="#c7c7c7" size="14px;"></ui-icon>
+                </view>
+                <view class="item_center">作品</view>
+                <view class="item_right"><ui-icon type="clear" color="#c7c7c7" size="12px;"></ui-icon></view>
+            </view>
+        </view>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+    config: {
+        navigationBarTitleText: '搜索',
+        navigationBarTextStyle: 'black'
+    },
+    data: {
+        NAV_HEIGHT:wx.STATUS_BAR_HEIGHT+wx.DEFAULT_HEADER_HEIGHT+'px',
+        DEFAULT_HEADER_HEIGHT: wx.DEFAULT_HEADER_HEIGHT
+    },
+    // 导航返回
+    navigateBack () {
+        wx.navigateBack()
+    }
+}
+</script>
+
+<style lang="less">
+// 搜索栏
+.search {
+    width: 90%;
+    height: 28px;
+    border-radius: 30px;
+    padding: 2px 10px;
+    display: flex;
+    position: absolute;     /* 初始化为相对定位 滑动时改为绝对定位fixed*/
+    top: 78px;
+    left: 0;
+    right: 0;               /* 决定了搜索框置顶 */
+    opacity: 0.6;           /* 搜索框半透明效果 */
+    z-index: 2;
+    background-color: #FFFFFF;
+    margin: auto;
+    border:1px solid #EFEFEF;
+    .mix-flex-y-center();
+    input {
+        width: 100%;
+        padding: 2px 5px;
+        margin: 2px;
+        font-size: 13px;
+    }
+}
+// 搜索历史
+.history{
+    margin-top: 50px;
+    padding: 0 40rpx;
+    .title{
+        border-bottom: 1px solid #EFEFEF;
+        padding-bottom: 10rpx;
+    } 
+}
+.tab-panel-item {
+    .mix-flex-center();
+    display: flex;
+    flex-direction: column;
+    .item_list {
+        width: 100%;
+        height: 42px;
+        .mix-flex-center();
+        .mix-1px(0, 0, 1, 0, #EFEFEF);
+        .item_left {
+            width: 8%;
+            .mix-flex-y-center();
+            height: 21px;
+            image {
+                width: 21px;
+                height: 21px;
+            }
+        }
+        .item_center {
+            width: 84%;
+            .mix-flex-y-center();
+            height: 21px;
+            text-align: left;
+        }
+        .item_right {
+            width: 8%;
+            .mix-flex-center();
+            height: 21px;
+        }
+    }
+}
+</style>

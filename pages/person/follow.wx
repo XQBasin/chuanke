@@ -1,0 +1,153 @@
+<template>
+  <view>
+    <!-- 自定义导航栏 -->
+    <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}">
+        <ui-row height="{{DEFAULT_HEADER_HEIGHT}}" class="nav_bar">
+            <ui-col vertical-align="middle" class="nav-bar-col" align="left" width="100px" bindtap="navigateBack">
+                <view class="containertitle">
+                    <view class='dingwei'>
+                        <ui-icon type="zuojiantou" color="#333333" size="20px;"></ui-icon>
+                    </view>
+                </view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col">
+                <view class="nav-bar-title">您关注的人</view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col" align="right"  width="100px">
+            </ui-col>
+        </ui-row>
+    </ui-nav-bar>
+    <view style="height:{{NAV_HEIGHT}}"></view>
+    <!-- 内容 -->
+    <view class="main">
+        <view class="warp">
+            <view class="item">
+                <image src="../../static/image/home/create.png" mode="aspectFill"/>
+                <view class="name">i miss you</view>
+                <view class="sign">i miss youi miss youi miss youi miss youi miss you</view>
+                <view class="click">
+                    <view class="none">
+                        <ui-icon type="clear" color="red" size="30rpx;"></ui-icon>
+                        <text>取消关注</text>
+                    </view>
+                </view>
+            </view>
+            <view class="item">
+                <image src="../../static/image/home/create.png" mode="aspectFill"/>
+                <view class="name">i miss you</view>
+                <view class="sign">i miss youi miss youi miss youi miss youi miss you</view>
+                <view class="click">
+                    <view class="none">
+                        <ui-icon type="clear" color="red" size="30rpx;"></ui-icon>
+                       <text>取消关注</text>
+                    </view>
+                </view>
+            </view>
+            <view class="item">
+                <image src="../../static/image/home/create.png" mode="aspectFill"/>
+                <view class="name">i miss you</view>
+                <view class="sign">i miss youi miss youi miss youi miss youi miss you</view>
+                <view class="click">
+                    <view class="none">
+                        <ui-icon type="clear" color="red" size="30rpx;"></ui-icon>
+                       <text>取消关注</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 一键关注 -->
+    <view class="follow">
+        一键取消关注
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+    config: {
+        navigationBarTitleText: '您的关注',
+        navigationBarTextStyle: 'black'
+    },
+    data: {
+        NAV_HEIGHT:wx.STATUS_BAR_HEIGHT+wx.DEFAULT_HEADER_HEIGHT+'px',
+        DEFAULT_HEADER_HEIGHT: wx.DEFAULT_HEADER_HEIGHT
+    },
+    // 导航返回
+    navigateBack () {
+        wx.navigateBack()
+    }
+}
+</script>
+
+<style lang="less">
+// 内容
+.main{
+    text-align: center;
+    padding: 40rpx 20rpx 20rpx;
+    .warp{
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .item{
+            width: 49%;
+            background: #fff;
+            border-radius: 10rpx;
+            border: 1px solid #EFEFEF;
+            padding: 40rpx 6px;
+            margin-top: 20rpx;
+            image{
+                width: 80rpx;
+                height: 80rpx;
+                margin: 0 auto;
+                border-radius: 50%;
+            }
+            .name{
+                font-weight: bold;
+            }
+            .sign{
+                color: #999999;
+                font-size: 24rpx;
+                .mix-text-overflow();
+            }
+            .click{
+                margin-top: 20rpx;
+                view{
+                    width: 150rpx;
+                    height: 70rpx;
+                    margin: 0 auto;
+                    border-radius: 35rpx;
+                    background: #EFEFEF;
+                    font-size: 24rpx;
+                    .mix-flex-center();
+                }
+                .none{
+                    width:200rpx;
+                    background: #fff;
+                    border:1px solid #EFEFEF;
+                    text{
+                        margin-left: 10rpx;
+                    }
+                }
+            }
+        }
+    }
+}
+// 一键关注
+.follow{
+    position: fixed;
+    bottom: 20rpx;
+    width: 70%;
+    left: 50%;
+    margin-left: -35%;
+    height: 100rpx;
+    background: #007BFF;
+    color:#fff;
+    font-size: 32rpx;
+    border-radius: 50rpx;
+    .mix-flex-center();
+}
+</style>

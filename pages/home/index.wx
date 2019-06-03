@@ -1,0 +1,577 @@
+<template>
+  <view>
+    <!-- 自定义导航栏 -->
+    <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}">
+        <ui-row height="{{DEFAULT_HEADER_HEIGHT}}" class="nav_bar">
+            <ui-col vertical-align="middle" class="nav-bar-col" align="left" width="100px" bindtap="navigateBack">
+                <view class="containertitle">
+                    <view class='dingwei'>
+                      <ui-icon type="zuojiantou" color="#333333" size="20px;"></ui-icon>
+                    </view>
+                </view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col">
+                <view class="nav-bar-title">首页</view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col" align="right"  width="100px">
+            </ui-col>
+        </ui-row>
+    </ui-nav-bar>
+    <view style="height:{{NAV_HEIGHT}}"></view>
+    <!-- 顶部选择区 -->
+    <view class="head">
+      <view class="block" wx:for="{{headTitle}}" wx:key="headKey" data-sid="{{index}}" bindtap="check">
+        <view class="text {{checkedId==index? 'active':''}}">{{item}}</view>
+        <view class="{{checkedId==index? 'line':''}}"></view>
+      </view>
+      <ui-icon type="xiala" color="#222222" size="40rpx;" class="more" data-show="{{ true }}" bindtap="openPopup"></ui-icon>
+    </view>
+    <!-- 全部分类 -->
+    <ui-popup show="{{ show }}" position="top" top="{{ NAV_HEIGHT }}" mask-style="{{ maskStyle}}" background="none">
+        <view class="popupHead">
+          <view class="title">全部分类</view>
+          <view>
+            <ui-icon type="shanchu" color="#222222" size="40rpx;" data-show="{{ false }}" bindtap="openPopup"></ui-icon>
+          </view>
+        </view>
+        <view class="top_pop">
+            <ui-tags data="{{list00}}" bindchange="singleTap" col-number="3"  fixed-width></ui-tags>
+        </view>
+    </ui-popup>
+    <!-- 分享 -->
+    <view class='content' wx:if="{{checkedId==0}}">
+      <view class="tab-panel-item" wx:key="activitykey" wx:for="{{list}}">
+          <view class="flex-acwrp">
+              <view class="ac_green">
+                  <image src="{{item.img}}"/>
+              </view>
+              <view class="ac_red">
+                  <view class='ac_title'>
+                      <view>111</view>
+                      <view><ui-icon type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;" size="14px;"></ui-icon></view>
+                  </view>
+                  <view class='ac_description'>
+                      <view>发布时间：1111</view>
+                      <view>123粉丝</view>
+                  </view>
+              </view>
+          </view>
+          <view class="flex-wrp" data-id="{{activity.id}}" bindtap='getActInfo'>
+              <view class="fx_green">
+                  <image src="{{item.img}}" mode="aspectFill"/>
+              </view>
+              <view class="fx_title">
+                  {{item.title}}
+              </view>
+          </view>
+          <view class='fx_description_btn'>
+              <view class="info">
+                <view class="show">
+                  <ui-icon type="liulan" color="#c7c7c7" size="30rpx;"></ui-icon>
+                  <text>233</text>
+                  <ui-icon type="jushoucang" color="#c7c7c7" size="30rpx;"></ui-icon>
+                  <text>3666</text>
+                  <ui-icon type="xiazai" color="#c7c7c7" size="30rpx;"></ui-icon>
+                  <text>3666</text>
+                </view>
+              </view>
+          </view>
+      </view>
+      <!-- 加载更多 -->
+      <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
+      </view>
+      <ui-divider wx:if="{{isHideLoadMore}}" padding="20">我是有底线的</ui-divider>
+    </view>
+    <!-- 经验 -->
+    <view class="content" wx:if="{{checkedId==1}}">
+      <view class="aw_tab_panel_item" wx:key="socialkey">
+        <view class="aw_flex_wrp">
+            <view class="aw_bc_green">
+                <image src="../../static/image/home/create.png"/>
+            </view>
+            <view class="aw_bc_red">
+                <view class='aw_title'>
+                    <view>111</view>
+                    <view><ui-icon type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;" size="14px;"></ui-icon></view>
+                </view>
+                <view class='aw_description'>
+                    <view>{{dateUtil.formatTime(social.timestamp, 'M/D h:m:s')}}2018/9/15</view>
+                    <view>128粉丝</view>
+                </view>
+            </view>
+        </view>
+        <view class="aw_flex_des" data-id="{{social.id}}" bindtap="getSocInfo">
+            111222
+        </view>
+        <!-- 消息菜单 -->
+        <view class='aw_description_btn'>
+            <view>
+                <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                    <ui-icon type="liulan" color="#888888" size="14px;"> 222</ui-icon>
+                </button>
+            </view>
+            <view>
+                <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                    <ui-icon type="jushoucang" color="#888888" size="14px;"> 111</ui-icon>
+                </button>
+            </view>
+        </view>
+      </view>
+      <!-- 加载更多 -->
+      <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
+      </view>
+      <ui-divider wx:if="{{isHideLoadMore}}" padding="20">我是有底线的</ui-divider>
+    </view>
+    <!-- 爱问知识人 -->
+    <view class="content" wx:if="{{checkedId==2}}">
+      <view class="aw_tab_panel_item" wx:key="socialkey">
+        <view class="aw_flex_wrp">
+            <view class="aw_bc_green">
+                <image src="../../static/image/home/create.png"/>
+            </view>
+            <view class="aw_bc_red">
+                <view class='aw_title'>
+                    <view>111</view>
+                    <view><ui-icon type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;" size="14px;"></ui-icon></view>
+                </view>
+                <view class='aw_description'>
+                    <view>{{dateUtil.formatTime(social.timestamp, 'M/D h:m:s')}}2018/9/15</view>
+                    <view>128粉丝</view>
+                </view>
+            </view>
+        </view>
+        <view class="aw_flex_des" data-id="{{social.id}}" bindtap="getSocInfo">
+            111222
+        </view>
+        <!-- 作品展示 -->
+        <view wx:if="{{social.production[0]}}" class="weui-cell__bd" data-id="{{social.id}}" bindtap="getSocInfo">
+            <view class="weui-uploader">
+                <view class="weui-uploader__bd">
+                    <view class="weui-uploader__files" id="uploaderFiles">
+                        <block wx:for="{{social.production}}" wx:key="*this">
+                            <view wx:if="{{social.production.length > 1}}" class="weui-uploader__file" data-urls="{{social.production}}" bindtap="previewImage" id="{{item}}">
+                                <image class="weui-uploader__img" style="border-radius:5px; width: 80px; height: 80px;" src="{{item}}" mode="widthFix" />
+                            </view>
+                            <view wx:else class="weui-uploader__file" data-urls="{{social.production}}" bindtap="previewImage" id="{{item}}">
+                                <image class="weui-uploader__img" style="border-radius:5px; width: 200px;" src="{{item}}" mode="widthFix" />
+                            </view>
+                        </block>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- 消息菜单 -->
+        <view class='aw_description_btn'>
+            <view>
+                <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                    <ui-icon type="wodefankui" color="#888888" size="14px;"> 222</ui-icon>
+                </button>
+            </view>
+            <view>
+                <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                    <ui-icon type="jushoucang" color="#888888" size="14px;"> 111</ui-icon>
+                </button>
+            </view>
+        </view>
+      </view>
+      <!-- 加载更多 -->
+      <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
+      </view>
+      <ui-divider wx:if="{{isHideLoadMore}}" padding="20">我是有底线的</ui-divider>
+    </view>
+  </view>
+</template>
+
+<script>
+const tagStyle = `
+  padding: 0 20rpx;
+  text-align: center;
+  height: 70rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 70rpx;
+  margin: 14rpx 0;
+  border:1px solid #c7c7c7;
+  border-radius: 50rpx;
+`
+const selectStyle = `
+  padding: 0 20rpx;
+  text-align: center;
+  height: 70rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 70rpx;
+  margin: 14rpx 0;
+  font-weight: bold;
+  border-radius: 50rpx;
+  background:#007BFF;
+  color:#fff;
+`
+
+export default {
+  config: {
+    navigationBarTitleText: '首页',
+    navigationBarTextStyle: 'black'
+  },
+  data: {
+    NAV_HEIGHT:wx.STATUS_BAR_HEIGHT+wx.DEFAULT_HEADER_HEIGHT+'px',
+    DEFAULT_HEADER_HEIGHT: wx.DEFAULT_HEADER_HEIGHT,
+    headTitle:['分享','经验','爱问知识人'],            //顶部选择标题
+    checkedId:0,                                   //顶部选择序号Id
+    list:[
+      {title:'php中文网vip特权会员学习指南',img:'../../static/image/home/create.png'},
+      {title:'2019春招PHP面试题（附答案）',img:'../../static/image/home/create.png'},
+      {title:'PHP使用统计和市场定位最新报告',img:'../../static/image/home/create.png'},
+      {title:'php中文网《玉女心经》公益PHP培训系列课程汇总',img:'../../static/image/home/create.png'},
+    ],
+    show: false,
+    maskStyle:{
+        'top':'198px'
+    },
+    list00: [{
+        text: '全部活动',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: true
+      }, {
+        text: '电脑办公',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '精选活动',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '个护美妆',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '家用电器',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '酒水饮料',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '日用百货',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '流行服饰',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '鞋靴箱包',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '手机数码',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '钟表珠宝',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }],
+      isHideLoadMore:true          //加载更多状态
+  },
+  // 顶部选择
+  check(e){
+    this.setData({
+      checkedId:e.currentTarget.dataset.sid
+    })
+  },
+  // 收藏
+  bindLike(){
+    this.setData({
+      likeStatus:!this.data.likeStatus
+    })
+  },
+  openPopup (e) {
+    let show = e.currentTarget.dataset.show
+    this.setData({
+      show: show
+    })
+  },
+  singleTap (e) {
+    let opt = e.detail.index
+    wx.showToast({
+      title: this.data.list00[opt].text,
+      icon:'none'
+    })
+    this.data.list00.forEach((item, index) => {
+      item.checked = (index === opt)
+    })
+    this.setData({
+      show:false,
+      list00:this.data.list00
+    })
+  }
+}
+</script>
+
+<style lang="less">
+// 顶部选择区
+.head{
+  width: 100%;
+  background: #fff;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0rpx 5rpx 10rpx #EFEFEF;
+  position: fixed;
+  z-index: 1;
+  padding: 0 20rpx;
+  .block{
+    position: relative;
+    margin: 0 20rpx;
+    padding-bottom: 25rpx;
+    .mix-flex-y-center();
+    .text{
+      font-size: 30rpx;
+      color: #999999;
+    }
+    .active{
+      font-weight: bold;
+      font-size: 36rpx;
+      color: #222222;
+    }
+    .line{
+      width: 100%;
+      height: 7rpx;
+      border-radius: 10rpx 10rpx 0 0;
+      background: #007BFF;
+      position: absolute;
+      bottom: 0;
+    }
+  }
+  .more{
+    position: absolute;
+    right: 40rpx;
+  }
+}
+// 全部分类
+.top_pop{
+  background:#fff;
+  border-radius: 0 0 20rpx 20rpx;
+  padding: 0 20rpx 20rpx;
+}
+.popupHead{
+  padding: 20rpx 40rpx 0 20rpx;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  background: #fff;
+  .title{
+    color: #222222;
+    font-size: 36rpx;
+  }
+}
+// 分享
+.content{
+  margin-top: 100rpx;
+  .tab-panel-item {
+      background: #FFFFFF;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin: 10px;
+      box-shadow: 0 3px 6px 0 rgb(240, 240, 240);
+  }
+  .flex-acwrp {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      .mix-flex-y-center();
+      padding: 5px 0px;
+  }
+  .ac_green {
+      width: 45px;
+      height: 45px;
+      .mix-flex-center();
+  }
+  .ac_green image {
+      width:40px; 
+      height:40px;
+      border-radius: 50%;
+  }
+  .ac_red {
+      height: 45px;
+      width: 85%;
+  }
+  .ac_title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      color: #007BFF;
+      font-size: 14px;
+  }
+  .ac_title view {
+      .mix-text-overflow();
+  }
+  .ac_description {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      color: #848484;
+      font-size: 12px;
+  }
+  .ac_description view {
+      .mix-text-overflow();
+  }
+  .flex-wrp {
+      display: flex;
+      flex-direction: column;
+      .mix-flex-y-center();
+      padding: 5px 0px;
+      position:relative;
+  }
+  .fx_green {
+      width: 100%;
+      height: 150px;
+      border-radius: 10px;
+      .mix-flex-center();
+  }
+  .fx_green image {
+      width: 100%;
+      height: 150px;
+      border-radius: 10px;
+  }
+  .fx_title {
+      background-color: #FFFFFF;
+      position: absolute;  /* 初始化为相对定位 滑动时改为绝对定位fixed*/
+      top: 120px;
+      left: 0;
+      right: 0;           /* 决定了搜索框置顶 */
+      opacity: 0.8;       /* 搜索框半透明效果 */
+      height: 35px;
+      padding: 5px;
+      .mix-text-overflow();
+      .mix-flex-y-center();
+  }
+  .fx_red {
+      width: 100%;
+  }
+  .fx_red view {
+      color: #888888;
+      font-size: 14px;
+      .mix-text-overflow();
+  }
+  .fx_description_btn {
+    display: flex;
+    margin-top: 5px;
+    flex-direction: row;
+    color: #848484;
+    font-size: 12px;
+    .info{
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      .show{
+        text{
+          margin: 0 40rpx 0 10rpx;
+          color: #c7c7c7;
+          font-size: 24rpx;
+        }
+      }
+    }
+  }
+}
+// 经验
+// 爱问知识人
+.aw_tab_panel_item {
+  background: #FFFFFF;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 10px;
+  box-shadow: 0 3px 6px 0 rgb(240, 240, 240);
+  .aw_flex_wrp {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      .mix-flex-y-center();
+      padding: 5px 0px;
+  }
+  .aw_bc_green {
+      width: 45px;
+      height: 45px;
+      .mix-flex-center();
+  }
+  .aw_bc_green image {
+      width:40px; 
+      height:40px;
+      border-radius: 50%;
+  }
+  .aw_bc_red {
+      height: 45px;
+      width: 85%;
+  }
+  .aw_title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      color: #007BFF;
+      font-size: 14px;
+  }
+  .aw_title view {
+      .mix-text-overflow();
+  }
+  .aw_description {
+      display: flex;
+      margin-top: 5px;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      color: #848484;
+      font-size: 12px;
+      view {
+          .mix-text-overflow();
+      }
+  }
+  .aw_description_btn {
+      display: flex;
+      margin-top: 5px;
+      flex-direction: row;
+      justify-content: flex-end;
+      color: #848484;
+      font-size: 12px;
+      .fenxiang-btn {
+          border: none;
+          background-color: #FFFFFF;
+      }
+      .fenxiang-btn::after {
+          border: none;
+      }
+  }
+  .aw_flex_des {
+      margin: 5px;
+  }
+  .aw_flex_zfdes {
+      font-size: 13px;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #F4F4F4;
+  }
+}
+</style>

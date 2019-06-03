@@ -1,0 +1,207 @@
+<template>
+  <view>
+    <!-- 自定义导航栏 -->
+    <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#007BFF',color:'#fff'} }}">
+        <ui-row height="{{DEFAULT_HEADER_HEIGHT}}" class="nav_bar">
+            <ui-col vertical-align="middle" class="nav-bar-col" align="left" width="100px" bindtap="navigateBack">
+                <view class="containertitle">
+                    <view class='dingwei'>
+
+                    </view>
+                </view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col">
+                <view class="nav-bar-title">个人中心</view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col" align="right"  width="100px">
+            </ui-col>
+        </ui-row>
+    </ui-nav-bar>
+    <view style="height:{{NAV_HEIGHT}}"></view>
+    <!-- 用户信息 -->
+    <view class="head">
+        <view class="top">
+            <view class="left">
+                <view class="name">I miss you</view>
+                <view class="sign">帅的不要不要的</view>
+            </view>
+            <view class="right">
+                <image src="../../static/image/home/create.png" mode="aspectFill" />
+            </view>
+        </view>
+        <view class="bottom">
+            <view class="block">
+                <view>152</view>
+                <view>作品</view>
+            </view>
+            <view class="block">
+                <view>152</view>
+                <view>资料</view>
+            </view>
+            <view class="block">
+                <view>152</view>
+                <view>粉丝</view>
+            </view>
+            <view class="block none">
+                <view>152</view>
+                <view>收藏</view>
+            </view>
+        </view>
+    </view>
+    <!-- 详细参数 -->
+    <view class="warp">
+        <view class="tab-panel-item">
+            <view class="item_list" data-route="mysocial" bindtap="navigateToShow">
+                <view class="item_left">
+                    <!-- <image src="../../static/image/main/lie1.png"/> -->
+                </view>
+                <view class="item_center">我的作品</view>
+                <view class="item_right"><ui-icon type="gengduo" color="#848484" size="12px;"></ui-icon></view>
+            </view>
+            <view class="item_list" data-route="myparttime" bindtap="navigateToShow">
+                <view class="item_left">
+                    <!-- <image src="../../static/image/main/lie2.png"/> -->
+                </view>
+                <view class="item_center">我的资料</view>
+                <view class="item_right"><ui-icon type="gengduo" color="#848484" size="12px;"></ui-icon></view>
+            </view>
+            <view class="item_list" data-route="myactivity" bindtap="navigateToShow">
+                <view class="item_left">
+                    <!-- <image src="../../static/image/main/lie3.png"/> -->
+                </view>
+                <view class="item_center">我的粉丝</view>
+                <view class="item_right"><ui-icon type="gengduo" color="#848484" size="12px;"></ui-icon></view>
+            </view>
+            <view class="item_list" data-route="follow" bindtap="navigateToShow">
+                <view class="item_left">
+                    <!-- <image src="../../static/image/main/lie3.png"/> -->
+                </view>
+                <view class="item_center">我的关注</view>
+                <view class="item_right"><ui-icon type="gengduo" color="#848484" size="12px;"></ui-icon></view>
+            </view>
+            <view class="item_list" data-route="mymall" bindtap="navigateToShow">
+                <view class="item_left">
+                    <!-- <image src="../../static/image/main/lie4.png"/> -->
+                </view>
+                <view class="item_center">我的收藏</view>
+                <view class="item_right"><ui-icon type="gengduo" color="#848484" size="12px;"></ui-icon></view>
+            </view>
+        </view>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+    config: {
+    navigationBarTitleText: '我的',
+    navigationBarTextStyle: 'black'
+    },
+    data: {
+    NAV_HEIGHT:wx.STATUS_BAR_HEIGHT+wx.DEFAULT_HEADER_HEIGHT+'px',
+    DEFAULT_HEADER_HEIGHT: wx.DEFAULT_HEADER_HEIGHT
+    },
+    // 路由跳转
+    navigateToShow(e){
+        var route = e.currentTarget.dataset.route;
+        wx.navigateTo({
+            url: '../person/' + route
+        })
+    }
+}
+</script>
+
+<style lang="less">
+page{
+    background: #fff;
+}
+// 用户信息
+.head{
+    padding: 20rpx 40rpx 100rpx;
+    background: #007BFF;
+    color: #fff;
+    .top{
+    display: flex;
+    justify-content: space-between;
+        .left{
+            .name{
+                font-size: 42rpx;
+            }
+            .sign{
+                font-size: 24rpx;
+            }
+        }
+        .right{
+            image{
+                width: 120rpx;
+                height: 120rpx;
+                border-radius: 50%;
+            }
+        }
+    }
+    .bottom{
+        width: 100%;
+        display: flex;
+        margin-top: 40rpx;
+        .block{
+            font-size: 24rpx;
+            width: 25%;
+            box-sizing: border-box;
+            border-right: 1px solid rgba(255, 255, 255, .1);
+            view{
+                .mix-flex-center();
+            }
+        }
+        .none{
+            border:none;
+        }
+    }
+}
+// 详细参数
+.warp{
+    border-radius: 20rpx 20rpx 0 0;
+    background: #fff;
+    width: 100%;
+    position: relative;
+    top: -70rpx;
+    padding: 20rpx 40rpx 0;
+}
+.tab-panel-item {
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    box-shadow: 0 3px 6px 0 rgb(240, 240, 240);
+    .mix-flex-center();
+    display: flex;
+    flex-direction: column;
+    .item_list {
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        height: 42px;
+        .mix-flex-center();
+        .mix-1px(0, 0, 1, 0, #ECECEC);
+        .item_left {
+            width: 12%;
+            .mix-flex-y-center();
+            height: 21px;
+            image {
+                width: 21px;
+                height: 21px;
+            }
+        }
+        .item_center {
+            width: 80%;
+            .mix-flex-y-center();
+            height: 21px;
+            text-align: left;
+        }
+        .item_right {
+            width: 8%;
+            .mix-flex-center();
+            height: 21px;
+        }
+    }
+}
+</style>

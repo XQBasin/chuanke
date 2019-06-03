@@ -1,0 +1,516 @@
+<template>
+  <view>
+    <!-- 自定义导航栏 -->
+    <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}">
+        <ui-row height="{{DEFAULT_HEADER_HEIGHT}}" class="nav_bar">
+            <ui-col vertical-align="middle" class="nav-bar-col" align="left" width="100px" bindtap="navigateBack">
+                <view class="containertitle">
+                    <view class='dingwei'>
+                        <ui-icon type="zuojiantou" color="#333333" size="20px;"></ui-icon>
+                    </view>
+                </view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col">
+                <view class="nav-bar-title"></view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col" align="right"  width="100px">
+            </ui-col>
+        </ui-row>
+    </ui-nav-bar>
+    <view style="height:{{NAV_HEIGHT}}"></view>
+    <!-- 背景 -->
+    <view class="image">
+      <image src="../../static/image/home/create.png" mode="aspectFill"/>
+    </view>
+    <!-- 详细内容 -->
+    <view class="content">
+      <view class="user-info">
+        <image src="../../static/image/home/create.png" mode="aspectFill"/>
+        <text>I miss you</text>
+      </view>
+      <view class="title">php中文网vip特权会员学习指南</view>
+      <view class="price">免费</view>
+      <view class="info">
+        <view class="show">
+          <ui-icon type="liulan" color="#999999" size="30rpx;"></ui-icon>
+          <text>233</text>
+          <ui-icon type="jushoucang" color="{{likeStatus==true?'red':'#999999'}}" size="30rpx;" bindtap="bindLike"></ui-icon>
+          <text>3666</text>
+        </view>
+        <view class="time">
+          刚刚
+        </view>
+      </view>
+      <!-- 资料目录 -->
+      <view class="catalog">
+        
+      </view>
+      <!-- 其他作品 -->
+      <view class="other">
+        <view class="name">其它作品</view>
+        <scroll-view scroll-x style="width: 100%;white-space: nowrap;">
+          <view class="item" wx:for="{{list}}" wx:key="listKey">
+            <image src="{{item.img}}" mode="aspectFill" lazy-load="true" />
+            <view class="text">{{item.title}}</view>
+          </view>
+        </scroll-view>
+      </view>
+      <!-- 评论 -->
+      <view class="comment">
+        <view class="name">12条评论</view>
+        <view height="80" border-bottom>
+            <view class="pl_item">
+                <view class="pl_flex_wrp">
+                    <view class="pl_left">
+                        <image src="../../static/image/home/create.png"/>
+                    </view>
+                    <view class="pl_right">
+                        <view class='pl_title'>111</view>
+                        <view class='pl_description'>
+                            <view class="pl_des_left">111</view>
+                            <view class="pl_des_center">{{dateUtil.formatTime(com.timestamp, 'M/D h:m:s')}}2018/9/15</view>
+                            <view class="pl_des_right" data-plshow="{{true}}" data-parentid="{{com.id}}" data-level=1 data-touser="@ {{com.userInfo.username}}" bindtap="openPLPopup">
+                                回复 <ui-icon type="huifucopy" color="#007BFF" size="12px;"></ui-icon>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view wx:if="{{ com.child }}">
+                    <view style="background-color:#F4F4F4;border-radius:10px;font-size:12px;margin-left:10%;">
+                        <view class="pl_flex_wrp_child" wx:for="{{ com.child }}" wx:key="comchild" wx:for-item="comchild">
+                            <view class="pl_left">
+                                <image src="{{comchild.userInfo.avatar}}"/>
+                            </view>
+                            <view class="pl_right">
+                                <view class='pl_title'>{{comchild.content}}</view>
+                                <view class='pl_description'>
+                                    <view class="pl_des_left">{{comchild.userInfo.username}}</view>
+                                    <view class="pl_des_center">{{dateUtil.formatTime(comchild.timestamp, 'M/D h:m:s')}}</view>
+                                    <view wx:if="{{ comchild.reply }}" class="pl_des_right" data-plshow="{{true}}" data-parentid="{{com.id}}" data-level=2 data-touser="@ {{comchild.userInfo.username}}" bindtap="openPLPopup">
+                                        回复 <ui-icon type="huifucopy" color="#007BFF" size="12px;"></ui-icon>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="more">查看更多评论</view>
+      </view>
+    </view>
+    <!-- 底部 -->
+    <view class="bottom">
+      <view class="search" data-touser="趣味想投的评论~" data-plshow="{{true}}" bindtap="openPL">
+        趣味想投的评论
+      </view>
+      <view class="circle">
+        <ui-icon type="jushoucang" color="#222222" size="52rpx;"></ui-icon>
+      </view>
+      <view class="circle">
+        <ui-icon type="xiazai" color="#222222" size="52rpx;"></ui-icon>
+      </view>
+    </view>
+    <!-- 评论POP -->
+    <ui-popup show="{{plshow}}" position="bottom" background="none">
+        <form bindsubmit="plFormSubmit">
+            <view class='pocket_input'>
+                <input name="parentid" value="{{cpid}}" hidden />
+                <input class='input_style' name="content" value="{{content}}" placeholder="{{place}}" placeholder-class='input-placeholder' focus='{{plfocus}}' cursor-spacing="16"/>
+                <view class='groupsources'>
+                    <button form-type="submit" class="button-style-huodong">评论</button>
+                </view>
+            </view>
+        </form>
+    </ui-popup>
+  </view>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: '资料详情',
+    navigationBarTextStyle: 'black',
+    onReachBottomDistance: 250
+  },
+  data: {
+    NAV_HEIGHT:wx.STATUS_BAR_HEIGHT+wx.DEFAULT_HEADER_HEIGHT+'px',
+    DEFAULT_HEADER_HEIGHT: wx.DEFAULT_HEADER_HEIGHT,
+    list:[
+      {title:'php中文网vip特权会员学习指南',img:'../../static/image/home/create.png'},
+      {title:'2019春招PHP面试题（附答案）',img:'../../static/image/home/create.png'},
+      {title:'PHP使用统计和市场定位最新报告',img:'../../static/image/home/create.png'},
+      {title:'php中文网《玉女心经》公益PHP培训系列课程汇总',img:'../../static/image/home/create.png'},
+    ],
+    catalog:[
+      {title:'一级目录',son:['二级目录','二级目录','二级目录']},
+      {title:'一级目录',son:['二级目录','二级目录','二级目录']},
+      {title:'一级目录',son:['二级目录','二级目录','二级目录']}
+    ],
+    show:false,
+    plshow: false,              // 是否显示评论组件
+    content: '',                // 评论内容
+    place: '',                  // 默认回复提示
+  },
+  // 导航返回
+  navigateBack () {
+      wx.navigateBack()
+  },
+  onReachBottom(){
+    console.log(1)
+  },
+  // 目录是否显示
+  isShow(e){
+    console.log(e);
+    this.setData({
+      show:e.currentTarget.dataset.show
+    });
+  },
+  //打开评论组件
+  openPL(e){
+    this.setData({
+      plshow:e.currentTarget.dataset.plshow,
+      place:e.currentTarget.dataset.touser
+    })
+  },
+  // 提交评论
+  plFormSubmit: function(e) {
+      // var that = this
+      // var data = e.detail.value
+      // if (that.data.level == 2) {
+      //     var content = data.content + that.data.place
+      // } else {
+      //     var content = data.content
+      // }
+      // // 校验表单
+      // if (!that.validate.checkForm(data)) {
+      //     const error = that.validate.errorList[0];
+      //     wx.showToast({
+      //         title: error.msg,
+      //         icon: 'none'
+      //     })
+      //     return false
+      // }
+      // wx.showLoading({
+      //     title: '请稍后...',
+      //     mask: true
+      // })
+      // wx.request({
+      //     url: 'https://wx.taoyuantoday.com/mini.Wesocial/comments.html',
+      //     data: {
+      //         uid: that.data.uid,
+      //         socialid: that.data.social.id,
+      //         content: content,
+      //         parentid: that.data.cpid
+      //     },
+      //     header: {
+      //         'Content-Type': 'application/x-www-form-urlencoded'     // 默认值
+      //     },
+      //     method: "POST",
+      //     success(res) {
+      //         if (res.data.state) {
+      //             wx.hideLoading()
+      //             wx.showToast({
+      //                 title: res.data.message,
+      //                 icon: 'success',
+      //                 duration: 2000
+      //             })
+      //             that.getCommentsForPage(that.data.comfield, that.data.socialid, 1)
+      //             that.setData({
+      //                 plshow:false
+      //             })
+      //         } else {
+      //             wx.showToast({
+      //                 title: res.data.message,
+      //                 icon: 'none',
+      //                 duration: 2000
+      //             })
+      //             that.setData({
+      //                 plshow:false
+      //             })
+      //         }
+      //     }
+      // })
+  }
+}
+</script>
+
+<style lang="less">
+// 背景
+.image{
+  width: 100%;
+  image{
+    height: 400rpx;
+  }
+}
+// 详细内容
+.content{
+  width: 100%;
+  border-radius: 40rpx 40rpx 0 0;
+  background: #fff;
+  margin-top: -45rpx;
+  padding: 60rpx 40rpx 90rpx;
+  .user-info{
+    .mix-flex-y-center();
+    image{
+      width: 80rpx;
+      height: 80rpx;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    text{
+      margin-left: 20rpx;
+      font-size: 28rpx;
+      font-weight: bold;
+    }
+  }
+  .title{
+    margin: 20rpx 0 20rpx;
+    font-weight: bold;
+    font-size: 30rpx;
+  }
+  .price{
+    font-size: 30rpx;
+    color:#007BFF;
+  }
+  .info{
+    display: flex;
+    justify-content: space-between;
+    padding: 30rpx 0 10rpx;
+    border-bottom: 1px solid #EFEFEF;
+    .mix-flex-y-center();
+    .show{
+      text{
+        margin-right: 40rpx;
+        color: #c7c7c7;
+        font-size: 24rpx;
+      }
+    }
+    .time{
+      font-size: 24rpx;
+      color: #999999;
+    }
+  }
+  // 资料目录
+  .catalog{
+    padding: 20rpx 0 0;
+    
+  }
+  
+  // 其它作品
+  .other{
+    margin-top: 40rpx;
+    .name{
+      font-size: 30rpx;
+      font-weight: bold;
+      padding-bottom: 20rpx;
+    }
+    .item{
+      width: 300rpx;
+      height: 200rpx;
+      margin-right: 20rpx;
+      display: inline-block;
+      position: relative;
+      image{
+        border-radius: 10rpx;
+      }
+      .text{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        font-weight: normal;
+        font-size: 24rpx;
+        background: rgba(0, 0, 0, .5);
+        padding: 0 8rpx;
+        color: #fff;
+        border-radius: 0 0 10rpx 10rpx;
+        .mix-text-overflow();
+      }
+    }
+  }
+  // 评论
+  .comment{
+    margin-top: 40rpx;
+    .name{
+      font-size: 30rpx;
+      font-weight: bold;
+      padding-bottom: 20rpx;
+      border-bottom: 1px solid #EFEFEF;
+    }
+    // 评论列表
+    .pl_item {
+      display: flex;
+      flex-direction: column;
+      .mix-1px(0, 0, 1, 0, #ccc);
+      padding: 5px;
+      .pl_flex_wrp {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          flex-wrap: nowrap;
+          padding: 5px;
+          width: 100%;
+          .mix-flex-center();
+          .pl_left {
+              width: 20%;
+              height: 45px;
+              image {
+                  width:40px; 
+                  height:40px;
+                  border-radius: 50%;
+              }
+          }
+          .pl_right {
+              width: 80%;
+              display: flex;
+              flex-direction: column;
+              .pl_title {
+                  text-align: left;
+              }
+              .pl_description {
+                  color: #848484;
+                  margin-top: 5px;
+                  font-size: 12px;
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                  flex-wrap: nowrap;
+                  .pl_des_left {
+                      width: 30%;
+                      .mix-text-overflow();
+                  }
+                  .pl_des_center {
+                      text-align: center;
+                      width: 50%;
+                  }
+                  .pl_des_right {
+                      text-align: right;
+                      width: 20%;
+                      color: #007BFF;
+                  }
+              }
+          }
+      }
+      // 回复列表
+      .pl_flex_wrp_child {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          flex-wrap: nowrap;
+          padding: 5px;
+          width: 100%;
+          .mix-flex-center();
+          .pl_left {
+              width: 20%;
+              height: 45px;
+              image {
+                  width:40px; 
+                  height:40px;
+                  border-radius: 50%;
+              }
+          }
+          .pl_right {
+              width: 80%;
+              display: flex;
+              flex-direction: column;
+              .pl_title {
+                  text-align: left;
+              }
+              .pl_description {
+                  color: #848484;
+                  margin-top: 5px;
+                  font-size: 12px;
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                  flex-wrap: nowrap;
+                  .pl_des_left {
+                      width: 30%;
+                      .mix-text-overflow();
+                  }
+                  .pl_des_center {
+                      text-align: center;
+                      width: 50%;
+                  }
+                  .pl_des_right {
+                      text-align: right;
+                      width: 20%;
+                      color: #FFD100;
+                  }
+              }
+          }
+      }
+    }
+  }
+  .more{
+    font-size: 24rpx;
+    color: #c7c7c7;
+    padding: 40rpx 0;
+    .mix-flex-center();
+  }
+}
+// 底部
+.bottom{
+  width: 100%;
+  position: fixed;
+  bottom: 20rpx;
+  padding: 0 20rpx;
+  display: flex;
+  justify-content: space-between;
+  .search {
+    width: 70%;
+    height: 80rpx;
+    border-radius: 60rpx;
+    padding: 2px 10px;
+    background: #fff;
+    border:1px solid #EFEFEF;
+    box-shadow: 0rpx 5rpx 10rpx #EFEFEF;
+    color: #999999;
+    .mix-flex-y-center();
+    input {
+      width: 100%;
+      padding: 2rpx 5rpx;
+      margin: 2rpx;
+      font-size: 26rpx;
+    }
+  }
+  .circle{
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0rpx 5rpx 10rpx #EFEFEF;
+    .mix-flex-center();
+  }
+}
+// 表单样式
+.pocket_input {
+    background-color: #F4F4F4;
+    padding: 6px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 20rpx 20rpx 0 0;
+    .mix-flex-y-center();
+    .input_style {
+        width: 70%;
+        padding: 6px;
+        background-color: #FFFFFF;
+        border-radius: 5px;
+    }
+    .groupsources {
+        padding: 2px 10px;
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        .button-style-huodong {
+            border-radius: 30px;
+            background-color: #007BFF;
+            color: #FFFFFF;
+        }
+        .button-style-huodong::after{
+            border: none;
+        }
+    }
+}
+</style>

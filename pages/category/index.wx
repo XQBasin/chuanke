@@ -1,0 +1,153 @@
+<template>
+  <view>
+    <!-- 自定义导航栏 -->
+    <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}">
+        <ui-row height="{{DEFAULT_HEADER_HEIGHT}}" class="nav_bar">
+            <ui-col vertical-align="middle" class="nav-bar-col" align="left" width="100px" bindtap="navigateBack">
+                <view class="containertitle">
+                    <view class='dingwei'>
+                        <!-- <ui-icon type="zuojiantou" color="#333333" size="20px;"></ui-icon> -->
+                    </view>
+                </view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col">
+                <view class="nav-bar-title">分类</view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col" align="right"  width="100px">
+            </ui-col>
+        </ui-row>
+    </ui-nav-bar>
+    <view style="height:{{NAV_HEIGHT}}"></view>
+    <!-- 顶部选择区 -->
+    <view class="head">
+      <view class="block" wx:for="{{headTitle}}" wx:key="headKey" data-sid="{{index}}" bindtap="check">
+        <view class="text {{checkedId==index? 'active':''}}">{{item}}</view>
+        <view class="{{checkedId==index? 'line':''}}"></view>
+      </view>
+    </view>
+    <!-- 列表区 -->
+    <!-- 分享 -->
+    <view class="content" wx:if="{{checkedId==0}}">
+        <view class="block" wx:for="{{list}}" wx:key="listKey">
+            <view class="first">{{item.title}}</view>
+            <view class="second">
+                <view class="item" data-id="{{index}}" wx:for="{{item.type}}" wx:key="typeKey" wx:for-item='idx' bindtap="clickItem">{{idx}}</view>
+            </view>
+        </view>
+    </view>
+    <!-- 经验 -->
+    <view class="content" wx:if="{{checkedId==1}}">
+        <view class="block" wx:for="{{list1}}" wx:key="listKey">
+            <view class="first">{{item.title}}</view>
+            <view class="second">
+                <view class="item" data-id="{{index}}" wx:for="{{item.type}}" wx:key="typeKey" wx:for-item='idx' bindtap="clickItem">{{idx}}</view>
+            </view>
+        </view>
+    </view>
+    <!-- 爱问知识人 -->
+    <view class="content" wx:if="{{checkedId==2}}">
+        <view class="block" wx:for="{{list}}" wx:key="listKey">
+            <view class="first">{{item.title}}</view>
+            <view class="second">
+                <view class="item" data-id="{{index}}" wx:for="{{item.type}}" wx:key="typeKey" wx:for-item='idx' bindtap="clickItem">{{idx}}</view>
+            </view>
+        </view>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+    config: {
+        navigationBarTitleText: '分类',
+        navigationBarTextStyle: 'black'
+    },
+    data: {
+        NAV_HEIGHT:wx.STATUS_BAR_HEIGHT+wx.DEFAULT_HEADER_HEIGHT+'px',
+        DEFAULT_HEADER_HEIGHT: wx.DEFAULT_HEADER_HEIGHT,
+        headTitle:['分享','经验','爱问知识人'],            //顶部选择标题
+        checkedId:0,                                     //顶部选择序号Id
+        list:[
+            {title:'互联网',type:['PHP','JAVA','javascript','PHP','JAVA','javascript']},
+            {title:'服务业',type:['PHP','JAVA','javascript','PHP','JAVA','javascript']},
+            {title:'机械业',type:['PHP','JAVA','javascript','PHP','JAVA','javascript']}
+        ],
+        list1:[
+            {title:'666',type:['PHP','JAVA','javascript','PHP','JAVA','javascript']},
+            {title:'666888',type:['PHP','JAVA','javascript','PHP','JAVA','javascript']},
+            {title:'机械业',type:['PHP','JAVA','javascript','PHP','JAVA','javascript']}
+        ]
+    },
+    // 顶部选择
+    check(e){
+        this.setData({
+            checkedId:e.currentTarget.dataset.sid
+        })
+    }
+}
+</script>
+
+<style lang="less">
+// 顶部选择区
+.head{
+  width: 100%;
+  background: #fff;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0rpx 5rpx 10rpx #EFEFEF;
+  position: fixed;
+  z-index: 1;
+  padding: 0 20rpx;
+  .block{
+    position: relative;
+    margin: 0 20rpx;
+    padding-bottom: 25rpx;
+    .mix-flex-y-center();
+    .text{
+      font-size: 30rpx;
+      color: #999999;
+    }
+    .active{
+      font-weight: bold;
+      font-size: 36rpx;
+      color: #222222;
+    }
+    .line{
+      width: 100%;
+      height: 7rpx;
+      border-radius: 10rpx 10rpx 0 0;
+      background: #007BFF;
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}
+// 列表区
+.content{
+    padding: 0 10px;
+    margin-top: 100rpx;
+    .block{
+        margin-bottom: 20rpx;
+        .first{
+            font-size: 32rpx;
+            font-weight: bold;
+        }
+        .second{
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            .item{
+                width: 30%;
+                height: 100rpx;
+                box-shadow: 0 0 2rpx #CCCCCC;
+                border: 1px solid #EFEFEF;
+                margin: 20rpx 0;
+                background: #fff;
+                border-radius: 10rpx;
+                padding-top: 40rpx;
+                .mix-flex-center();
+            }
+        }
+    }
+}
+</style>

@@ -1,0 +1,349 @@
+<template>
+  <view>
+    <!-- 自定义导航栏 -->
+    <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}">
+        <ui-row height="{{DEFAULT_HEADER_HEIGHT}}" class="nav_bar">
+            <ui-col vertical-align="middle" class="nav-bar-col" align="left" width="100px" bindtap="navigateBack">
+                <view class="containertitle">
+                    <view class='dingwei'>
+                      <ui-icon type="zuojiantou" color="#333333" size="20px;"></ui-icon>
+                    </view>
+                </view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col">
+                <view class="nav-bar-title">经验</view>
+            </ui-col>
+            <ui-col vertical-align="middle" class="nav-bar-col" align="right"  width="100px">
+            </ui-col>
+        </ui-row>
+    </ui-nav-bar>
+    <view style="height:{{NAV_HEIGHT}}"></view>
+    <!-- 搜索栏 -->
+    <view class="warp">
+      <view class="top">
+        <view class="search">
+            <ui-icon type="sousuo" color="#666666" size="26rpx;"></ui-icon>
+            <input type='text' placeholder="iPhone xs" placeholder-style="color:#666666;" confirm-type='search' bindtap="toSearch">
+        </view>
+        <view class="text">
+            <ui-icon type="xiala" color="#222222" size="40rpx;" class="more" data-show="{{ true }}" bindtap="openPopup"></ui-icon>
+        </view>
+      </view>
+    </view>
+    <!-- 全部分类 -->
+    <ui-popup show="{{ show }}" position="top" top="{{ NAV_HEIGHT }}" mask-style="{{ maskStyle}}" background="none">
+        <view class="popupHead">
+          <view class="title">全部分类</view>
+          <view>
+            <ui-icon type="shanchu" color="#222222" size="40rpx;" data-show="{{ false }}" bindtap="openPopup"></ui-icon>
+          </view>
+        </view>
+        <view class="top_pop">
+            <ui-tags data="{{list00}}" bindchange="singleTap" col-number="3"  fixed-width></ui-tags>
+        </view>
+    </ui-popup>
+    <!-- 经验 -->
+    <view class="content">
+      <view class="jy_tab_panel_item" wx:key="socialkey">
+        <view class="jy_flex_wrp">
+            <view class="jy_bc_green">
+                <image src="../../static/image/home/create.png"/>
+            </view>
+            <view class="jy_bc_red">
+                <view class='jy_title'>
+                    <view>111</view>
+                    <view><ui-icon type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;" size="14px;"></ui-icon></view>
+                </view>
+                <view class='jy_description'>
+                    <view>{{dateUtil.formatTime(social.timestamp, 'M/D h:m:s')}}2018/9/15</view>
+                    <view>128粉丝</view>
+                </view>
+            </view>
+        </view>
+        <view class="jy_flex_des" data-id="{{social.id}}" bindtap="getSocInfo">
+            111222
+        </view>
+        <!-- 消息菜单 -->
+        <view class='jy_description_btn'>
+            <view>
+                <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                    <ui-icon type="liulan" color="#888888" size="14px;"> 222</ui-icon>
+                </button>
+            </view>
+            <view>
+                <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                    <ui-icon type="jushoucang" color="#888888" size="14px;"> 111</ui-icon>
+                </button>
+            </view>
+        </view>
+      </view>
+      <!-- 加载更多 -->
+      <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
+      </view>
+      <ui-divider wx:if="{{isHideLoadMore}}" padding="20">我是有底线的</ui-divider>
+    </view>
+  </view>
+</template>
+
+<script>
+const tagStyle = `
+  padding: 0 20rpx;
+  text-align: center;
+  height: 70rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 70rpx;
+  margin: 14rpx 0;
+  border:1px solid #c7c7c7;
+  border-radius: 50rpx;
+`
+const selectStyle = `
+  padding: 0 20rpx;
+  text-align: center;
+  height: 70rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 70rpx;
+  margin: 14rpx 0;
+  font-weight: bold;
+  border-radius: 50rpx;
+  background:#007BFF;
+  color:#fff;
+`
+
+export default {
+  config: {
+    navigationBarTitleText: '首页',
+    navigationBarTextStyle: 'black'
+  },
+  data: {
+    NAV_HEIGHT:wx.STATUS_BAR_HEIGHT+wx.DEFAULT_HEADER_HEIGHT+'px',
+    DEFAULT_HEADER_HEIGHT: wx.DEFAULT_HEADER_HEIGHT,
+    show: false,
+    maskStyle:{
+        'top':'198px'
+    },
+    list00: [{
+        text: '全部活动',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: true
+      }, {
+        text: '电脑办公',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '精选活动',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '个护美妆',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '家用电器',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '酒水饮料',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '日用百货',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '流行服饰',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '鞋靴箱包',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '手机数码',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }, {
+        text: '钟表珠宝',
+        tagStyle: tagStyle,
+        tagSelectedStyle: selectStyle,
+        checked: false
+      }],
+      isHideLoadMore:true          //加载更多状态
+  },
+  //打开分类组件
+  openPopup (e) {
+    let show = e.currentTarget.dataset.show
+    this.setData({
+      show: show
+    })
+  },
+  //获取选择选项
+  singleTap (e) {
+    let opt = e.detail.index
+    wx.showToast({
+      title: this.data.list00[opt].text,
+      icon:'none'
+    })
+    this.data.list00.forEach((item, index) => {
+      item.checked = (index === opt)
+    })
+    this.setData({
+      show:false,
+      list00:this.data.list00
+    })
+  },
+  // 跳转到搜索页面
+  toSearch(){
+    wx.navigateTo({ url: '/pages/home/search' });
+  }
+}
+</script>
+
+<style lang="less">
+// 搜索栏
+.warp{
+  height: 100rpx;
+  background: #fff;
+  padding: 22rpx 0;
+}
+.top{
+  height: 56rpx;
+  .search {
+    width: 88%;
+    height: 56rpx;
+    border-radius: 60rpx;
+    padding: 2px 10px;
+    display: flex;
+    position: absolute;     /* 初始化为相对定位 滑动时改为绝对定位fixed*/
+    left: 10px;
+    right: 0;               /* 决定了搜索框置顶 */
+    z-index: 2;
+    background: #f4f4f4;
+    .mix-flex-y-center();
+    input {
+        width: 100%;
+        padding: 2rpx 5rpx;
+        margin: 2rpx;
+        font-size: 26rpx;
+    }
+  }
+  .text {
+    height: 56rpx;
+    display: flex;
+    position: absolute;     /* 初始化为相对定位 滑动时改为绝对定位fixed*/
+    right: 10px;               /* 决定了搜索框置顶 */
+    z-index: 2;
+    font-size: 32rpx;
+    .mix-flex-y-center();
+  }
+}
+// 全部分类
+.top_pop{
+  background:#fff;
+  border-radius: 0 0 20rpx 20rpx;
+  padding: 0 20rpx 20rpx;
+}
+.popupHead{
+  padding: 20rpx 20rpx 0 20rpx;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  background: #fff;
+  .title{
+    color: #222222;
+    font-size: 36rpx;
+  }
+}
+// 经验
+.jy_tab_panel_item {
+  background: #FFFFFF;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 10px;
+  box-shadow: 0 3px 6px 0 rgb(240, 240, 240);
+  .jy_flex_wrp {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      .mix-flex-y-center();
+      padding: 5px 0px;
+  }
+  .jy_bc_green {
+      width: 45px;
+      height: 45px;
+      .mix-flex-center();
+  }
+  .jy_bc_green image {
+      width:40px; 
+      height:40px;
+      border-radius: 50%;
+  }
+  .jy_bc_red {
+      height: 45px;
+      width: 85%;
+  }
+  .jy_title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      color: #007BFF;
+      font-size: 14px;
+  }
+  .jy_title view {
+      .mix-text-overflow();
+  }
+  .jy_description {
+      display: flex;
+      margin-top: 5px;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      color: #848484;
+      font-size: 12px;
+      view {
+          .mix-text-overflow();
+      }
+  }
+  .jy_description_btn {
+      display: flex;
+      margin-top: 5px;
+      flex-direction: row;
+      justify-content: flex-end;
+      color: #848484;
+      font-size: 12px;
+      .fenxiang-btn {
+          border: none;
+          background-color: #FFFFFF;
+      }
+      .fenxiang-btn::after {
+          border: none;
+      }
+  }
+  .jy_flex_des {
+      margin: 5px;
+  }
+  .jy_flex_zfdes {
+      font-size: 13px;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #F4F4F4;
+  }
+}
+</style>
