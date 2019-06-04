@@ -1,0 +1,93 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+.main {
+  text-align: center;
+  padding: 40rpx 20rpx 20rpx;
+}
+.main .warp {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.main .warp .item {
+  width: 49%;
+  background: #fff;
+  border-radius: 10rpx;
+  border: 1px solid #EFEFEF;
+  padding: 40rpx 6px;
+  margin-top: 20rpx;
+}
+.main .warp .item image {
+  width: 80rpx;
+  height: 80rpx;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+.main .warp .item .name {
+  font-weight: bold;
+}
+.main .warp .item .sign {
+  color: #999999;
+  font-size: 24rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.main .warp .item .click {
+  margin-top: 20rpx;
+}
+.main .warp .item .click view {
+  width: 150rpx;
+  height: 70rpx;
+  margin: 0 auto;
+  border-radius: 35rpx;
+  background: #EFEFEF;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main .warp .item .click .none {
+  width: 200rpx;
+  background: #fff;
+  border: 1px solid #EFEFEF;
+}
+.main .warp .item .click .none text {
+  margin-left: 10rpx;
+}
+.follow {
+  position: fixed;
+  bottom: 20rpx;
+  width: 70%;
+  left: 50%;
+  margin-left: -35%;
+  height: 100rpx;
+  background: #007BFF;
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

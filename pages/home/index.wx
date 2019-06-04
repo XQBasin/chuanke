@@ -1,43 +1,12 @@
 <template>
   <view>
-    <!-- 自定义导航栏 -->
-    <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}">
-        <ui-row height="{{DEFAULT_HEADER_HEIGHT}}" class="nav_bar">
-            <ui-col vertical-align="middle" class="nav-bar-col" align="left" width="100px" bindtap="navigateBack">
-                <view class="containertitle">
-                    <view class='dingwei'>
-                      <ui-icon type="zuojiantou" color="#333333" size="20px;"></ui-icon>
-                    </view>
-                </view>
-            </ui-col>
-            <ui-col vertical-align="middle" class="nav-bar-col">
-                <view class="nav-bar-title">首页</view>
-            </ui-col>
-            <ui-col vertical-align="middle" class="nav-bar-col" align="right"  width="100px">
-            </ui-col>
-        </ui-row>
-    </ui-nav-bar>
-    <view style="height:{{NAV_HEIGHT}}"></view>
     <!-- 顶部选择区 -->
     <view class="head">
       <view class="block" wx:for="{{headTitle}}" wx:key="headKey" data-sid="{{index}}" bindtap="check">
         <view class="text {{checkedId==index? 'active':''}}">{{item}}</view>
         <view class="{{checkedId==index? 'line':''}}"></view>
       </view>
-      <ui-icon type="xiala" color="#222222" size="40rpx;" class="more" data-show="{{ true }}" bindtap="openPopup"></ui-icon>
     </view>
-    <!-- 全部分类 -->
-    <ui-popup show="{{ show }}" position="top" top="{{ NAV_HEIGHT }}" mask-style="{{ maskStyle}}" background="none">
-        <view class="popupHead">
-          <view class="title">全部分类</view>
-          <view>
-            <ui-icon type="shanchu" color="#222222" size="40rpx;" data-show="{{ false }}" bindtap="openPopup"></ui-icon>
-          </view>
-        </view>
-        <view class="top_pop">
-            <ui-tags data="{{list00}}" bindchange="singleTap" col-number="3"  fixed-width></ui-tags>
-        </view>
-    </ui-popup>
     <!-- 分享 -->
     <view class='content' wx:if="{{checkedId==0}}">
       <view class="tab-panel-item" wx:key="activitykey" wx:for="{{list}}">
@@ -185,6 +154,26 @@
       </view>
       <ui-divider wx:if="{{isHideLoadMore}}" padding="20">我是有底线的</ui-divider>
     </view>
+    <!-- 发布按钮 -->
+    <view class="fixedanimate">
+      <view class="{{animatebtngroup}}" hidden="{{!show}}">
+        <view class="animatebtn">
+          <ui-icon type="fenxiang" color="#fff" size="20px;"></ui-icon>
+        </view>
+        <view class="animatebtn">
+          <ui-icon type="wendang" color="#fff" size="20px;"></ui-icon>
+        </view>
+      </view>
+      <view class="{{animatebtngroup}}" hidden="{{!show}}">
+        <view class="animatebtn">
+          <ui-icon type="dengpao" color="#fff" size="20px;"></ui-icon>
+        </view>
+      </view>
+      <view class="animatebtn" bindtap="openAnimate">
+        <ui-icon wx:if="{{!show}}" type="tianjia" color="#fff" size="20px;"></ui-icon>
+        <ui-icon wx:else type="guanbi" color="#fff" size="20px;"></ui-icon>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -215,11 +204,10 @@ const selectStyle = `
   background:#007BFF;
   color:#fff;
 `
-
 export default {
   config: {
     navigationBarTitleText: '首页',
-    navigationBarTextStyle: 'black'
+    navigationBarTextStyle: 'black',
   },
   data: {
     NAV_HEIGHT:wx.STATUS_BAR_HEIGHT+wx.DEFAULT_HEADER_HEIGHT+'px',
@@ -233,9 +221,7 @@ export default {
       {title:'php中文网《玉女心经》公益PHP培训系列课程汇总',img:'../../static/image/home/create.png'},
     ],
     show: false,
-    maskStyle:{
-        'top':'198px'
-    },
+    animatebtngroup:'animatebtngroup',
     list00: [{
         text: '全部活动',
         tagStyle: tagStyle,
@@ -306,50 +292,51 @@ export default {
       likeStatus:!this.data.likeStatus
     })
   },
-  openPopup (e) {
-    let show = e.currentTarget.dataset.show
-    this.setData({
-      show: show
-    })
+  // 打开发布按钮
+  openAnimate (e) {
+    var that = this
+    let show = that.data.show
+    if (!show) {
+      that.setData({
+        show: !show,
+        animatebtngroup: 'animated fadeInUp'
+      })
+    } else {
+      that.setData({
+        animatebtngroup: 'animated fadeOutDown',
+      })
+      setTimeout(function() {
+        that.setData({
+          show: !show,
+        })
+      }, 700)
+    }
   },
-  singleTap (e) {
-    let opt = e.detail.index
-    wx.showToast({
-      title: this.data.list00[opt].text,
-      icon:'none'
-    })
-    this.data.list00.forEach((item, index) => {
-      item.checked = (index === opt)
-    })
-    this.setData({
-      show:false,
-      list00:this.data.list00
-    })
-  }
 }
 </script>
 
 <style lang="less">
 // 顶部选择区
-.head{
+.head {
+  position: fixed;
+  top: 0px;
   width: 100%;
   background: #fff;
   display: flex;
   overflow: hidden;
   box-shadow: 0rpx 5rpx 10rpx #EFEFEF;
-  position: fixed;
   z-index: 1;
   padding: 0 20rpx;
-  .block{
+  .block {
     position: relative;
     margin: 0 20rpx;
     padding-bottom: 25rpx;
     .mix-flex-y-center();
-    .text{
+    .text {
       font-size: 30rpx;
       color: #999999;
     }
-    .active{
+    .active {
       font-weight: bold;
       font-size: 36rpx;
       color: #222222;
@@ -363,30 +350,9 @@ export default {
       bottom: 0;
     }
   }
-  .more{
-    position: absolute;
-    right: 40rpx;
-  }
-}
-// 全部分类
-.top_pop{
-  background:#fff;
-  border-radius: 0 0 20rpx 20rpx;
-  padding: 0 20rpx 20rpx;
-}
-.popupHead{
-  padding: 20rpx 40rpx 0 20rpx;
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-  background: #fff;
-  .title{
-    color: #222222;
-    font-size: 36rpx;
-  }
 }
 // 分享
-.content{
+.content {
   margin-top: 100rpx;
   .tab-panel-item {
       background: #FFFFFF;
@@ -497,7 +463,6 @@ export default {
   }
 }
 // 经验
-// 爱问知识人
 .aw_tab_panel_item {
   background: #FFFFFF;
   border-radius: 5px;
@@ -573,5 +538,25 @@ export default {
       border-radius: 10px;
       background-color: #F4F4F4;
   }
+}
+// 动画按钮
+.fixedanimate {
+  position:fixed;
+  right: 20px;
+  bottom: 40px;
+}
+.animatebtngroup {
+  display: flex;
+  flex-direction: column;
+}
+.animatebtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #007BFF;
+  .mix-flex-center();
+  margin-bottom: 5px;
+  box-shadow: 0 3px 6px 0 rgb(183, 218, 255);
+  
 }
 </style>

@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/home/search",
+    "pages/home/details",
+    "pages/home/question",
+    "pages/category/index",
+    "pages/category/share",
+    "pages/category/question",
+    "pages/category/experience",
+    "pages/person/index",
+    "pages/person/follow"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#F4F4F4",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "传客"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "./static/image/ziliao.png",
+        "selectedIconPath": "./static/image/ziliao_a.png"
+      },
+      {
+        "pagePath": "pages/category/index",
+        "text": "分类",
+        "iconPath": "./static/image/fenlei.png",
+        "selectedIconPath": "./static/image/fenlei_a.png"
+      },
+      {
+        "pagePath": "pages/person/index",
+        "text": "我的",
+        "iconPath": "./static/image/person.png",
+        "selectedIconPath": "./static/image/person_a.png"
+      }
+    ],
+    "color": "#333333",
+    "selectedColor": "#007BFF",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white"
+  },
+  "networkTimeout": {
+    "request": 10000
+  },
+  "theme": {
+    "theme-color": "#007BFF"
+  }
+}

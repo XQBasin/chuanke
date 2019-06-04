@@ -1,0 +1,109 @@
+<view>
+  <!-- 自定义导航栏 -->
+  <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}" _pid="{{_pid}}">
+    <view class="nav_bar ui-row" style="height:{{DEFAULT_HEADER_HEIGHT}}px;">
+      <view class="nav-bar-col ui-col ui-col-align-left align-left valign-middle" bindtap="navigateBack" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-left valign-middle">
+          <view class="containertitle">
+            <view class="dingwei">
+              <span type="zuojiantou" color="#333333" size="20px;" class="ui-icon icon-zuojiantou" style="color: #333333;font-size: 20px;px;"></span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col valign-middle" style="">
+        <view class="ui-col-content valign-middle">
+          <view class="nav-bar-title">爱问</view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-right valign-middle">
+        </view>
+      </view>
+    </view>
+  </ui-nav-bar>
+  <view style="height:{{NAV_HEIGHT}}"></view>
+  <!-- 搜索栏 -->
+  <view class="warp">
+    <view class="top">
+      <view class="search">
+        <span type="sousuo" color="#666666" size="26rpx;" class="ui-icon icon-sousuo" style="color: #666666;font-size: 26rpx;px;"></span>
+        <input type="text" placeholder="iPhone xs" placeholder-style="color:#666666;" confirm-type="search" bindtap="toSearch"></input>
+      </view>
+      <view class="text">
+        <span type="xiala" color="#222222" size="40rpx;" class="more ui-icon icon-xiala" data-show="{{ true }}" bindtap="openPopup" style="color: #222222;font-size: 40rpx;px;"></span>
+      </view>
+    </view>
+  </view>
+  <!-- 全部分类 -->
+  <ui-popup show="{{ show }}" position="top" top="{{ NAV_HEIGHT }}" mask-style="{{ maskStyle}}" background="none" _pid="{{_pid}}">
+    <view class="popupHead">
+      <view class="title">全部分类</view>
+      <view>
+        <span type="shanchu" color="#222222" size="40rpx;" data-show="{{ false }}" bindtap="openPopup" class="ui-icon icon-shanchu" style="color: #222222;font-size: 40rpx;px;"></span>
+      </view>
+    </view>
+    <view class="top_pop">
+      <ui-tags data="{{list00}}" bindchange="singleTap" col-number="3" fixed-width _pid="{{_pid}}"></ui-tags>
+    </view>
+  </ui-popup>
+  <!-- 爱问 -->
+  <view class="content">
+    <view class="aw_tab_panel_item" wx:key="socialkey">
+      <view class="aw_flex_wrp">
+        <view class="aw_bc_green">
+          <image src="../../static/image/home/create.png" />
+        </view>
+        <view class="aw_bc_red">
+          <view class="aw_title">
+            <view>111</view>
+            <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
+          </view>
+          <view class="aw_description">
+            <view>{{dateUtil.formatTime(social.timestamp, 'M/D h:m:s')}}2018/9/15</view>
+            <view>128粉丝</view>
+          </view>
+        </view>
+      </view>
+      <view class="aw_flex_des" data-id="{{social.id}}" bindtap="getSocInfo">
+        111222
+      </view>
+      <!-- 作品展示 -->
+      <view wx:if="{{social.production[0]}}" class="weui-cell__bd" data-id="{{social.id}}" bindtap="getSocInfo">
+        <view class="weui-uploader">
+          <view class="weui-uploader__bd">
+            <view class="weui-uploader__files" id="uploaderFiles">
+              <block wx:for="{{social.production}}" wx:key="*this">
+                <view wx:if="{{social.production.length > 1}}" class="weui-uploader__file" data-urls="{{social.production}}" bindtap="previewImage" id="{{item}}">
+                  <image class="weui-uploader__img" style="border-radius:5px; width: 80px; height: 80px;" src="{{item}}" mode="widthFix" />
+                </view>
+                <view wx:else="" class="weui-uploader__file" data-urls="{{social.production}}" bindtap="previewImage" id="{{item}}">
+                  <image class="weui-uploader__img" style="border-radius:5px; width: 200px;" src="{{item}}" mode="widthFix" />
+                </view>
+              </block>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 消息菜单 -->
+      <view class="aw_description_btn">
+        <view>
+          <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+            <span type="wodefankui" color="#888888" size="14px;" class="ui-icon icon-wodefankui" style="color: #888888;font-size: 14px;px;"> 222</span>
+          </button>
+        </view>
+        <view>
+          <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+            <span type="jushoucang" color="#888888" size="14px;" class="ui-icon icon-jushoucang" style="color: #888888;font-size: 14px;px;"> 111</span>
+          </button>
+        </view>
+      </view>
+    </view>
+    <!-- 加载更多 -->
+    <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
+    </view>
+    <ui-divider wx:if="{{isHideLoadMore}}" padding="20" _pid="{{_pid}}">我是有底线的</ui-divider>
+  </view>
+</view>

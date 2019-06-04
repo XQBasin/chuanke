@@ -1,0 +1,130 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+page {
+  background: #fff;
+}
+.head {
+  padding: 20rpx 40rpx 100rpx;
+  background: #007BFF;
+  color: #fff;
+}
+.head .top {
+  display: flex;
+  justify-content: space-between;
+}
+.head .top .left .name {
+  font-size: 42rpx;
+}
+.head .top .left .sign {
+  font-size: 24rpx;
+}
+.head .top .right image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+}
+.head .bottom {
+  width: 100%;
+  display: flex;
+  margin-top: 40rpx;
+}
+.head .bottom .block {
+  font-size: 24rpx;
+  width: 25%;
+  box-sizing: border-box;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+.head .bottom .block view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.head .bottom .none {
+  border: none;
+}
+.warp {
+  border-radius: 20rpx 20rpx 0 0;
+  background: #fff;
+  width: 100%;
+  position: relative;
+  top: -70rpx;
+  padding: 20rpx 40rpx 0;
+}
+.tab-panel-item {
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  box-shadow: 0 3px 6px 0 #f0f0f0;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+.tab-panel-item .item_list {
+  width: 90%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.tab-panel-item .item_list:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 300%;
+  height: 300%;
+  border: 0 #ECECEC solid;
+  box-sizing: border-box;
+  transform-origin: 0 0;
+  transform: scale(0.33333333);
+  pointer-events: none;
+  z-index: 0;
+  border-bottom-width: 1px;
+}
+.tab-panel-item .item_list .item_left {
+  width: 12%;
+  display: flex;
+  align-items: center;
+  height: 21px;
+}
+.tab-panel-item .item_list .item_left image {
+  width: 21px;
+  height: 21px;
+}
+.tab-panel-item .item_list .item_center {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  height: 21px;
+  text-align: left;
+}
+.tab-panel-item .item_list .item_right {
+  width: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 21px;
+}

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "ui-nav-bar": "../../packages/touchui-wx-components/ui-nav-bar/dist/index",
+    "ui-popup": "../../packages/touchui-wx-components/ui-popup/dist/index"
+  },
+  "navigationBarTitleText": "资料详情",
+  "navigationBarTextStyle": "black",
+  "onReachBottomDistance": 250
+}

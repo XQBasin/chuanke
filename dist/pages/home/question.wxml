@@ -1,0 +1,233 @@
+<view>
+  <!-- 自定义导航栏 -->
+  <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}" _pid="{{_pid}}">
+    <view class="nav_bar ui-row" style="height:{{DEFAULT_HEADER_HEIGHT}}px;">
+      <view class="nav-bar-col ui-col ui-col-align-left align-left valign-middle" bindtap="navigateBack" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-left valign-middle">
+          <view class="containertitle">
+            <view class="dingwei">
+              <span type="zuojiantou" color="#333333" size="20px;" class="ui-icon icon-zuojiantou" style="color: #333333;font-size: 20px;px;"></span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col valign-middle" style="">
+        <view class="ui-col-content valign-middle">
+          <view class="nav-bar-title">消息评论</view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-right valign-middle">
+        </view>
+      </view>
+    </view>
+  </ui-nav-bar>
+  <view style="height:{{NAV_HEIGHT}}px"></view>
+  <!-- 内容 -->
+  <wxs module="dateUtil" src="../../static/utils/util.wxs"></wxs>
+  <view class="sj_tab_panel_item">
+    <view class="sj_flex_wrp">
+      <view class="sj_bc_green">
+        <image src="{{social.userInfo.avatar}}" />
+      </view>
+      <view class="sj_bc_red">
+        <view class="sj_title">
+          <view>{{social.userInfo.name}}</view>
+          <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
+        </view>
+        <view class="sj_description">
+          <view>{{dateUtil.formatTime(social.timestamp, 'M/D h:m:s')}}</view>
+          <view>128粉丝</view>
+        </view>
+      </view>
+    </view>
+    <view class="sj_flex_des">
+      {{social.content}}
+    </view>
+    <!-- 作品展示 -->
+    <view wx:if="{{social.production[0]}}" class="weui-cell__bd">
+      <view class="weui-uploader">
+        <view class="weui-uploader__bd">
+          <view class="weui-uploader__files" id="uploaderFiles">
+            <block wx:for="{{social.production}}" wx:key="*this">
+              <view class="weui-uploader__file" data-urls="{{social.production}}" bindtap="previewImage" id="{{item}}">
+                <image class="weui-uploader__img" style="border-radius:5px; width: 200px;" src="{{item}}" mode="widthFix" />
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 被转发消息 -->
+    <view class="sj_flex_zfdes" wx:if="{{social.spsocial}}">
+      <view class="sj_flex_wrp">
+        <view class="sj_bc_green">
+          <image src="{{social.spsocial.userInfo.avatar}}" />
+        </view>
+        <view class="sj_bc_red">
+          <view class="sj_title">
+            <view>{{social.spsocial.userInfo.name}}</view>
+            <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
+          </view>
+          <view class="sj_description">
+            <view>{{dateUtil.formatTime(social.spsocial.timestamp, 'M/D h:m:s')}}</view>
+            <view>128粉丝</view>
+          </view>
+        </view>
+      </view>
+      <view class="sj_flex_des">
+        {{social.spsocial.content}}
+      </view>
+      <!-- 作品展示 -->
+      <view wx:if="{{social.spsocial.production[0]}}" class="weui-cell__bd">
+        <view class="weui-uploader">
+          <view class="weui-uploader__bd">
+            <view class="weui-uploader__files" id="uploaderFiles">
+              <block wx:for="{{social.spsocial.production}}" wx:key="*this">
+                <view class="weui-uploader__file" data-urls="{{social.spsocial.production}}" bindtap="previewImage" id="{{item}}">
+                  <image class="weui-uploader__img" style="border-radius:5px; width: 200px;" src="{{item}}" mode="widthFix" />
+                </view>
+              </block>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="comments">
+    <!-- 导航占位 -->
+    <view style="height: 66px;" wx:if="{{fixedHid == false}}"></view>
+    <view wx:else=""></view>
+    <view class="{{fixedNav}}">
+      <ui-tabs index="{{index}}" ink-bar="true" catchchange="handleChange" active-tab-style="{{activeTabStyle}}" _pid="{{_pid}}">
+        <ui-tab _pid="{{_pid}}">回答（{{comtotalNum}}）</ui-tab>
+        <ui-tab _pid="{{_pid}}">点赞（{{social.likenum}}）</ui-tab>
+      </ui-tabs>
+    </view>
+    <view id="tabitems">
+      <!-- 评论列表 -->
+      <view wx:if="{{ index === 0 }}">
+        <view wx:for="{{ comfilm }}" wx:key="com" wx:for-item="com" height="80" border-bottom>
+          <view class="pl_item">
+            <view class="pl_flex_wrp">
+              <view class="pl_left">
+                <image src="{{com.userInfo.avatar}}" />
+              </view>
+              <view class="pl_right">
+                <view class="pl_title">{{com.content}}</view>
+                <view class="pl_description">
+                  <view class="pl_des_left">{{com.userInfo.username}}</view>
+                  <view class="pl_des_center">{{dateUtil.formatTime(com.timestamp, 'M/D h:m:s')}}</view>
+                  <view wx:if="{{ com.reply }}" class="pl_des_right" data-plshow="{{true}}" data-parentid="{{com.id}}" data-level="1" data-touser="@ {{com.userInfo.username}}" bindtap="openPLPopup">
+                    回复 <span type="huifucopy" color="#FFD100" size="12px;" class="ui-icon icon-huifucopy" style="color: #FFD100;font-size: 12px;px;"></span>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view wx:if="{{ com.child }}">
+              <view style="background-color:#F4F4F4;border-radius:10px;font-size:12px;margin-left:10%;">
+                <view class="pl_flex_wrp_child" wx:for="{{ com.child }}" wx:key="comchild" wx:for-item="comchild">
+                  <view class="pl_left">
+                    <image src="{{comchild.userInfo.avatar}}" />
+                  </view>
+                  <view class="pl_right">
+                    <view class="pl_title">{{comchild.content}}</view>
+                    <view class="pl_description">
+                      <view class="pl_des_left">{{comchild.userInfo.username}}</view>
+                      <view class="pl_des_center">{{dateUtil.formatTime(comchild.timestamp, 'M/D h:m:s')}}</view>
+                      <view wx:if="{{ comchild.reply }}" class="pl_des_right" data-plshow="{{true}}" data-parentid="{{com.id}}" data-level="2" data-touser="@ {{comchild.userInfo.username}}" bindtap="openPLPopup">
+                        回复 <span type="huifucopy" color="#FFD100" size="12px;" class="ui-icon icon-huifucopy" style="color: #FFD100;font-size: 12px;px;"></span>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 加载更多 -->
+        <view class="weui-loadmore" hidden="{{isHideComLoadMore}}">
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
+        </view>
+        <ui-divider wx:if="{{isHideComLoadMore}}" padding="20" _pid="{{_pid}}">没有更多评论了</ui-divider>
+      </view>
+      <!-- 点赞列表 -->
+      <view wx:elif="{{ index === 1 }}">
+        <view wx:for="{{ lovefilm }}" wx:key="love" wx:for-item="love" height="80" border-bottom>
+          <view class="pl_item">
+            <view class="pl_flex_wrp">
+              <view class="pl_left">
+                <image src="{{love.userInfo.avatar}}" />
+              </view>
+              <view class="pl_right">
+                <view class="pl_title">{{love.userInfo.username}}</view>
+                <view class="pl_description">
+                  <view style="width:100%; color: #848484;">{{dateUtil.formatTime(love.timestamp, 'M/D h:m:s')}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 页面公共广告 -->
+  <view style="margin:10px;">
+    <ad unit-id="adunit-32c386620de8cc6b"></ad>
+  </view>
+  <!-- 公众号关注引导 -->
+  <official-account></official-account>
+  <!-- 底部授权信息 -->
+  <view class="footer">
+    <view class="page__bd page__bd_spacing">
+      <view class="weui-footer">
+        <view class="weui-footer__links">
+          <button open-type="contact" bindcontact="handleContact" class="weui-footer_link">方寸奶爸</button>
+        </view>
+        <view class="weui-footer__text">Copyright © 2008-2019 fcdaddy.com</view>
+      </view>
+    </view>
+  </view>
+  <!-- 导航占位 -->
+  <view style="height:52px;"></view>
+  <!-- 评论组件 -->
+  <ui-fixed-view bottom="0" left="0" right="0" _pid="{{_pid}}">
+    <view class="pl_bar">
+      <view>
+        <button class="pl-btn" data-plshow="{{true}}" data-parentid="0" data-level="0" data-touser="说点什么吧~" data-bindtap="openPLPopup" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+          <span type="wodefankui" color="#888888" size="14px;" class="ui-icon icon-wodefankui" style="color: #888888;font-size: 14px;px;"> 回答</span>
+        </button>
+      </view>
+      <view>
+        <button class="pl-btn" data-bindtap="giveLike" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+          <span type="jushoucang" color="#888888" size="14px;" class="ui-icon icon-jushoucang" style="color: #888888;font-size: 14px;px;"> 点赞</span>
+        </button>
+      </view>
+    </view>
+  </ui-fixed-view>
+  <!-- 评论POP -->
+  <ui-popup show="{{plshow}}" position="bottom" _pid="{{_pid}}">
+    <form bindsubmit="plFormSubmit">
+      <view class="pocket_input">
+        <input name="parentid" value="{{cpid}}" hidden></input>
+        <input class="input_style" name="content" value="{{content}}" placeholder="{{place}}" placeholder-class="input-placeholder" focus="{{plfocus}}" cursor-spacing="16"></input>
+        <view class="groupsources">
+          <button form-type="submit" class="button-style-huodong">评论</button>
+        </view>
+      </view>
+    </form>
+  </ui-popup>
+  <!-- 转发POP -->
+  <ui-popup show="{{zfshow}}" position="bottom" _pid="{{_pid}}">
+    <form bindsubmit="zfFormSubmit">
+      <view class="pocket_input">
+        <input name="socialid" value="{{social.id}}" hidden></input>
+        <input class="input_style" name="content" value="{{content}}" placeholder="{{zface}}" placeholder-class="input-placeholder" focus="{{zffocus}}" cursor-spacing="16"></input>
+        <view class="groupsources">
+          <button form-type="submit" class="button-style-huodong">转发</button>
+        </view>
+      </view>
+    </form>
+  </ui-popup>
+</view>

@@ -1,0 +1,159 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+.warp {
+  height: 100rpx;
+  background: #fff;
+  padding: 22rpx 0;
+}
+.top {
+  height: 56rpx;
+}
+.top .search {
+  width: 88%;
+  height: 56rpx;
+  border-radius: 60rpx;
+  padding: 2px 10px;
+  position: absolute;
+  /* 初始化为相对定位 滑动时改为绝对定位fixed*/
+  left: 10px;
+  right: 0;
+  /* 决定了搜索框置顶 */
+  z-index: 2;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+}
+.top .search input {
+  width: 100%;
+  padding: 2rpx 5rpx;
+  margin: 2rpx;
+  font-size: 26rpx;
+}
+.top .text {
+  height: 56rpx;
+  position: absolute;
+  /* 初始化为相对定位 滑动时改为绝对定位fixed*/
+  right: 10px;
+  /* 决定了搜索框置顶 */
+  z-index: 2;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+}
+.top_pop {
+  background: #fff;
+  border-radius: 0 0 20rpx 20rpx;
+  padding: 0 20rpx 20rpx;
+}
+.popupHead {
+  padding: 20rpx 20rpx 0 20rpx;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  background: #fff;
+}
+.popupHead .title {
+  color: #222222;
+  font-size: 36rpx;
+}
+.aw_tab_panel_item {
+  background: #FFFFFF;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 10px;
+  box-shadow: 0 3px 6px 0 #f0f0f0;
+}
+.aw_tab_panel_item .aw_flex_wrp {
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  padding: 5px 0px;
+}
+.aw_tab_panel_item .aw_bc_green {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aw_tab_panel_item .aw_bc_green image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.aw_tab_panel_item .aw_bc_red {
+  height: 45px;
+  width: 85%;
+}
+.aw_tab_panel_item .aw_title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  color: #007BFF;
+  font-size: 14px;
+}
+.aw_tab_panel_item .aw_title view {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.aw_tab_panel_item .aw_description {
+  display: flex;
+  margin-top: 5px;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  color: #848484;
+  font-size: 12px;
+}
+.aw_tab_panel_item .aw_description view {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.aw_tab_panel_item .aw_description_btn {
+  display: flex;
+  margin-top: 5px;
+  flex-direction: row;
+  justify-content: flex-end;
+  color: #848484;
+  font-size: 12px;
+}
+.aw_tab_panel_item .aw_description_btn .fenxiang-btn {
+  border: none;
+  background-color: #FFFFFF;
+}
+.aw_tab_panel_item .aw_description_btn .fenxiang-btn::after {
+  border: none;
+}
+.aw_tab_panel_item .aw_flex_des {
+  margin: 5px;
+}
+.aw_tab_panel_item .aw_flex_zfdes {
+  font-size: 13px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #F4F4F4;
+}

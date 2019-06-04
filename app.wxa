@@ -25,10 +25,9 @@ export default {
     ],
     window: {
       backgroundTextStyle: 'dark',
-      backgroundColor: '#efefef',
+      backgroundColor: '#F4F4F4',
       navigationBarBackgroundColor: '#ffffff',
-      navigationBarTitleText: 'TouchUI',
-      navigationStyle: 'custom'
+      navigationBarTitleText: '传客',
     },
     tabBar: {
       list: [{
@@ -59,7 +58,7 @@ export default {
       request: 10000
     },
     theme: {
-      'theme-color': '#39f'
+      'theme-color': '#007BFF'
     }
   },
   globalData: {},
@@ -74,7 +73,7 @@ export default {
 <style lang="less">
 @import './static/styles/index.less';
 @import './static/styles/weui.wxss';
-
+@import './static/styles/animate.wxss';
 page {
   font-size: 28rpx;
   line-height: 1.6;

@@ -1,0 +1,198 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+.warp {
+  height: 100rpx;
+  background: #fff;
+  padding: 22rpx 0;
+}
+.top {
+  height: 56rpx;
+}
+.top .search {
+  width: 88%;
+  height: 56rpx;
+  border-radius: 60rpx;
+  padding: 2px 10px;
+  position: absolute;
+  /* 初始化为相对定位 滑动时改为绝对定位fixed*/
+  left: 10px;
+  right: 0;
+  /* 决定了搜索框置顶 */
+  z-index: 2;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+}
+.top .search input {
+  width: 100%;
+  padding: 2rpx 5rpx;
+  margin: 2rpx;
+  font-size: 26rpx;
+}
+.top .text {
+  height: 56rpx;
+  position: absolute;
+  /* 初始化为相对定位 滑动时改为绝对定位fixed*/
+  right: 10px;
+  /* 决定了搜索框置顶 */
+  z-index: 2;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+}
+.top_pop {
+  background: #fff;
+  border-radius: 0 0 20rpx 20rpx;
+  padding: 0 20rpx 20rpx;
+}
+.popupHead {
+  padding: 20rpx 20rpx 0 20rpx;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  background: #fff;
+}
+.popupHead .title {
+  color: #222222;
+  font-size: 36rpx;
+}
+.content .tab-panel-item {
+  background: #FFFFFF;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 10px;
+  box-shadow: 0 3px 6px 0 #f0f0f0;
+}
+.content .flex-acwrp {
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  padding: 5px 0px;
+}
+.content .ac_green {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.content .ac_green image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.content .ac_red {
+  height: 45px;
+  width: 85%;
+}
+.content .ac_title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  color: #007BFF;
+  font-size: 14px;
+}
+.content .ac_title view {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.content .ac_description {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #848484;
+  font-size: 12px;
+}
+.content .ac_description view {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.content .flex-wrp {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  padding: 5px 0px;
+  position: relative;
+}
+.content .fx_green {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.content .fx_green image {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+}
+.content .fx_title {
+  background-color: #FFFFFF;
+  position: absolute;
+  /* 初始化为相对定位 滑动时改为绝对定位fixed*/
+  top: 120px;
+  left: 0;
+  right: 0;
+  /* 决定了搜索框置顶 */
+  opacity: 0.8;
+  /* 搜索框半透明效果 */
+  height: 35px;
+  padding: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.content .fx_red {
+  width: 100%;
+}
+.content .fx_red view {
+  color: #888888;
+  font-size: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.content .fx_description_btn {
+  display: flex;
+  margin-top: 5px;
+  flex-direction: row;
+  color: #848484;
+  font-size: 12px;
+}
+.content .fx_description_btn .info {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+.content .fx_description_btn .info .show text {
+  margin: 0 40rpx 0 10rpx;
+  color: #c7c7c7;
+  font-size: 24rpx;
+}

@@ -1,0 +1,176 @@
+<view>
+  <!-- 顶部选择区 -->
+  <view class="head">
+    <view class="block" wx:for="{{headTitle}}" wx:key="headKey" data-sid="{{index}}" bindtap="check">
+      <view class="text {{checkedId==index? 'active':''}}">{{item}}</view>
+      <view class="{{checkedId==index? 'line':''}}"></view>
+    </view>
+  </view>
+  <!-- 分享 -->
+  <view class="content" wx:if="{{checkedId==0}}">
+    <view class="tab-panel-item" wx:key="activitykey" wx:for="{{list}}">
+      <view class="flex-acwrp">
+        <view class="ac_green">
+          <image src="{{item.img}}" />
+        </view>
+        <view class="ac_red">
+          <view class="ac_title">
+            <view>111</view>
+            <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
+          </view>
+          <view class="ac_description">
+            <view>发布时间：1111</view>
+            <view>123粉丝</view>
+          </view>
+        </view>
+      </view>
+      <view class="flex-wrp" data-id="{{activity.id}}" bindtap="getActInfo">
+        <view class="fx_green">
+          <image src="{{item.img}}" mode="aspectFill" />
+        </view>
+        <view class="fx_title">
+          {{item.title}}
+        </view>
+      </view>
+      <view class="fx_description_btn">
+        <view class="info">
+          <view class="show">
+            <span type="liulan" color="#c7c7c7" size="30rpx;" class="ui-icon icon-liulan" style="color: #c7c7c7;font-size: 30rpx;px;"></span>
+            <text>233</text>
+            <span type="jushoucang" color="#c7c7c7" size="30rpx;" class="ui-icon icon-jushoucang" style="color: #c7c7c7;font-size: 30rpx;px;"></span>
+            <text>3666</text>
+            <span type="xiazai" color="#c7c7c7" size="30rpx;" class="ui-icon icon-xiazai" style="color: #c7c7c7;font-size: 30rpx;px;"></span>
+            <text>3666</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 加载更多 -->
+    <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
+    </view>
+    <ui-divider wx:if="{{isHideLoadMore}}" padding="20" _pid="{{_pid}}">我是有底线的</ui-divider>
+  </view>
+  <!-- 经验 -->
+  <view class="content" wx:if="{{checkedId==1}}">
+    <view class="aw_tab_panel_item" wx:key="socialkey">
+      <view class="aw_flex_wrp">
+        <view class="aw_bc_green">
+          <image src="../../static/image/home/create.png" />
+        </view>
+        <view class="aw_bc_red">
+          <view class="aw_title">
+            <view>111</view>
+            <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
+          </view>
+          <view class="aw_description">
+            <view>{{dateUtil.formatTime(social.timestamp, 'M/D h:m:s')}}2018/9/15</view>
+            <view>128粉丝</view>
+          </view>
+        </view>
+      </view>
+      <view class="aw_flex_des" data-id="{{social.id}}" bindtap="getSocInfo">
+        111222
+      </view>
+      <!-- 消息菜单 -->
+      <view class="aw_description_btn">
+        <view>
+          <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+            <span type="liulan" color="#888888" size="14px;" class="ui-icon icon-liulan" style="color: #888888;font-size: 14px;px;"> 222</span>
+          </button>
+        </view>
+        <view>
+          <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+            <span type="jushoucang" color="#888888" size="14px;" class="ui-icon icon-jushoucang" style="color: #888888;font-size: 14px;px;"> 111</span>
+          </button>
+        </view>
+      </view>
+    </view>
+    <!-- 加载更多 -->
+    <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
+    </view>
+    <ui-divider wx:if="{{isHideLoadMore}}" padding="20" _pid="{{_pid}}">我是有底线的</ui-divider>
+  </view>
+  <!-- 爱问知识人 -->
+  <view class="content" wx:if="{{checkedId==2}}">
+    <view class="aw_tab_panel_item" wx:key="socialkey">
+      <view class="aw_flex_wrp">
+        <view class="aw_bc_green">
+          <image src="../../static/image/home/create.png" />
+        </view>
+        <view class="aw_bc_red">
+          <view class="aw_title">
+            <view>111</view>
+            <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
+          </view>
+          <view class="aw_description">
+            <view>{{dateUtil.formatTime(social.timestamp, 'M/D h:m:s')}}2018/9/15</view>
+            <view>128粉丝</view>
+          </view>
+        </view>
+      </view>
+      <view class="aw_flex_des" data-id="{{social.id}}" bindtap="getSocInfo">
+        111222
+      </view>
+      <!-- 作品展示 -->
+      <view wx:if="{{social.production[0]}}" class="weui-cell__bd" data-id="{{social.id}}" bindtap="getSocInfo">
+        <view class="weui-uploader">
+          <view class="weui-uploader__bd">
+            <view class="weui-uploader__files" id="uploaderFiles">
+              <block wx:for="{{social.production}}" wx:key="*this">
+                <view wx:if="{{social.production.length > 1}}" class="weui-uploader__file" data-urls="{{social.production}}" bindtap="previewImage" id="{{item}}">
+                  <image class="weui-uploader__img" style="border-radius:5px; width: 80px; height: 80px;" src="{{item}}" mode="widthFix" />
+                </view>
+                <view wx:else="" class="weui-uploader__file" data-urls="{{social.production}}" bindtap="previewImage" id="{{item}}">
+                  <image class="weui-uploader__img" style="border-radius:5px; width: 200px;" src="{{item}}" mode="widthFix" />
+                </view>
+              </block>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 消息菜单 -->
+      <view class="aw_description_btn">
+        <view>
+          <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+            <span type="wodefankui" color="#888888" size="14px;" class="ui-icon icon-wodefankui" style="color: #888888;font-size: 14px;px;"> 222</span>
+          </button>
+        </view>
+        <view>
+          <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+            <span type="jushoucang" color="#888888" size="14px;" class="ui-icon icon-jushoucang" style="color: #888888;font-size: 14px;px;"> 111</span>
+          </button>
+        </view>
+      </view>
+    </view>
+    <!-- 加载更多 -->
+    <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
+    </view>
+    <ui-divider wx:if="{{isHideLoadMore}}" padding="20" _pid="{{_pid}}">我是有底线的</ui-divider>
+  </view>
+  <!-- 发布按钮 -->
+  <view class="fixedanimate">
+    <view class="{{animatebtngroup}}" hidden="{{!show}}">
+      <view class="animatebtn">
+        <span type="fenxiang" color="#fff" size="20px;" class="ui-icon icon-fenxiang" style="color: #fff;font-size: 20px;px;"></span>
+      </view>
+      <view class="animatebtn">
+        <span type="wendang" color="#fff" size="20px;" class="ui-icon icon-wendang" style="color: #fff;font-size: 20px;px;"></span>
+      </view>
+    </view>
+    <view class="{{animatebtngroup}}" hidden="{{!show}}">
+      <view class="animatebtn">
+        <span type="dengpao" color="#fff" size="20px;" class="ui-icon icon-dengpao" style="color: #fff;font-size: 20px;px;"></span>
+      </view>
+    </view>
+    <view class="animatebtn" bindtap="openAnimate">
+      <span wx:if="{{!show}}" type="tianjia" color="#fff" size="20px;" class="ui-icon icon-tianjia" style="color: #fff;font-size: 20px;px;"></span>
+      <span wx:else="" type="guanbi" color="#fff" size="20px;" class="ui-icon icon-guanbi" style="color: #fff;font-size: 20px;px;"></span>
+    </view>
+  </view>
+</view>

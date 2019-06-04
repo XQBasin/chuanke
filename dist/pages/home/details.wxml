@@ -1,0 +1,131 @@
+<view>
+  <!-- 自定义导航栏 -->
+  <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}" _pid="{{_pid}}">
+    <view class="nav_bar ui-row" style="height:{{DEFAULT_HEADER_HEIGHT}}px;">
+      <view class="nav-bar-col ui-col ui-col-align-left align-left valign-middle" bindtap="navigateBack" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-left valign-middle">
+          <view class="containertitle">
+            <view class="dingwei">
+              <span type="zuojiantou" color="#333333" size="20px;" class="ui-icon icon-zuojiantou" style="color: #333333;font-size: 20px;px;"></span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col valign-middle" style="">
+        <view class="ui-col-content valign-middle">
+          <view class="nav-bar-title"></view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-right valign-middle">
+        </view>
+      </view>
+    </view>
+  </ui-nav-bar>
+  <view style="height:{{NAV_HEIGHT}}"></view>
+  <!-- 背景 -->
+  <view class="image">
+    <image src="../../static/image/home/create.png" mode="aspectFill" />
+  </view>
+  <!-- 详细内容 -->
+  <view class="content">
+    <view class="user-info">
+      <image src="../../static/image/home/create.png" mode="aspectFill" />
+      <text>I miss you</text>
+    </view>
+    <view class="title">php中文网vip特权会员学习指南</view>
+    <view class="price">免费</view>
+    <view class="info">
+      <view class="show">
+        <span type="liulan" color="#999999" size="30rpx;" class="ui-icon icon-liulan" style="color: #999999;font-size: 30rpx;px;"></span>
+        <text>233</text>
+        <span type="jushoucang" color="{{likeStatus==true?'red':'#999999'}}" size="30rpx;" bindtap="bindLike" class="ui-icon icon-jushoucang" style="color: {{likeStatus==true?'red':'#999999'}};font-size: 30rpx;px;"></span>
+        <text>3666</text>
+      </view>
+      <view class="time">
+        刚刚
+      </view>
+    </view>
+    <!-- 资料目录 -->
+    <view class="catalog">
+
+    </view>
+    <!-- 其他作品 -->
+    <view class="other">
+      <view class="name">其它作品</view>
+      <scroll-view scroll-x style="width: 100%;white-space: nowrap;">
+        <view class="item" wx:for="{{list}}" wx:key="listKey">
+          <image src="{{item.img}}" mode="aspectFill" lazy-load="true" />
+          <view class="text">{{item.title}}</view>
+        </view>
+      </scroll-view>
+    </view>
+    <!-- 评论 -->
+    <view class="comment">
+      <view class="name">12条评论</view>
+      <view height="80" border-bottom>
+        <view class="pl_item">
+          <view class="pl_flex_wrp">
+            <view class="pl_left">
+              <image src="../../static/image/home/create.png" />
+            </view>
+            <view class="pl_right">
+              <view class="pl_title">111</view>
+              <view class="pl_description">
+                <view class="pl_des_left">111</view>
+                <view class="pl_des_center">{{dateUtil.formatTime(com.timestamp, 'M/D h:m:s')}}2018/9/15</view>
+                <view class="pl_des_right" data-plshow="{{true}}" data-parentid="{{com.id}}" data-level="1" data-touser="@ {{com.userInfo.username}}" bindtap="openPLPopup">
+                  回复 <span type="huifucopy" color="#007BFF" size="12px;" class="ui-icon icon-huifucopy" style="color: #007BFF;font-size: 12px;px;"></span>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view wx:if="{{ com.child }}">
+            <view style="background-color:#F4F4F4;border-radius:10px;font-size:12px;margin-left:10%;">
+              <view class="pl_flex_wrp_child" wx:for="{{ com.child }}" wx:key="comchild" wx:for-item="comchild">
+                <view class="pl_left">
+                  <image src="{{comchild.userInfo.avatar}}" />
+                </view>
+                <view class="pl_right">
+                  <view class="pl_title">{{comchild.content}}</view>
+                  <view class="pl_description">
+                    <view class="pl_des_left">{{comchild.userInfo.username}}</view>
+                    <view class="pl_des_center">{{dateUtil.formatTime(comchild.timestamp, 'M/D h:m:s')}}</view>
+                    <view wx:if="{{ comchild.reply }}" class="pl_des_right" data-plshow="{{true}}" data-parentid="{{com.id}}" data-level="2" data-touser="@ {{comchild.userInfo.username}}" bindtap="openPLPopup">
+                      回复 <span type="huifucopy" color="#007BFF" size="12px;" class="ui-icon icon-huifucopy" style="color: #007BFF;font-size: 12px;px;"></span>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="more">查看更多评论</view>
+    </view>
+  </view>
+  <!-- 底部 -->
+  <view class="bottom">
+    <view class="search" data-touser="趣味想投的评论~" data-plshow="{{true}}" bindtap="openPL">
+      趣味想投的评论
+    </view>
+    <view class="circle">
+      <span type="jushoucang" color="#222222" size="52rpx;" class="ui-icon icon-jushoucang" style="color: #222222;font-size: 52rpx;px;"></span>
+    </view>
+    <view class="circle">
+      <span type="xiazai" color="#222222" size="52rpx;" class="ui-icon icon-xiazai" style="color: #222222;font-size: 52rpx;px;"></span>
+    </view>
+  </view>
+  <!-- 评论POP -->
+  <ui-popup show="{{plshow}}" position="bottom" background="none" _pid="{{_pid}}">
+    <form bindsubmit="plFormSubmit">
+      <view class="pocket_input">
+        <input name="parentid" value="{{cpid}}" hidden></input>
+        <input class="input_style" name="content" value="{{content}}" placeholder="{{place}}" placeholder-class="input-placeholder" focus="{{plfocus}}" cursor-spacing="16"></input>
+        <view class="groupsources">
+          <button form-type="submit" class="button-style-huodong">评论</button>
+        </view>
+      </view>
+    </form>
+  </ui-popup>
+</view>

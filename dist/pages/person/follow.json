@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "ui-nav-bar": "../../packages/touchui-wx-components/ui-nav-bar/dist/index"
+  },
+  "navigationBarTitleText": "您的关注",
+  "navigationBarTextStyle": "black"
+}

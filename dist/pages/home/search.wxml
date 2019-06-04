@@ -1,0 +1,44 @@
+<view>
+  <!-- 自定义导航栏 -->
+  <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}" _pid="{{_pid}}">
+    <view class="nav_bar ui-row" style="height:{{DEFAULT_HEADER_HEIGHT}}px;">
+      <view class="nav-bar-col ui-col ui-col-align-left align-left valign-middle" bindtap="navigateBack" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-left valign-middle">
+          <view class="containertitle">
+            <view class="dingwei">
+              <span type="zuojiantou" color="#333333" size="20px;" class="ui-icon icon-zuojiantou" style="color: #333333;font-size: 20px;px;"></span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col valign-middle" style="">
+        <view class="ui-col-content valign-middle">
+          <view class="nav-bar-title">搜索</view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-right valign-middle">
+        </view>
+      </view>
+    </view>
+  </ui-nav-bar>
+  <view style="height:{{NAV_HEIGHT}}"></view>
+  <!-- 搜索栏 -->
+  <view class="search">
+    <span type="sousuo" color="#848484" size="13px;" class="ui-icon icon-sousuo" style="color: #848484;font-size: 13px;px;"></span>
+    <input type="text" placeholder="搜索资料" placeholder-style="color:#848484;" confirm-type="search" bindconfirm="search"></input>
+  </view>
+  <!-- 搜索历史 -->
+  <view class="history">
+    <view class="title">搜索历史</view>
+    <view class="tab-panel-item">
+      <view class="item_list">
+        <view class="item_left">
+          <span type="shijian" color="#c7c7c7" size="14px;" class="ui-icon icon-shijian" style="color: #c7c7c7;font-size: 14px;px;"></span>
+        </view>
+        <view class="item_center">作品</view>
+        <view class="item_right"><span type="clear" color="#c7c7c7" size="12px;" class="ui-icon icon-clear" style="color: #c7c7c7;font-size: 12px;px;"></span></view>
+      </view>
+    </view>
+  </view>
+</view>

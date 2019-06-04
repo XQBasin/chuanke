@@ -1,0 +1,96 @@
+<view>
+  <!-- 自定义导航栏 -->
+  <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}" _pid="{{_pid}}">
+    <view class="nav_bar ui-row" style="height:{{DEFAULT_HEADER_HEIGHT}}px;">
+      <view class="nav-bar-col ui-col ui-col-align-left align-left valign-middle" bindtap="navigateBack" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-left valign-middle">
+          <view class="containertitle">
+            <view class="dingwei">
+              <span type="zuojiantou" color="#333333" size="20px;" class="ui-icon icon-zuojiantou" style="color: #333333;font-size: 20px;px;"></span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col valign-middle" style="">
+        <view class="ui-col-content valign-middle">
+          <view class="nav-bar-title">分享</view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-right valign-middle">
+        </view>
+      </view>
+    </view>
+  </ui-nav-bar>
+  <view style="height:{{NAV_HEIGHT}}"></view>
+  <!-- 搜索栏 -->
+  <view class="warp">
+    <view class="top">
+      <view class="search">
+        <span type="sousuo" color="#666666" size="26rpx;" class="ui-icon icon-sousuo" style="color: #666666;font-size: 26rpx;px;"></span>
+        <input type="text" placeholder="iPhone xs" placeholder-style="color:#666666;" confirm-type="search" bindtap="toSearch"></input>
+      </view>
+      <view class="text">
+        <span type="xiala" color="#222222" size="40rpx;" class="more ui-icon icon-xiala" data-show="{{ true }}" bindtap="openPopup" style="color: #222222;font-size: 40rpx;px;"></span>
+      </view>
+    </view>
+  </view>
+  <!-- 全部分类 -->
+  <ui-popup show="{{ show }}" position="top" top="{{ NAV_HEIGHT }}" mask-style="{{ maskStyle}}" background="none" _pid="{{_pid}}">
+    <view class="popupHead">
+      <view class="title">全部分类</view>
+      <view>
+        <span type="shanchu" color="#222222" size="40rpx;" data-show="{{ false }}" bindtap="openPopup" class="ui-icon icon-shanchu" style="color: #222222;font-size: 40rpx;px;"></span>
+      </view>
+    </view>
+    <view class="top_pop">
+      <ui-tags data="{{list00}}" bindchange="singleTap" col-number="3" fixed-width _pid="{{_pid}}"></ui-tags>
+    </view>
+  </ui-popup>
+  <!-- 分享 -->
+  <view class="content">
+    <view class="tab-panel-item" wx:key="activitykey" wx:for="{{list}}">
+      <view class="flex-acwrp">
+        <view class="ac_green">
+          <image src="{{item.img}}" />
+        </view>
+        <view class="ac_red">
+          <view class="ac_title">
+            <view>111</view>
+            <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
+          </view>
+          <view class="ac_description">
+            <view>发布时间：1111</view>
+            <view>123粉丝</view>
+          </view>
+        </view>
+      </view>
+      <view class="flex-wrp" data-id="{{activity.id}}" bindtap="getActInfo">
+        <view class="fx_green">
+          <image src="{{item.img}}" mode="aspectFill" />
+        </view>
+        <view class="fx_title">
+          {{item.title}}
+        </view>
+      </view>
+      <view class="fx_description_btn">
+        <view class="info">
+          <view class="show">
+            <span type="liulan" color="#c7c7c7" size="30rpx;" class="ui-icon icon-liulan" style="color: #c7c7c7;font-size: 30rpx;px;"></span>
+            <text>233</text>
+            <span type="jushoucang" color="#c7c7c7" size="30rpx;" class="ui-icon icon-jushoucang" style="color: #c7c7c7;font-size: 30rpx;px;"></span>
+            <text>3666</text>
+            <span type="xiazai" color="#c7c7c7" size="30rpx;" class="ui-icon icon-xiazai" style="color: #c7c7c7;font-size: 30rpx;px;"></span>
+            <text>3666</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 加载更多 -->
+    <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
+    </view>
+    <ui-divider wx:if="{{isHideLoadMore}}" padding="20" _pid="{{_pid}}">我是有底线的</ui-divider>
+  </view>
+</view>

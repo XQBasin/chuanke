@@ -1,0 +1,69 @@
+<view>
+  <!-- 自定义导航栏 -->
+  <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}" _pid="{{_pid}}">
+    <view class="nav_bar ui-row" style="height:{{DEFAULT_HEADER_HEIGHT}}px;">
+      <view class="nav-bar-col ui-col ui-col-align-left align-left valign-middle" bindtap="navigateBack" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-left valign-middle">
+          <view class="containertitle">
+            <view class="dingwei">
+              <span type="zuojiantou" color="#333333" size="20px;" class="ui-icon icon-zuojiantou" style="color: #333333;font-size: 20px;px;"></span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col valign-middle" style="">
+        <view class="ui-col-content valign-middle">
+          <view class="nav-bar-title">您关注的人</view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-right valign-middle">
+        </view>
+      </view>
+    </view>
+  </ui-nav-bar>
+  <view style="height:{{NAV_HEIGHT}}"></view>
+  <!-- 内容 -->
+  <view class="main">
+    <view class="warp">
+      <view class="item">
+        <image src="../../static/image/home/create.png" mode="aspectFill" />
+        <view class="name">i miss you</view>
+        <view class="sign">i miss youi miss youi miss youi miss youi miss you</view>
+        <view class="click">
+          <view class="none">
+            <span type="clear" color="red" size="30rpx;" class="ui-icon icon-clear" style="color: red;font-size: 30rpx;px;"></span>
+            <text>取消关注</text>
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <image src="../../static/image/home/create.png" mode="aspectFill" />
+        <view class="name">i miss you</view>
+        <view class="sign">i miss youi miss youi miss youi miss youi miss you</view>
+        <view class="click">
+          <view class="none">
+            <span type="clear" color="red" size="30rpx;" class="ui-icon icon-clear" style="color: red;font-size: 30rpx;px;"></span>
+            <text>取消关注</text>
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <image src="../../static/image/home/create.png" mode="aspectFill" />
+        <view class="name">i miss you</view>
+        <view class="sign">i miss youi miss youi miss youi miss youi miss you</view>
+        <view class="click">
+          <view class="none">
+            <span type="clear" color="red" size="30rpx;" class="ui-icon icon-clear" style="color: red;font-size: 30rpx;px;"></span>
+            <text>取消关注</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 一键关注 -->
+  <view class="follow">
+    一键取消关注
+  </view>
+</view>

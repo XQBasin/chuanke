@@ -1,0 +1,282 @@
+/* 1像素解决方案 */
+/*
+ * 清除1px
+ */
+/*
+ * 清除浮动
+ */
+/*
+ * mobile
+ */
+/*
+ * 1px
+ */
+/*
+ * text
+ */
+/* 垂直居中 */
+/* 水平居中 */
+/* 水平垂直居中 */
+/* 超出部分出省略号 */
+/* 多行文本超出部分省略号 */
+.head {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0rpx 5rpx 10rpx #EFEFEF;
+  z-index: 1;
+  padding: 0 20rpx;
+}
+.head .block {
+  position: relative;
+  margin: 0 20rpx;
+  padding-bottom: 25rpx;
+  display: flex;
+  align-items: center;
+}
+.head .block .text {
+  font-size: 30rpx;
+  color: #999999;
+}
+.head .block .active {
+  font-weight: bold;
+  font-size: 36rpx;
+  color: #222222;
+}
+.head .block .line {
+  width: 100%;
+  height: 7rpx;
+  border-radius: 10rpx 10rpx 0 0;
+  background: #007BFF;
+  position: absolute;
+  bottom: 0;
+}
+.content {
+  margin-top: 100rpx;
+}
+.content .tab-panel-item {
+  background: #FFFFFF;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 10px;
+  box-shadow: 0 3px 6px 0 #f0f0f0;
+}
+.content .flex-acwrp {
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  padding: 5px 0px;
+}
+.content .ac_green {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.content .ac_green image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.content .ac_red {
+  height: 45px;
+  width: 85%;
+}
+.content .ac_title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  color: #007BFF;
+  font-size: 14px;
+}
+.content .ac_title view {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.content .ac_description {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #848484;
+  font-size: 12px;
+}
+.content .ac_description view {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.content .flex-wrp {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  padding: 5px 0px;
+  position: relative;
+}
+.content .fx_green {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.content .fx_green image {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+}
+.content .fx_title {
+  background-color: #FFFFFF;
+  position: absolute;
+  /* 初始化为相对定位 滑动时改为绝对定位fixed*/
+  top: 120px;
+  left: 0;
+  right: 0;
+  /* 决定了搜索框置顶 */
+  opacity: 0.8;
+  /* 搜索框半透明效果 */
+  height: 35px;
+  padding: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.content .fx_red {
+  width: 100%;
+}
+.content .fx_red view {
+  color: #888888;
+  font-size: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.content .fx_description_btn {
+  display: flex;
+  margin-top: 5px;
+  flex-direction: row;
+  color: #848484;
+  font-size: 12px;
+}
+.content .fx_description_btn .info {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+.content .fx_description_btn .info .show text {
+  margin: 0 40rpx 0 10rpx;
+  color: #c7c7c7;
+  font-size: 24rpx;
+}
+.aw_tab_panel_item {
+  background: #FFFFFF;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 10px;
+  box-shadow: 0 3px 6px 0 #f0f0f0;
+}
+.aw_tab_panel_item .aw_flex_wrp {
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  padding: 5px 0px;
+}
+.aw_tab_panel_item .aw_bc_green {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aw_tab_panel_item .aw_bc_green image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.aw_tab_panel_item .aw_bc_red {
+  height: 45px;
+  width: 85%;
+}
+.aw_tab_panel_item .aw_title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  color: #007BFF;
+  font-size: 14px;
+}
+.aw_tab_panel_item .aw_title view {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.aw_tab_panel_item .aw_description {
+  display: flex;
+  margin-top: 5px;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  color: #848484;
+  font-size: 12px;
+}
+.aw_tab_panel_item .aw_description view {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.aw_tab_panel_item .aw_description_btn {
+  display: flex;
+  margin-top: 5px;
+  flex-direction: row;
+  justify-content: flex-end;
+  color: #848484;
+  font-size: 12px;
+}
+.aw_tab_panel_item .aw_description_btn .fenxiang-btn {
+  border: none;
+  background-color: #FFFFFF;
+}
+.aw_tab_panel_item .aw_description_btn .fenxiang-btn::after {
+  border: none;
+}
+.aw_tab_panel_item .aw_flex_des {
+  margin: 5px;
+}
+.aw_tab_panel_item .aw_flex_zfdes {
+  font-size: 13px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #F4F4F4;
+}
+.fixedanimate {
+  position: fixed;
+  right: 20px;
+  bottom: 40px;
+}
+.animatebtngroup {
+  display: flex;
+  flex-direction: column;
+}
+.animatebtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #007BFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+  box-shadow: 0 3px 6px 0 #b7daff;
+}
