@@ -1,0 +1,58 @@
+<view>
+  <!-- 自定义导航栏 -->
+  <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}" _pid="{{_pid}}">
+    <view class="nav_bar ui-row" style="height:{{DEFAULT_HEADER_HEIGHT}}px;">
+      <view class="nav-bar-col ui-col ui-col-align-left align-left valign-middle" bindtap="navigateBack" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-left valign-middle">
+          <view class="containertitle">
+            <view class="dingwei">
+              <span type="zuojiantou" color="#333333" size="20px;" class="ui-icon icon-zuojiantou" style="color: #333333;font-size: 20px;px;"></span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col valign-middle" style="">
+        <view class="ui-col-content valign-middle">
+          <view class="nav-bar-title">认证通知</view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-right valign-middle">
+        </view>
+      </view>
+    </view>
+  </ui-nav-bar>
+  <view style="height:{{NAV_HEIGHT}}"></view>
+  <view class="content">
+    <view class="icon"><span type="tijiao" color="#ffd100" size="100px;" class="ui-icon icon-tijiao" style="color: #ffd100;font-size: 100px;px;"></span></view>
+    <view class="des">认证内容正在审核当中，请耐心等待...</view>
+    <view class="image">
+      <image src="../../static/image/upload/xiaoshudian.png" />
+    </view>
+  </view>
+  <!-- 页面公共广告 -->
+  <view style="margin:10px;">
+    <ad unit-id="adunit-32c386620de8cc6b"></ad>
+  </view>
+  <!-- 公众号关注引导 -->
+  <official-account></official-account>
+  <!-- 底部授权 -->
+  <view class="footer">
+    <view class="page__bd page__bd_spacing">
+      <view class="weui-footer">
+        <view class="weui-footer__links">
+          <button open-type="contact" bindcontact="handleContact" class="weui-footer__link">传客科技</button>
+        </view>
+        <view class="weui-footer__text">Copyright © 2008-2019 fcdaddy.com</view>
+      </view>
+    </view>
+  </view>
+  <!-- 底部导航 -->
+  <ui-fixed-view bottom="0" left="0" right="0" _pid="{{_pid}}">
+    <view class="btn">
+      <button class="button-style-huodong" bindtap="remind">提醒审核人员加快认证</button>
+    </view>
+  </ui-fixed-view>
+  <!-- 导航占位 -->
+  <view style="height:52px;"></view>
+</view>

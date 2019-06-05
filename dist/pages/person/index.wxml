@@ -54,42 +54,53 @@
     </view>
   </view>
   <!-- 详细参数 -->
-  <view class="warp">
-    <view class="tab-panel-item">
-      <view class="item_list" data-route="mysocial" bindtap="navigateToShow">
-        <view class="item_left">
-          <!-- <image src="../../static/image/main/lie1.png"/> -->
-        </view>
-        <view class="item_center">我的作品</view>
-        <view class="item_right"><span type="gengduo" color="#848484" size="12px;" class="ui-icon icon-gengduo" style="color: #848484;font-size: 12px;px;"></span></view>
+  <view class="tab-panel-item">
+    <view class="item_list" data-route="mysocial" bindtap="navigateToShow">
+      <view class="item_left">
+        <!-- <image src="../../static/image/main/lie1.png"/> -->
       </view>
-      <view class="item_list" data-route="myparttime" bindtap="navigateToShow">
-        <view class="item_left">
-          <!-- <image src="../../static/image/main/lie2.png"/> -->
-        </view>
-        <view class="item_center">我的资料</view>
-        <view class="item_right"><span type="gengduo" color="#848484" size="12px;" class="ui-icon icon-gengduo" style="color: #848484;font-size: 12px;px;"></span></view>
+      <view class="item_center">我的作品</view>
+      <view class="item_right"><span type="gengduo" color="#848484" size="12px;" class="ui-icon icon-gengduo" style="color: #848484;font-size: 12px;px;"></span></view>
+    </view>
+    <view class="item_list" data-route="myparttime" bindtap="navigateToShow">
+      <view class="item_left">
+        <!-- <image src="../../static/image/main/lie2.png"/> -->
       </view>
-      <view class="item_list" data-route="myactivity" bindtap="navigateToShow">
-        <view class="item_left">
-          <!-- <image src="../../static/image/main/lie3.png"/> -->
-        </view>
-        <view class="item_center">我的粉丝</view>
-        <view class="item_right"><span type="gengduo" color="#848484" size="12px;" class="ui-icon icon-gengduo" style="color: #848484;font-size: 12px;px;"></span></view>
+      <view class="item_center">我的资料</view>
+      <view class="item_right"><span type="gengduo" color="#848484" size="12px;" class="ui-icon icon-gengduo" style="color: #848484;font-size: 12px;px;"></span></view>
+    </view>
+    <view class="item_list" data-route="myactivity" bindtap="navigateToShow">
+      <view class="item_left">
+        <!-- <image src="../../static/image/main/lie3.png"/> -->
       </view>
-      <view class="item_list" data-route="follow" bindtap="navigateToShow">
-        <view class="item_left">
-          <!-- <image src="../../static/image/main/lie3.png"/> -->
-        </view>
-        <view class="item_center">我的关注</view>
-        <view class="item_right"><span type="gengduo" color="#848484" size="12px;" class="ui-icon icon-gengduo" style="color: #848484;font-size: 12px;px;"></span></view>
+      <view class="item_center">我的粉丝</view>
+      <view class="item_right"><span type="gengduo" color="#848484" size="12px;" class="ui-icon icon-gengduo" style="color: #848484;font-size: 12px;px;"></span></view>
+    </view>
+    <view class="item_list" data-route="follow" bindtap="navigateToShow">
+      <view class="item_left">
+        <!-- <image src="../../static/image/main/lie3.png"/> -->
       </view>
-      <view class="item_list" data-route="mymall" bindtap="navigateToShow">
-        <view class="item_left">
-          <!-- <image src="../../static/image/main/lie4.png"/> -->
+      <view class="item_center">我的关注</view>
+      <view class="item_right"><span type="gengduo" color="#848484" size="12px;" class="ui-icon icon-gengduo" style="color: #848484;font-size: 12px;px;"></span></view>
+    </view>
+    <view class="item_list" data-route="mymall" bindtap="navigateToShow">
+      <view class="item_left">
+        <!-- <image src="../../static/image/main/lie4.png"/> -->
+      </view>
+      <view class="item_center">我的收藏</view>
+      <view class="item_right"><span type="gengduo" color="#848484" size="12px;" class="ui-icon icon-gengduo" style="color: #848484;font-size: 12px;px;"></span></view>
+    </view>
+  </view>
+  <!-- 公众号关注向导 -->
+  <official-account></official-account>
+  <!-- 底部授权 -->
+  <view class="footer">
+    <view class="page__bd page__bd_spacing">
+      <view class="weui-footer">
+        <view class="weui-footer__links">
+          <button open-type="contact" bindcontact="handleContact" class="weui-footer__link">传客科技</button>
         </view>
-        <view class="item_center">我的收藏</view>
-        <view class="item_right"><span type="gengduo" color="#848484" size="12px;" class="ui-icon icon-gengduo" style="color: #848484;font-size: 12px;px;"></span></view>
+        <view class="weui-footer__text">Copyright © 2008-2019 fcdaddy.com</view>
       </view>
     </view>
   </view>

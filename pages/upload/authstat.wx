@@ -1,0 +1,181 @@
+<template>
+    <view>
+        <!-- 自定义导航栏 -->
+        <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}">
+            <ui-row height="{{DEFAULT_HEADER_HEIGHT}}" class="nav_bar">
+                <ui-col vertical-align="middle" class="nav-bar-col" align="left" width="100px" bindtap="navigateBack">
+                    <view class="containertitle">
+                        <view class='dingwei'>
+                            <ui-icon type="zuojiantou" color="#333333" size="20px;"></ui-icon>
+                        </view>
+                    </view>
+                </ui-col>
+                <ui-col vertical-align="middle" class="nav-bar-col">
+                    <view class="nav-bar-title">认证通知</view>
+                </ui-col>
+                <ui-col vertical-align="middle" class="nav-bar-col" align="right"  width="100px">
+                </ui-col>
+            </ui-row>
+        </ui-nav-bar>
+        <view style="height:{{NAV_HEIGHT}}"></view>
+        <view class='content'>
+            <view class="icon"><ui-icon type="tijiao" color="#ffd100" size="100px;"></ui-icon></view>
+            <view class="des">认证内容正在审核当中，请耐心等待...</view>
+            <view class="image">
+                <image src="../../static/image/upload/xiaoshudian.png"/>
+            </view>
+        </view>
+        <!-- 页面公共广告 -->
+        <view style="margin:10px;">
+            <ad unit-id="adunit-32c386620de8cc6b"></ad>
+        </view>
+        <!-- 公众号关注引导 -->
+        <official-account></official-account>
+        <!-- 底部授权 -->
+        <view class="footer">
+            <view class="page__bd page__bd_spacing">
+                <view class="weui-footer">
+                    <view class="weui-footer__links">
+                        <button open-type="contact" bindcontact="handleContact" class="weui-footer__link">传客科技</button>
+                    </view>
+                    <view class="weui-footer__text">Copyright © 2008-2019 fcdaddy.com</view>
+                </view>
+            </view>
+        </view>
+        <!-- 底部导航 -->
+        <ui-fixed-view bottom="0" left="0" right="0">
+            <view class="btn">
+                <button class="button-style-huodong" bindtap="remind">提醒审核人员加快认证</button>
+            </view>
+        </ui-fixed-view>
+        <!-- 导航占位 -->
+        <view style="height:52px;"></view>
+    </view>
+</template>
+
+<script>
+export default {
+    config: {
+        navigationBarTitleText: '认证通知',
+        navigationBarTextStyle: 'black',
+        backgroundColor: "#F8F8F8",
+        backgroundTextStyle: "light",
+    },
+    data: {
+        NAV_HEIGHT:wx.STATUS_BAR_HEIGHT+wx.DEFAULT_HEADER_HEIGHT+'px',
+        DEFAULT_HEADER_HEIGHT: wx.DEFAULT_HEADER_HEIGHT,
+    },
+    onLoad(options) {
+        wx.showShareMenu({
+            withShareTicket: true
+        })
+    },
+    remind(e) {
+        wx.showModal({
+            title: '温馨提示',
+            content: '我们已通知审核人员快速处理，请耐心等待！',
+            showCancel: false,
+            confirmColor: '#ffd100',
+            confirmText: '确认',
+            success(res) {
+                if (res.confirm) {
+                    wx.navigateBack()
+                }
+            }
+        })
+    },
+    // 客服消息
+    handleContact(e) {
+        console.log(e.path)
+        console.log(e.query)
+    },
+    // 导航返回
+    navigateBack () {
+        wx.navigateBack()
+    },
+}
+</script>
+
+<style lang="less">
+@import '../../static/styles/weui.wxss';
+// 自定义导航栏
+.nav_bar {
+    .mix-flex-center();
+    .nav-bar-col {
+        text-align: center;
+        .containertitle {
+            padding: 6px 10px;
+            display: flex;
+            background-color: #FFFFFF;
+            .dingwei {
+                height: 25px;
+                display: flex;
+                .mix-flex-y-center();
+            }
+            .dingwei text {
+                size: 16px;
+                color: #FFFFFF;
+                margin: 0px 3px;
+            }
+        }
+        .nav-bar-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+    }
+}
+// 底部授权信息
+.footer{
+    margin: 25px 0px;
+    .weui-footer_link {
+        color: #ffd100;
+        border: none;
+        background-color: #F4F4F4;
+    }
+    .weui-footer_link::after {
+        border: none
+    }
+}
+// 主题内容
+.content {
+    display: flex;
+    flex-direction: column;
+    .mix-flex-center();
+    background-color: #FFFFFF;
+    padding: 20px 10px;
+    .icon {
+        width: 100px;
+        height: 100px;
+        .mix-flex-center();
+    }
+    .des {
+        margin-top: 20px;
+    }
+    .image {
+        margin-top: 20px;
+        width: 144rpx;
+        height: 16rpx;
+        image {
+            width: 144rpx;
+            height: 16rpx;
+        }
+    }
+}
+// 底部导航
+.btn {
+    padding: 2px 10px;
+    .mix-flex-center();
+    .mix-1px(1, 0, 0, 0, #ccc);
+    background-color: #FFFFFF;
+    .button-style-huodong {
+        width: 100%;
+        margin: 10px;
+        padding: 5px;
+        background-color: #ffd100;
+        color: #FFFFFF;
+    }
+    .button-style-huodong::after {
+        border: none;
+    }
+}
+</style>

@@ -1,0 +1,91 @@
+<view>
+  <!-- 自定义导航栏 -->
+  <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}" _pid="{{_pid}}">
+    <view class="nav_bar ui-row" style="height:{{DEFAULT_HEADER_HEIGHT}}px;">
+      <view class="nav-bar-col ui-col ui-col-align-left align-left valign-middle" bindtap="navigateBack" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-left valign-middle">
+          <view class="containertitle">
+            <view class="dingwei">
+              <span type="zuojiantou" color="#333333" size="20px;" class="ui-icon icon-zuojiantou" style="color: #333333;font-size: 20px;px;"></span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col valign-middle" style="">
+        <view class="ui-col-content valign-middle">
+          <view class="nav-bar-title">实名认证</view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-right valign-middle">
+        </view>
+      </view>
+    </view>
+  </ui-nav-bar>
+  <view style="height:{{NAV_HEIGHT}}"></view>
+  <view class="content">
+    <form bindsubmit="formSubmit">
+      <view class="row-column-group">
+        <view class="row-column">
+          <view class="label">真实姓名：</view>
+          <view class="content">
+            <view class="placep">
+              <input name="uid" value="{{uid}}" hidden></input>
+              <input name="name" value="{{name}}" placeholder="请输入真实姓名"></input>
+            </view>
+          </view>
+        </view>
+        <view class="row-column">
+          <view class="label">身份证号：</view>
+          <view class="content">
+            <view class="placep">
+              <input name="idcard" type="idcard" value="{{idcard}}" placeholder="请输入15位或18位身份证号"></input>
+            </view>
+          </view>
+        </view>
+        <view class="image-group">
+          <view class="imagedes">上传身份证照片</view>
+          <button class="image_btn" bindtap="choosePositive">
+            <view class="image" wx:if="{{localPositive == ''}}">
+              <image src="../../static/image/upload/shenfenzhengz.png" mode="aspectFill" />
+            </view>
+            <view class="image" wx:else="">
+              <image src="{{localPositive}}" mode="aspectFill" />
+            </view>
+          </button><input name="positive" value="{{serverPositive}}" hidden></input>
+
+          <button class="image_btn" bindtap="chooseReverse">
+            <view class="image" wx:if="{{localReverse == ''}}">
+              <image src="../../static/image/upload/shenfenzhengb.png" mode="aspectFill" />
+            </view>
+            <view class="image" wx:else="">
+              <image src="{{localReverse}}" mode="aspectFill" />
+            </view>
+          </button><input name="reverse" value="{{serverReverse}}" hidden></input>
+
+        </view>
+      </view>
+      <!-- 公众号关注引导 -->
+      <official-account></official-account>
+      <!-- 底部授权 -->
+      <view class="footer">
+        <view class="page__bd page__bd_spacing">
+          <view class="weui-footer">
+            <view class="weui-footer__links">
+              <button open-type="contact" bindcontact="handleContact" class="weui-footer__link">传客科技</button>
+            </view>
+            <view class="weui-footer__text">Copyright © 2008-2019 fcdaddy.com</view>
+          </view>
+        </view>
+      </view>
+      <!-- 底部导航 -->
+      <ui-fixed-view bottom="0" left="0" right="0" _pid="{{_pid}}">
+        <view class="btn">
+          <button form-type="submit" class="button-style-huodong"><text>提交认证</text></button>
+        </view>
+      </ui-fixed-view>
+      <!-- 导航占位 -->
+      <view style="height:52px;"></view>
+    </form>
+  </view>
+</view>

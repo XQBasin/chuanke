@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "ui-nav-bar": "../../packages/touchui-wx-components/ui-nav-bar/dist/index",
+    "ui-fixed-view": "../../packages/touchui-wx-components/ui-fixed-view/dist/index"
+  },
+  "navigationBarTitleText": "认证通知",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#F8F8F8",
+  "backgroundTextStyle": "light"
+}

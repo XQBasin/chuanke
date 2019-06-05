@@ -1,4 +1,24 @@
 <view>
+  <!-- 自定义导航栏 -->
+  <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}" _pid="{{_pid}}">
+    <view class="nav_bar ui-row" style="height:{{DEFAULT_HEADER_HEIGHT}}px;">
+      <view class="nav-bar-col ui-col ui-col-align-left align-left valign-middle" bindtap="navigateBack" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-left valign-middle">
+          <view class="containertitle"></view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col valign-middle" style="">
+        <view class="ui-col-content valign-middle">
+          <view class="nav-bar-title">传客共享</view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-right valign-middle">
+        </view>
+      </view>
+    </view>
+  </ui-nav-bar>
+  <view style="height:{{NAV_HEIGHT}}"></view>
   <!-- 顶部选择区 -->
   <view class="head">
     <view class="block" wx:for="{{headTitle}}" wx:key="headKey" data-sid="{{index}}" bindtap="check">
@@ -7,7 +27,7 @@
     </view>
   </view>
   <!-- 分享 -->
-  <view class="content" wx:if="{{checkedId==0}}">
+  <view class="content {{touchanimate}}" wx:if="{{checkedId==0}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
     <view class="tab-panel-item" wx:key="activitykey" wx:for="{{list}}">
       <view class="flex-acwrp">
         <view class="ac_green">
@@ -53,7 +73,7 @@
     <ui-divider wx:if="{{isHideLoadMore}}" padding="20" _pid="{{_pid}}">我是有底线的</ui-divider>
   </view>
   <!-- 经验 -->
-  <view class="content" wx:if="{{checkedId==1}}">
+  <view class="content {{touchanimate}}" wx:if="{{checkedId==1}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
     <view class="aw_tab_panel_item" wx:key="socialkey">
       <view class="aw_flex_wrp">
         <view class="aw_bc_green">
@@ -61,7 +81,7 @@
         </view>
         <view class="aw_bc_red">
           <view class="aw_title">
-            <view>111</view>
+            <view>Basin</view>
             <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
           </view>
           <view class="aw_description">
@@ -71,7 +91,7 @@
         </view>
       </view>
       <view class="aw_flex_des" data-id="{{social.id}}" bindtap="getSocInfo">
-        111222
+        经验分享描述
       </view>
       <!-- 消息菜单 -->
       <view class="aw_description_btn">
@@ -95,7 +115,7 @@
     <ui-divider wx:if="{{isHideLoadMore}}" padding="20" _pid="{{_pid}}">我是有底线的</ui-divider>
   </view>
   <!-- 爱问知识人 -->
-  <view class="content" wx:if="{{checkedId==2}}">
+  <view class="content {{touchanimate}}" wx:if="{{checkedId==2}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
     <view class="aw_tab_panel_item" wx:key="socialkey">
       <view class="aw_flex_wrp">
         <view class="aw_bc_green">
@@ -103,7 +123,7 @@
         </view>
         <view class="aw_bc_red">
           <view class="aw_title">
-            <view>111</view>
+            <view>Basin</view>
             <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
           </view>
           <view class="aw_description">
@@ -113,7 +133,7 @@
         </view>
       </view>
       <view class="aw_flex_des" data-id="{{social.id}}" bindtap="getSocInfo">
-        111222
+        爱问问题展示
       </view>
       <!-- 作品展示 -->
       <view wx:if="{{social.production[0]}}" class="weui-cell__bd" data-id="{{social.id}}" bindtap="getSocInfo">
@@ -156,21 +176,42 @@
   <!-- 发布按钮 -->
   <view class="fixedanimate">
     <view class="{{animatebtngroup}}" hidden="{{!show}}">
-      <view class="animatebtn">
-        <span type="fenxiang" color="#fff" size="20px;" class="ui-icon icon-fenxiang" style="color: #fff;font-size: 20px;px;"></span>
-      </view>
-      <view class="animatebtn">
-        <span type="wendang" color="#fff" size="20px;" class="ui-icon icon-wendang" style="color: #fff;font-size: 20px;px;"></span>
-      </view>
+      <button class="authorise_btn" data-route="shareCreate" data-authorise="1" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+        <view class="animatebtn">
+          <span type="fenxiang" color="#fff" size="20px;" class="ui-icon icon-fenxiang" style="color: #fff;font-size: 20px;px;"></span>
+        </view>
+      </button>
+      <button class="authorise_btn" data-route="knowCreate" data-authorise="1" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+        <view class="animatebtn">
+          <span type="wendang" color="#fff" size="20px;" class="ui-icon icon-wendang" style="color: #fff;font-size: 20px;px;"></span>
+        </view>
+      </button>
     </view>
     <view class="{{animatebtngroup}}" hidden="{{!show}}">
-      <view class="animatebtn">
-        <span type="dengpao" color="#fff" size="20px;" class="ui-icon icon-dengpao" style="color: #fff;font-size: 20px;px;"></span>
-      </view>
+      <button class="authorise_btn" data-route="quesCreate" data-authorise="1" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+        <view class="animatebtn">
+          <span type="dengpao" color="#fff" size="20px;" class="ui-icon icon-dengpao" style="color: #fff;font-size: 20px;px;"></span>
+        </view>
+      </button>
     </view>
-    <view class="animatebtn" bindtap="openAnimate">
-      <span wx:if="{{!show}}" type="tianjia" color="#fff" size="20px;" class="ui-icon icon-tianjia" style="color: #fff;font-size: 20px;px;"></span>
-      <span wx:else="" type="guanbi" color="#fff" size="20px;" class="ui-icon icon-guanbi" style="color: #fff;font-size: 20px;px;"></span>
+    <button class="authorise_btn" bindtap="openAnimate">
+      <view class="animatebtn">
+        <span wx:if="{{!show}}" type="tianjia" color="#fff" size="20px;" class="ui-icon icon-tianjia" style="color: #fff;font-size: 20px;px;"></span>
+        <span wx:else="" type="guanbi" color="#fff" size="20px;" class="ui-icon icon-guanbi" style="color: #fff;font-size: 20px;px;"></span>
+      </view>
+    </button>
+  </view>
+  <!-- 公众号关注向导 -->
+  <official-account></official-account>
+  <!-- 底部授权 -->
+  <view class="footer">
+    <view class="page__bd page__bd_spacing">
+      <view class="weui-footer">
+        <view class="weui-footer__links">
+          <button open-type="contact" bindcontact="handleContact" class="weui-footer__link">传客科技</button>
+        </view>
+        <view class="weui-footer__text">Copyright © 2008-2019 fcdaddy.com</view>
+      </view>
     </view>
   </view>
 </view>

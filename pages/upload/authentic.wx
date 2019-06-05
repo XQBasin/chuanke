@@ -1,0 +1,386 @@
+<template>
+    <view>
+        <!-- 自定义导航栏 -->
+        <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}">
+            <ui-row height="{{DEFAULT_HEADER_HEIGHT}}" class="nav_bar">
+                <ui-col vertical-align="middle" class="nav-bar-col" align="left" width="100px" bindtap="navigateBack">
+                    <view class="containertitle">
+                        <view class='dingwei'>
+                            <ui-icon type="zuojiantou" color="#333333" size="20px;"></ui-icon>
+                        </view>
+                    </view>
+                </ui-col>
+                <ui-col vertical-align="middle" class="nav-bar-col">
+                    <view class="nav-bar-title">实名认证</view>
+                </ui-col>
+                <ui-col vertical-align="middle" class="nav-bar-col" align="right"  width="100px">
+                </ui-col>
+            </ui-row>
+        </ui-nav-bar>
+        <view style="height:{{NAV_HEIGHT}}"></view>
+        <view class='content'>
+            <form bindsubmit="formSubmit">
+                <view class="row-column-group">
+                    <view class="row-column">
+                        <view class="label">真实姓名：</view>
+                        <view class="content">
+                            <view class="placep">
+                                <input name="uid" value="{{uid}}" hidden/>
+                                <input name="name" value="{{name}}" placeholder="请输入真实姓名"/>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="row-column">
+                        <view class="label">身份证号：</view>
+                        <view class="content">
+                            <view class="placep">
+                                <input name="idcard" type="idcard" value="{{idcard}}" placeholder="请输入15位或18位身份证号"/>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="image-group">
+                        <view class="imagedes">上传身份证照片</view>
+                        <button class="image_btn" bindtap="choosePositive">
+                            <view class="image" wx:if="{{localPositive == ''}}">
+                                <image src="../../static/image/upload/shenfenzhengz.png" mode="aspectFill"/>
+                            </view>
+                            <view class="image" wx:else>
+                                <image src="{{localPositive}}" mode="aspectFill"/>
+                            </view>
+                            <input name="positive" value="{{serverPositive}}" hidden/>
+                        </button>
+                        <button class="image_btn" bindtap="chooseReverse">
+                            <view class="image" wx:if="{{localReverse == ''}}">
+                                <image src="../../static/image/upload/shenfenzhengb.png" mode="aspectFill"/>
+                            </view>
+                            <view class="image" wx:else>
+                                <image src="{{localReverse}}" mode="aspectFill"/>
+                            </view>
+                            <input name="reverse" value="{{serverReverse}}" hidden/>
+                        </button>
+                    </view>
+                </view>
+                <!-- 公众号关注引导 -->
+                <official-account></official-account>
+                <!-- 底部授权 -->
+                <view class="footer">
+                    <view class="page__bd page__bd_spacing">
+                        <view class="weui-footer">
+                            <view class="weui-footer__links">
+                                <button open-type="contact" bindcontact="handleContact" class="weui-footer__link">传客科技</button>
+                            </view>
+                            <view class="weui-footer__text">Copyright © 2008-2019 fcdaddy.com</view>
+                        </view>
+                    </view>
+                </view>
+                <!-- 底部导航 -->
+                <ui-fixed-view bottom="0" left="0" right="0">
+                    <view class="btn">
+                        <button form-type="submit" class="button-style-huodong"><text>提交认证</text></button>
+                    </view>
+                </ui-fixed-view>
+                <!-- 导航占位 -->
+                <view style="height:52px;"></view>
+            </form>
+        </view>
+    </view>
+</template>
+
+<script>
+import { $init, $digest } from '../../static/utils/common.util'
+import WxValidate from '../../static/utils/WxValidate.js'
+export default {
+    config: {
+        navigationBarTitleText: '实名认证',
+        navigationBarTextStyle: 'black',
+        backgroundColor: "#F8F8F8",
+        backgroundTextStyle: "light",
+    },
+    data: {
+        NAV_HEIGHT:wx.STATUS_BAR_HEIGHT+wx.DEFAULT_HEADER_HEIGHT+'px',
+        DEFAULT_HEADER_HEIGHT: wx.DEFAULT_HEADER_HEIGHT,
+        uid: '',                // 用户标识
+        localPositive: '',      // 正面证件照本地路径
+        serverPositive: '',     // 正面证件照网络路径
+        localReverse: '',       // 反面证件照本地路径
+        serverReverse: '',      // 反面证件照本地路径
+    },
+    onLoad(options) {
+        $init(this)
+        if (options.uid) {
+            this.setData({
+                uid: options.uid
+            })
+        }
+        this.initValidate()
+        wx.showShareMenu({
+            withShareTicket: true
+        })
+    },
+    // 初始化表单校验
+    initValidate(){
+        // 验证字段的规则
+        const rules = {
+            name: {
+                required: true,
+            },
+            idcard: {
+                required: true,
+                idcard: true,
+            },
+            positive: {
+                required: true,
+            },
+            reverse: {
+                required: true,
+            },
+        }
+        // 验证字段的提示信息，若不传则调用默认的信息
+        const messages = {
+            name: {
+                required: '真实姓名不予许为空！',
+            },
+            idcard: {
+                required: '请输入15或18位身份证号码！',
+                idcard: '身份证号格式不正确！',
+            },
+            positive: {
+                required: '正面证照不予许为空！',
+            },
+            reverse: {
+                required: '反面证照不允许为空！',
+            },
+        }
+        // 创建实例对象
+        this.validate = new WxValidate(rules, messages)
+    },
+    choosePositive(e) {
+        var that = this;
+        wx.chooseImage({
+            sizeType: ['original', 'compressed'],   //可选择原图或压缩后的图片
+            sourceType: ['album', 'camera'],        //可选择性开放访问相册、相机
+            success: res => {
+                const images = res.tempFilePaths
+                that.data.localPositive = images[0]
+                wx.uploadFile({
+                    url: 'https://ck.taoyuantoday.com/mini/Upload/alone', //仅为示例，非真实的接口地址
+                    filePath: images[0],
+                    name: 'file',
+                    success (res) {
+                        const result = JSON.parse(res.data)
+                        that.data.serverPositive = result.url
+                        $digest(that)
+                    }
+                })
+            }
+        })
+    },
+    chooseReverse(e) {
+        var that = this;
+        wx.chooseImage({
+            sizeType: ['original', 'compressed'],   //可选择原图或压缩后的图片
+            sourceType: ['album', 'camera'],        //可选择性开放访问相册、相机
+            success: res => {
+                const images = res.tempFilePaths
+                that.data.localReverse = images[0]
+                wx.uploadFile({
+                    url: 'https://ck.taoyuantoday.com/mini/Upload/alone', //仅为示例，非真实的接口地址
+                    filePath: images[0],
+                    name: 'file',
+                    success (res) {
+                        const result = JSON.parse(res.data)
+                        that.data.serverReverse = result.url
+                        $digest(that)
+                    }
+                })
+            }
+        })
+    },
+    formSubmit(e) {
+        var that = this
+        var data = e.detail.value
+        // 校验表单
+        if (!this.validate.checkForm(data)) {
+            const error = this.validate.errorList[0];
+            wx.showToast({
+                title: error.msg,
+                icon: 'none'
+            })
+            return false
+        }
+        wx.showLoading({
+            title: '请稍后...',
+            mask: true
+        })
+        wx.request({
+            url: 'https://ck.taoyuantoday.com/mini/Index/authenticApply.html',
+            data: {
+                uid: data.uid,
+                name: data.name,
+                idcard: data.idcard,
+                positive: data.positive,
+                reverse: data.reverse,
+            },
+            header: {
+                'Content-Type': 'application/x-www-form-urlencoded'     // 默认值
+            },
+            method: "POST",
+            success(res) {
+                if (res.data.state) {
+                    wx.hideLoading()
+                    wx.showToast({
+                        title: res.data.message,
+                        icon: 'success',
+                        duration: 2000
+                    })
+                    wx.navigateTo({
+                        url: './authstat'
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.data.message,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            }
+        })
+    },
+    // 客服消息
+    handleContact(e) {
+        console.log(e.path)
+        console.log(e.query)
+    },
+    // 导航返回
+    navigateBack () {
+        wx.navigateBack()
+    },
+}
+</script>
+
+<style lang="less">
+@import '../../static/styles/weui.wxss';
+// 自定义导航栏
+.nav_bar {
+    .mix-flex-center();
+    .nav-bar-col {
+        text-align: center;
+        .containertitle {
+            padding: 6px 10px;
+            display: flex;
+            background-color: #FFFFFF;
+            .dingwei {
+                height: 25px;
+                display: flex;
+                .mix-flex-y-center();
+            }
+            .dingwei text {
+                size: 16px;
+                color: #FFFFFF;
+                margin: 0px 3px;
+            }
+        }
+        .nav-bar-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+    }
+}
+// 底部授权信息
+.footer {
+    margin: 25px 0px;
+    .weui-footer_link {
+        color: #007BFF;
+        border: none;
+        background-color: #F4F4F4;
+    }
+    .weui-footer_link::after {
+        border: none
+    }
+}
+// 主题内容
+.row-column-group {
+    display: flex;
+    flex-direction: column;
+    .row-column {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: #FFFFFF;
+        .mix-1px(1, 0, 0, 0, #ccc);
+        .mix-flex-center();
+        width: 100%;
+        .label {
+            width: 24%;
+            .mix-flex-center();
+        }
+        .content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            width: 76%;
+            height: 40px;
+            .mix-flex-center();
+            .placep {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                flex-wrap: nowrap;
+                width: 100%;
+            }
+        }
+    }
+    .image-group {
+        margin-top: 5px;
+        background-color: #FFFFFF;
+        display: flex;
+        flex-direction: column;
+        .imagedes {
+            margin: 10px;
+        }
+        .image_btn {
+            .mix-flex-center();
+            background: none;
+            margin-top: 5px;
+        }
+        .image_btn::after {
+            border: none;
+        }
+        .image {
+            width: 525rpx;
+            height: 334rpx;
+            image {
+                width: 525rpx;
+                height: 334rpx;
+            }
+        }
+        .button-style-huodong {
+            margin: 10px;
+            padding: 5px;
+            background-color: #007BFF;
+            color: #FFFFFF;
+        }
+        .button-style-huodong::after{
+            border: none;
+        }
+    }
+}
+// 底部导航
+.btn {
+    padding: 2px 10px;
+    .mix-flex-center();
+    .mix-1px(1, 0, 0, 0, #ccc);
+    background-color: #FFFFFF;
+    .button-style-huodong {
+        width: 100%;
+        margin: 10px;
+        padding: 5px;
+        background-color: #007BFF;
+        color: #FFFFFF;
+    }
+    .button-style-huodong::after {
+        border: none;
+    }
+}
+</style>

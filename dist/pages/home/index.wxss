@@ -21,7 +21,6 @@
 /* 多行文本超出部分省略号 */
 .head {
   position: fixed;
-  top: 0px;
   width: 100%;
   background: #fff;
   display: flex;
@@ -262,8 +261,14 @@
 }
 .fixedanimate {
   position: fixed;
-  right: 20px;
-  bottom: 40px;
+  right: 10px;
+  bottom: 20px;
+}
+.fixedanimate .authorise_btn {
+  background: none;
+}
+.fixedanimate .authorise_btn::after {
+  border: none;
 }
 .animatebtngroup {
   display: flex;

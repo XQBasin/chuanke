@@ -9,13 +9,18 @@
     "pages/category/question",
     "pages/category/experience",
     "pages/person/index",
-    "pages/person/follow"
+    "pages/person/follow",
+    "pages/upload/shareCreate",
+    "pages/upload/authentic",
+    "pages/upload/authstat"
   ],
   "window": {
-    "backgroundTextStyle": "dark",
+    "backgroundTextStyle": "light",
     "backgroundColor": "#F4F4F4",
     "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTitleText": "传客"
+    "navigationBarTitleText": "传客",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
   },
   "tabBar": {
     "list": [
@@ -41,12 +46,13 @@
     "color": "#333333",
     "selectedColor": "#007BFF",
     "backgroundColor": "#FFFFFF",
-    "borderStyle": "white"
+    "borderStyle": "black"
   },
   "networkTimeout": {
     "request": 10000
   },
   "theme": {
     "theme-color": "#007BFF"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

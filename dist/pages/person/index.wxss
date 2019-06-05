@@ -19,9 +19,6 @@
 /* 水平垂直居中 */
 /* 超出部分出省略号 */
 /* 多行文本超出部分省略号 */
-page {
-  background: #fff;
-}
 .head {
   padding: 20rpx 40rpx 100rpx;
   background: #007BFF;
@@ -61,22 +58,16 @@ page {
 .head .bottom .none {
   border: none;
 }
-.warp {
-  border-radius: 20rpx 20rpx 0 0;
-  background: #fff;
-  width: 100%;
-  position: relative;
-  top: -70rpx;
-  padding: 20rpx 40rpx 0;
-}
 .tab-panel-item {
-  border-radius: 10px;
+  position: relative;
+  top: -60rpx;
+  border-radius: 20rpx;
   background-color: #FFFFFF;
-  box-shadow: 0 3px 6px 0 #f0f0f0;
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
+  margin: 5px;
 }
 .tab-panel-item .item_list {
   width: 90%;

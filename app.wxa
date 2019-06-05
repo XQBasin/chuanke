@@ -8,7 +8,6 @@ export default {
   config: {
     usingComponents: {},
     pages: [
-
       // 首页
       'pages/home/index',
       'pages/home/search',
@@ -22,12 +21,21 @@ export default {
       // 个人中心
       'pages/person/index',
       'pages/person/follow',
+      // 上传模块
+      'pages/upload/shareCreate',
+      'pages/upload/knowCreate',
+      'pages/upload/quesCreate',
+      'pages/upload/authentic',
+      'pages/upload/authstat',
     ],
     window: {
       backgroundTextStyle: 'dark',
       backgroundColor: '#F4F4F4',
+      backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#ffffff',
       navigationBarTitleText: '传客',
+      navigationBarTextStyle: 'black',
+      navigationStyle: 'custom',
     },
     tabBar: {
       list: [{
@@ -52,13 +60,13 @@ export default {
       color: '#333333',
       selectedColor: '#007BFF',
       backgroundColor: '#FFFFFF',
-      borderStyle: 'white'
+      borderStyle: 'black',
     },
     networkTimeout: {
       request: 10000
     },
-    theme: {
-      'theme-color': '#007BFF'
+    "theme": {
+      "theme-color": '#007BFF'
     }
   },
   globalData: {},
@@ -80,24 +88,19 @@ page {
   color: #333333;
   background-color: #F4F4F4;
 }
-
 // 自定义导航栏
 .nav_bar {
   .mix-flex-center();
-
   .nav-bar-col {
     text-align: center;
-
     .containertitle {
       padding: 6px 10px;
       display: flex;
-
       .dingwei {
         height: 25px;
         display: flex;
         .mix-flex-y-center();
       }
-
       .dingwei text {
         font-size: 14px;
         overflow: hidden;
@@ -105,11 +108,22 @@ page {
         text-overflow: ellipsis;
       }
     }
-
     .nav-bar-title {
       font-size: 18px;
-      font-weight: 600;
+      // font-weight: 600;
     }
+  }
+}
+// 底部授权信息
+.footer {
+  margin: 25px 0px;
+  .weui-footer__link {
+    color: #007BFF;
+    border: none;
+    background-color: #F4F4F4;
+  }
+  .weui-footer__link::after{
+    border: none
   }
 }
 </style>

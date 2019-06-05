@@ -1,0 +1,13 @@
+{
+  "usingComponents": {
+    "ui-nav-bar": "../../packages/touchui-wx-components/ui-nav-bar/dist/index",
+    "ui-popup": "../../packages/touchui-wx-components/ui-popup/dist/index",
+    "ui-tags": "../../packages/touchui-wx-components/ui-tags/dist/index",
+    "ui-mask": "../../packages/touchui-wx-components/ui-mask/dist/index",
+    "ui-fixed-view": "../../packages/touchui-wx-components/ui-fixed-view/dist/index"
+  },
+  "navigationBarTitleText": "发布分享",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#888888",
+  "backgroundTextStyle": "light"
+}
