@@ -18,7 +18,7 @@ exports.default = Page({
             title: '温馨提示',
             content: '我们已通知审核人员快速处理，请耐心等待！',
             showCancel: false,
-            confirmColor: '#ffd100',
+            confirmColor: '#007BFF',
             confirmText: '确认',
             success: function success(res) {
                 if (res.confirm) {

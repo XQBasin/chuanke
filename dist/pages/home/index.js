@@ -3,8 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var tagStyle = '\n  padding: 0 20rpx;\n  text-align: center;\n  height: 70rpx;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  line-height: 70rpx;\n  margin: 14rpx 0;\n  border:1px solid #c7c7c7;\n  border-radius: 50rpx;\n';
-var selectStyle = '\n  padding: 0 20rpx;\n  text-align: center;\n  height: 70rpx;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  line-height: 70rpx;\n  margin: 14rpx 0;\n  font-weight: bold;\n  border-radius: 50rpx;\n  background:#007BFF;\n  color:#fff;\n';
 // 触屏开始点坐标
 var startDot = {
   X: 0,
@@ -85,7 +83,7 @@ exports.default = Page({
     touchDot.X = event.touches[0].pageX;
     touchDot.Y = event.touches[0].pageY;
     //向左滑处理
-    if (startDot.X - touchDot.X > 150 && startDot.Y - touchDot.Y < 100 && time < 5 && time > 0.1) {
+    if (startDot.X - touchDot.X > 50 && startDot.Y - touchDot.Y < 10 && time < 5 && time > 0.1) {
       if (this.data.checkedId < this.data.headTitle.length - 1) {
         this.setData({
           checkedId: this.data.checkedId + 1,
@@ -102,7 +100,7 @@ exports.default = Page({
       time = 0;
     }
     //向右滑处理
-    if (touchDot.X - startDot.X > 150 && touchDot.Y - startDot.Y < 100 && time < 5 && time > 0.1) {
+    if (touchDot.X - startDot.X > 50 && touchDot.Y - startDot.Y < 10 && time < 5 && time > 0.1) {
       if (this.data.checkedId < this.data.headTitle.length && this.data.checkedId > 0) {
         this.setData({
           checkedId: this.data.checkedId - 1,
@@ -122,7 +120,6 @@ exports.default = Page({
    * 结束触屏重置计时
    */
   touchEnd: function touchEnd(event) {
-    console.log("结束触屏");
     clearInterval(number);
     time = 0;
   },
@@ -133,7 +130,7 @@ exports.default = Page({
         if (res.code) {
           //发起网络请求
           wx.request({
-            url: 'https://ck.taoyuantoday.com/mini/Index/wxQuickLogin.html',
+            url: 'https://ck.taoyuantoday.com/mini/Index/autoRegist.html',
             data: {
               code: res.code
             },
@@ -155,50 +152,11 @@ exports.default = Page({
     });
   },
 
-  // 获取用户基本信息
-  bindGetUserInfo: function bindGetUserInfo(e) {
+  // 获取路由页面
+  navigateTo: function navigateTo(e) {
     var that = this;
     var route = e.currentTarget.dataset.route;
     var authorise = e.currentTarget.dataset.authorise;
-    // 判断是否同意授权
-    if (e.detail.userInfo == undefined) {
-      wx.showModal({
-        title: '温馨提示',
-        content: '请先允许授权再继续！',
-        showCancel: false,
-        confirmColor: '#ffd100',
-        confirmText: '我知道啦',
-        success: function success(res) {
-          if (res.confirm) {
-            console.log('用户已确认看到提示！');
-          }
-        }
-      });
-    } else {
-      that.updateUser(e.detail.userInfo, that.data.uid, route, authorise);
-    }
-  },
-
-  // 更新用户信息
-  updateUser: function updateUser(userInfo, uid, route, authorise) {
-    var that = this;
-    wx.request({
-      url: 'https://ck.taoyuantoday.com/mini/Index/updateUser.html',
-      data: {
-        userInfo: userInfo,
-        uid: uid
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function success(res) {
-        that.navigateTo(route, authorise);
-      }
-    });
-  },
-  // 获取路由页面
-  navigateTo: function navigateTo(route, authorise) {
-    var that = this;
     // 若实名认证则再判断是否认证通过，若通过则正常路由，否则跳转至审核提示页
     if (authorise) {
       that.checkAuthenticApply(that.data.uid, route);
@@ -208,47 +166,51 @@ exports.default = Page({
       });
     }
   },
-  // 获取用户基本信息
+  // 判断实名认证导航
   checkAuthenticApply: function checkAuthenticApply(uid, route) {
-    var that = this;
-    wx.request({
-      url: 'https://ck.taoyuantoday.com/mini/Index/getUserInfoById.html',
-      data: {
-        uid: uid
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function success(res) {
-        if (res.data) {
-          wx.request({
-            url: 'https://ck.taoyuantoday.com/mini/Index/authenticApply.html',
-            data: {
-              id: res.data.authenticid
-            },
-            header: {
-              'content-type': 'application/json' // 默认值
-            },
-            success: function success(res) {
-              if (res.data) {
-                if (res.data.status) {
-                  wx.navigateTo({
-                    url: '../upload/' + route + '?uid=' + that.data.uid
-                  });
-                } else {
-                  wx.navigateTo({
-                    url: '../upload/authstat?uid=' + that.data.uid
-                  });
-                }
+    try {
+      // 优先从缓存中获取
+      var authid = wx.getStorageSync('authid');
+      if (authid) {
+        // Do something with return value
+        wx.navigateTo({
+          url: '../upload/' + route + '?uid=' + uid
+        });
+      } else {
+        wx.request({
+          url: 'https://ck.taoyuantoday.com/mini/Index/authenticApply.html',
+          data: {
+            uid: uid
+          },
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success: function success(res) {
+            if (res.data.id) {
+              if (res.data.status) {
+                // 写入缓存
+                wx.setStorage({
+                  key: "authid",
+                  data: res.data.id
+                });
+                wx.navigateTo({
+                  url: '../upload/' + route + '?uid=' + uid
+                });
               } else {
                 wx.navigateTo({
-                  url: '../upload/authentic?uid=' + that.data.uid
+                  url: '../upload/authstat?uid=' + uid
                 });
               }
+            } else {
+              wx.navigateTo({
+                url: '../upload/authentic?uid=' + uid
+              });
             }
-          });
-        }
+          }
+        });
       }
-    });
+    } catch (e) {
+      // Do something when catch error
+    }
   }
 });

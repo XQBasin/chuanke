@@ -264,12 +264,6 @@
   right: 10px;
   bottom: 20px;
 }
-.fixedanimate .authorise_btn {
-  background: none;
-}
-.fixedanimate .authorise_btn::after {
-  border: none;
-}
 .animatebtngroup {
   display: flex;
   flex-direction: column;

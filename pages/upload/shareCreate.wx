@@ -84,9 +84,8 @@
                     <view class="content">
                         <view class="placep">
                             <view class="place">
-                                <input type="digit" name="money" value="{{money}}" placeholder="请输联系手机号"/>
+                                <input type="number" name="phone" value="{{phone}}" placeholder="请输入你的手机号码"/>
                             </view>
-                            <view class="desp">元/次</view>
                         </view>
                     </view>
                 </view>

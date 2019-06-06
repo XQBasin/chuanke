@@ -91,12 +91,12 @@
         <!-- 消息菜单 -->
         <view class='aw_description_btn'>
             <view>
-                <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                <button class="fenxiang-btn">
                     <ui-icon type="liulan" color="#888888" size="14px;"> 222</ui-icon>
                 </button>
             </view>
             <view>
-                <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                <button class="fenxiang-btn">
                     <ui-icon type="jushoucang" color="#888888" size="14px;"> 111</ui-icon>
                 </button>
             </view>
@@ -150,12 +150,12 @@
         <!-- 消息菜单 -->
         <view class='aw_description_btn'>
             <view>
-                <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                <button class="fenxiang-btn">
                     <ui-icon type="wodefankui" color="#888888" size="14px;"> 222</ui-icon>
                 </button>
             </view>
             <view>
-                <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                <button class="fenxiang-btn">
                     <ui-icon type="jushoucang" color="#888888" size="14px;"> 111</ui-icon>
                 </button>
             </view>
@@ -171,30 +171,22 @@
     <!-- 发布按钮 -->
     <view class="fixedanimate">
       <view class="{{animatebtngroup}}" hidden="{{!show}}">
-        <button class="authorise_btn" data-route="shareCreate" data-authorise="1" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
-          <view class="animatebtn">
-            <ui-icon type="fenxiang" color="#fff" size="20px;"></ui-icon>
-          </view>
-        </button>
-        <button class="authorise_btn" data-route="knowCreate" data-authorise="1" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
-          <view class="animatebtn">
-            <ui-icon type="wendang" color="#fff" size="20px;"></ui-icon>
-          </view>
-        </button>
+        <view class="animatebtn" data-route="shareCreate" data-authorise="1" bindtap="navigateTo">
+          <ui-icon type="fenxiang" color="#fff" size="20px;"></ui-icon>
+        </view>
+        <view class="animatebtn" data-route="knowCreate" data-authorise="1" bindtap="navigateTo">
+          <ui-icon type="wendang" color="#fff" size="20px;"></ui-icon>
+        </view>
       </view>
       <view class="{{animatebtngroup}}" hidden="{{!show}}">
-        <button class="authorise_btn" data-route="quesCreate" data-authorise="1" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
-          <view class="animatebtn">
-            <ui-icon type="dengpao" color="#fff" size="20px;"></ui-icon>
-          </view>
-        </button>
-      </view>
-      <button class="authorise_btn" bindtap="openAnimate">
-        <view class="animatebtn">
-          <ui-icon wx:if="{{!show}}" type="tianjia" color="#fff" size="20px;"></ui-icon>
-          <ui-icon wx:else type="guanbi" color="#fff" size="20px;"></ui-icon>
+        <view class="animatebtn" data-route="quesCreate" data-authorise="1" bindtap="navigateTo">
+          <ui-icon type="dengpao" color="#fff" size="20px;"></ui-icon>
         </view>
-      </button>
+      </view>
+      <view class="animatebtn" bindtap="openAnimate">
+        <ui-icon wx:if="{{!show}}" type="tianjia" color="#fff" size="20px;"></ui-icon>
+        <ui-icon wx:else type="guanbi" color="#fff" size="20px;"></ui-icon>
+      </view>
     </view>
     <!-- 公众号关注向导 -->
     <official-account></official-account>
@@ -213,32 +205,6 @@
 </template>
 
 <script>
-const tagStyle = `
-  padding: 0 20rpx;
-  text-align: center;
-  height: 70rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 70rpx;
-  margin: 14rpx 0;
-  border:1px solid #c7c7c7;
-  border-radius: 50rpx;
-`
-const selectStyle = `
-  padding: 0 20rpx;
-  text-align: center;
-  height: 70rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 70rpx;
-  margin: 14rpx 0;
-  font-weight: bold;
-  border-radius: 50rpx;
-  background:#007BFF;
-  color:#fff;
-`
 // 触屏开始点坐标
 var startDot = {
   X: 0,
@@ -323,7 +289,7 @@ export default {
     touchDot.X = event.touches[0].pageX;
     touchDot.Y = event.touches[0].pageY;
     //向左滑处理
-    if ((startDot.X - touchDot.X) > 150 && (startDot.Y - touchDot.Y) < 100 && time < 5 && time > 0.1) {
+    if ((startDot.X - touchDot.X) > 50 && (startDot.Y - touchDot.Y) < 10 && time < 5 && time > 0.1) {
       if (this.data.checkedId < this.data.headTitle.length - 1) {
         this.setData({
           checkedId: this.data.checkedId + 1,
@@ -340,7 +306,7 @@ export default {
       time = 0;
     }
     //向右滑处理
-    if ((touchDot.X - startDot.X) > 150 && (touchDot.Y - startDot.Y) < 100 && time < 5 && time > 0.1) {
+    if ((touchDot.X - startDot.X) > 50 && (touchDot.Y - startDot.Y) < 10 && time < 5 && time > 0.1) {
       if (this.data.checkedId < this.data.headTitle.length && this.data.checkedId > 0) {
         this.setData({
           checkedId: this.data.checkedId - 1,
@@ -360,7 +326,6 @@ export default {
    * 结束触屏重置计时
    */
   touchEnd: function (event) {
-    console.log("结束触屏")
     clearInterval(number);
     time = 0;
   },
@@ -371,7 +336,7 @@ export default {
         if (res.code) {
           //发起网络请求
           wx.request({
-            url: 'https://ck.taoyuantoday.com/mini/Index/wxQuickLogin.html',
+            url: 'https://ck.taoyuantoday.com/mini/Index/autoRegist.html',
             data: {
               code: res.code
             },
@@ -392,49 +357,11 @@ export default {
       }
     })
   },
-  // 获取用户基本信息
-  bindGetUserInfo(e) {
-    var that = this;
-    let route = e.currentTarget.dataset.route
-    let authorise = e.currentTarget.dataset.authorise
-    // 判断是否同意授权
-    if (e.detail.userInfo == undefined) {
-      wx.showModal({
-        title: '温馨提示',
-        content: '请先允许授权再继续！',
-        showCancel: false,
-        confirmColor: '#ffd100',
-        confirmText: '我知道啦',
-        success(res) {
-          if (res.confirm) {
-              console.log('用户已确认看到提示！')
-          }
-        }
-      })
-    } else {
-      that.updateUser(e.detail.userInfo, that.data.uid, route, authorise)
-    }
-  },
-  // 更新用户信息
-  updateUser: function (userInfo, uid, route, authorise) {
-      var that = this;
-      wx.request({
-          url: 'https://ck.taoyuantoday.com/mini/Index/updateUser.html',
-          data: {
-              userInfo: userInfo,
-              uid: uid
-          },
-          header: {
-              'content-type': 'application/json' // 默认值
-          },
-          success(res) {
-              that.navigateTo(route, authorise)
-          }
-      })
-  },
   // 获取路由页面
-  navigateTo: function (route, authorise) {
+  navigateTo: function (e) {
       var that = this
+      let route = e.currentTarget.dataset.route
+      let authorise = e.currentTarget.dataset.authorise
       // 若实名认证则再判断是否认证通过，若通过则正常路由，否则跳转至审核提示页
       if (authorise) {
           that.checkAuthenticApply(that.data.uid, route)
@@ -444,48 +371,52 @@ export default {
           })
       }
   },
-  // 获取用户基本信息
+  // 判断实名认证导航
   checkAuthenticApply: function (uid, route) {
-    var that = this
-    wx.request({
-      url: 'https://ck.taoyuantoday.com/mini/Index/getUserInfoById.html',
-      data: {
-          uid: uid
-      },
-      header: {
-          'content-type': 'application/json' // 默认值
-      },
-      success(res) {
-        if (res.data) {
-          wx.request({
-            url: 'https://ck.taoyuantoday.com/mini/Index/authenticApply.html',
-            data: {
-              id: res.data.authenticid,
-            },
-            header: {
-              'content-type': 'application/json' // 默认值
-            },
-            success(res) {
-              if (res.data) {
-                if (res.data.status) {
-                  wx.navigateTo({
-                    url: '../upload/' + route + '?uid=' + that.data.uid
-                  })
-                } else {
-                  wx.navigateTo({
-                    url: '../upload/authstat?uid=' + that.data.uid
-                  })
-                }
+    try {
+      // 优先从缓存中获取
+      var authid = wx.getStorageSync('authid')
+      if (authid) {
+        // Do something with return value
+        wx.navigateTo({
+          url: '../upload/' + route + '?uid=' + uid
+        })
+      } else {
+        wx.request({
+          url: 'https://ck.taoyuantoday.com/mini/Index/authenticApply.html',
+          data: {
+            uid: uid,
+          },
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success(res) {
+            if (res.data.id) {
+              if (res.data.status) {
+                // 写入缓存
+                wx.setStorage({
+                  key: "authid",
+                  data: res.data.id
+                })
+                wx.navigateTo({
+                  url: '../upload/' + route + '?uid=' + uid
+                })
               } else {
                 wx.navigateTo({
-                  url: '../upload/authentic?uid=' + that.data.uid
+                  url: '../upload/authstat?uid=' + uid
                 })
               }
+            } else {
+              wx.navigateTo({
+                url: '../upload/authentic?uid=' + uid
+              })
             }
-          })
-        }
+          }
+        })
       }
-    })
+    } catch (e) {
+      // Do something when catch error
+    }
   },
 }
 </script>
@@ -718,12 +649,6 @@ export default {
   position:fixed;
   right: 10px;
   bottom: 20px;
-  .authorise_btn {
-    background: none;
-  }
-  .authorise_btn::after {
-    border: none;
-  }
 }
 .animatebtngroup {
   display: flex;

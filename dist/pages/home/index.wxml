@@ -96,12 +96,12 @@
       <!-- 消息菜单 -->
       <view class="aw_description_btn">
         <view>
-          <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+          <button class="fenxiang-btn">
             <span type="liulan" color="#888888" size="14px;" class="ui-icon icon-liulan" style="color: #888888;font-size: 14px;px;"> 222</span>
           </button>
         </view>
         <view>
-          <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+          <button class="fenxiang-btn">
             <span type="jushoucang" color="#888888" size="14px;" class="ui-icon icon-jushoucang" style="color: #888888;font-size: 14px;px;"> 111</span>
           </button>
         </view>
@@ -155,12 +155,12 @@
       <!-- 消息菜单 -->
       <view class="aw_description_btn">
         <view>
-          <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+          <button class="fenxiang-btn">
             <span type="wodefankui" color="#888888" size="14px;" class="ui-icon icon-wodefankui" style="color: #888888;font-size: 14px;px;"> 222</span>
           </button>
         </view>
         <view>
-          <button class="fenxiang-btn" data-route="comments" data-param="socialid={{social.id}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+          <button class="fenxiang-btn">
             <span type="jushoucang" color="#888888" size="14px;" class="ui-icon icon-jushoucang" style="color: #888888;font-size: 14px;px;"> 111</span>
           </button>
         </view>
@@ -176,30 +176,22 @@
   <!-- 发布按钮 -->
   <view class="fixedanimate">
     <view class="{{animatebtngroup}}" hidden="{{!show}}">
-      <button class="authorise_btn" data-route="shareCreate" data-authorise="1" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
-        <view class="animatebtn">
-          <span type="fenxiang" color="#fff" size="20px;" class="ui-icon icon-fenxiang" style="color: #fff;font-size: 20px;px;"></span>
-        </view>
-      </button>
-      <button class="authorise_btn" data-route="knowCreate" data-authorise="1" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
-        <view class="animatebtn">
-          <span type="wendang" color="#fff" size="20px;" class="ui-icon icon-wendang" style="color: #fff;font-size: 20px;px;"></span>
-        </view>
-      </button>
+      <view class="animatebtn" data-route="shareCreate" data-authorise="1" bindtap="navigateTo">
+        <span type="fenxiang" color="#fff" size="20px;" class="ui-icon icon-fenxiang" style="color: #fff;font-size: 20px;px;"></span>
+      </view>
+      <view class="animatebtn" data-route="knowCreate" data-authorise="1" bindtap="navigateTo">
+        <span type="wendang" color="#fff" size="20px;" class="ui-icon icon-wendang" style="color: #fff;font-size: 20px;px;"></span>
+      </view>
     </view>
     <view class="{{animatebtngroup}}" hidden="{{!show}}">
-      <button class="authorise_btn" data-route="quesCreate" data-authorise="1" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
-        <view class="animatebtn">
-          <span type="dengpao" color="#fff" size="20px;" class="ui-icon icon-dengpao" style="color: #fff;font-size: 20px;px;"></span>
-        </view>
-      </button>
-    </view>
-    <button class="authorise_btn" bindtap="openAnimate">
-      <view class="animatebtn">
-        <span wx:if="{{!show}}" type="tianjia" color="#fff" size="20px;" class="ui-icon icon-tianjia" style="color: #fff;font-size: 20px;px;"></span>
-        <span wx:else="" type="guanbi" color="#fff" size="20px;" class="ui-icon icon-guanbi" style="color: #fff;font-size: 20px;px;"></span>
+      <view class="animatebtn" data-route="quesCreate" data-authorise="1" bindtap="navigateTo">
+        <span type="dengpao" color="#fff" size="20px;" class="ui-icon icon-dengpao" style="color: #fff;font-size: 20px;px;"></span>
       </view>
-    </button>
+    </view>
+    <view class="animatebtn" bindtap="openAnimate">
+      <span wx:if="{{!show}}" type="tianjia" color="#fff" size="20px;" class="ui-icon icon-tianjia" style="color: #fff;font-size: 20px;px;"></span>
+      <span wx:else="" type="guanbi" color="#fff" size="20px;" class="ui-icon icon-guanbi" style="color: #fff;font-size: 20px;px;"></span>
+    </view>
   </view>
   <!-- 公众号关注向导 -->
   <official-account></official-account>
