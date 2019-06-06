@@ -53,5 +53,6 @@
   },
   "theme": {
     "theme-color": "#007BFF"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

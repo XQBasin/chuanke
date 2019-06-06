@@ -115,7 +115,7 @@
         </label>
       </checkbox-group>
     </view>
-    <ui-mask show="{{showMask}}" custom-style="{{customStyle}}" effect="scale-in" top="{{NAV_HEIGHT}}" blur="light" bindhide="maskHide" _pid="{{_pid}}">
+    <ui-mask show="{{showMask}}" effect="scale-in" top="{{NAV_HEIGHT}}" blur="light" bindhide="maskHide" _pid="{{_pid}}">
       <scroll-view scroll-y style="height: {{windowHeight}}px;">
         <rich-text nodes="{{agreement.content}}"></rich-text>
       </scroll-view>

@@ -62,9 +62,12 @@ exports.default = Page({
             checked: false
         }],
         showMask: false, // 服务协议查看
+        windowWidth: 0, // 系统屏幕宽度
+        windowHeight: 0, // 系统屏幕高度
         agreement: {} // 用户服务协议
     },
     onLoad: function onLoad(options) {
+        this.getSystemInfo();
         this.initValidate();
         (0, _commonUtil.$init)(this);
         if (options.uid) {
@@ -72,6 +75,19 @@ exports.default = Page({
                 uid: options.uid
             });
         }
+    },
+
+    // 获取系统参数
+    getSystemInfo: function getSystemInfo() {
+        var that = this;
+        wx.getSystemInfo({
+            success: function success(res) {
+                that.setData({
+                    windowWidth: res.windowWidth,
+                    windowHeight: res.windowHeight
+                });
+            }
+        });
     },
 
     // 初始化表单校验
