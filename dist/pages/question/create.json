@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "ui-nav-bar": "../../packages/touchui-wx-components/ui-nav-bar/dist/index",
+    "ui-fixed-view": "../../packages/touchui-wx-components/ui-fixed-view/dist/index"
+  },
+  "navigationBarTitleText": "发布",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#888888",
+  "backgroundTextStyle": "light"
+}

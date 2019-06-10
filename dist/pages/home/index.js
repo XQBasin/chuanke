@@ -162,7 +162,7 @@ exports.default = Page({
       that.checkAuthenticApply(that.data.uid, route);
     } else {
       wx.navigateTo({
-        url: '../upload/' + route + "?uid=" + that.data.uid
+        url: '../' + route + "?uid=" + that.data.uid
       });
     }
   },
@@ -174,7 +174,7 @@ exports.default = Page({
       if (authid) {
         // Do something with return value
         wx.navigateTo({
-          url: '../upload/' + route + '?uid=' + uid
+          url: '../' + route + '?uid=' + uid
         });
       } else {
         wx.request({
@@ -194,16 +194,16 @@ exports.default = Page({
                   data: res.data.id
                 });
                 wx.navigateTo({
-                  url: '../upload/' + route + '?uid=' + uid
+                  url: '../' + route + '?uid=' + uid
                 });
               } else {
                 wx.navigateTo({
-                  url: '../upload/authstat?uid=' + uid
+                  url: '../person/authstat?uid=' + uid
                 });
               }
             } else {
               wx.navigateTo({
-                url: '../upload/authentic?uid=' + uid
+                url: '../person/authentic?uid=' + uid
               });
             }
           }

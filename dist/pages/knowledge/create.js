@@ -27,31 +27,37 @@ exports.default = Page({
         isShowText: false, // 控制显示 textarea 还是 text
         typepopshow: false, // 兼职pop是否显示
         sourcestypes: [{
+            id: 1,
             text: '派单',
             tagStyle: tagStyle,
             tagSelectedStyle: selectStyle,
             checked: true
         }, {
+            id: 2,
             text: '餐饮',
             tagStyle: tagStyle,
             tagSelectedStyle: selectStyle,
             checked: false
         }, {
+            id: 3,
             text: '快递',
             tagStyle: tagStyle,
             tagSelectedStyle: selectStyle,
             checked: false
         }, {
+            id: 4,
             text: '家教',
             tagStyle: tagStyle,
             tagSelectedStyle: selectStyle,
             checked: false
         }, {
+            id: 5,
             text: '外卖',
             tagStyle: tagStyle,
             tagSelectedStyle: selectStyle,
             checked: false
         }, {
+            id: 6,
             text: '实习',
             tagStyle: tagStyle,
             tagSelectedStyle: selectStyle,
@@ -61,6 +67,8 @@ exports.default = Page({
             name: '1',
             checked: false
         }],
+        type: 1, // 默认资料类型
+        typetext: '', // 资料类型描述
         showMask: false, // 服务协议查看
         windowWidth: 0, // 系统屏幕宽度
         windowHeight: 0, // 系统屏幕高度
@@ -90,22 +98,43 @@ exports.default = Page({
         });
     },
 
+    // 资料宣传图片选择
+    chooseImage: function chooseImage(e) {
+        var that = this;
+        wx.chooseImage({
+            sizeType: ['original', 'compressed'], //可选择原图或压缩后的图片
+            sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
+            success: function success(res) {
+                var images = res.tempFilePaths;
+                that.data.localSrc = images[0];
+                wx.uploadFile({
+                    url: 'https://ck.taoyuantoday.com/mini/Upload/alone', //仅为示例，非真实的接口地址
+                    filePath: images[0],
+                    name: 'file',
+                    success: function success(res) {
+                        var result = JSON.parse(res.data);
+                        that.data.serverSrc = result.url;
+                        (0, _commonUtil.$digest)(that);
+                    }
+                });
+            }
+        });
+    },
+
     // 初始化表单校验
     initValidate: function initValidate() {
         // 验证字段的规则
         var rules = {
             title: { required: true },
             type: { required: true },
-            money: { required: true },
             phone: { required: true, tel: true },
             content: { required: true }
             // 验证字段的提示信息，若不传则调用默认的信息
         };var messages = {
-            title: { required: '请输入兼职标题！' },
-            type: { required: '请选择资料所属类型！' },
-            money: { required: '请输入基本工资！' },
+            title: { required: '资料标题不允许为空！' },
+            type: { required: '请选择资料所属分类！' },
             phone: { required: '请输入联系电话！', tel: '手机号格式错误！' },
-            content: { required: '请输入职位描述！' }
+            content: { required: '请输入资料简介或描述！' }
             // 创建实例对象
         };this.validate = new _WxValidate2.default(rules, messages);
     },
@@ -166,7 +195,8 @@ exports.default = Page({
             item.checked = index === opt;
         });
         this.setData({
-            type: this.data.sourcestypes[opt].text,
+            type: this.data.sourcestypes[opt].id,
+            typetext: this.data.sourcestypes[opt].text,
             sourcestypes: this.data.sourcestypes,
             typepopshow: false
         });
@@ -211,17 +241,14 @@ exports.default = Page({
         }
         if (!data.agree[0]) {
             wx.showToast({
-                title: '必须同意方寸奶爸服务协议才可继续。',
+                title: '必须同意传客用户服务协议才可发布。',
                 icon: 'none'
             });
             return false;
         }
-        wx.showLoading({
-            title: '请稍后...',
-            mask: true
-        });
+        data.type = this.data.type;
         wx.request({
-            url: 'https://ck.taoyuantoday.com/mini/Weparttime/create.html',
+            url: 'https://ck.taoyuantoday.com/mini/Upload/shareCreate.html',
             data: data,
             header: {
                 'Content-Type': 'application/x-www-form-urlencoded' // 默认值
@@ -229,15 +256,12 @@ exports.default = Page({
             method: "POST",
             success: function success(res) {
                 if (res.data.state) {
-                    wx.hideLoading();
                     wx.showToast({
                         title: res.data.message,
                         icon: 'success',
                         duration: 3000
                     });
-                    wx.navigateTo({
-                        url: './index'
-                    });
+                    wx.navigateBack();
                 } else {
                     wx.showToast({
                         title: res.data.message,

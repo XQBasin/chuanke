@@ -171,15 +171,15 @@
     <!-- 发布按钮 -->
     <view class="fixedanimate">
       <view class="{{animatebtngroup}}" hidden="{{!show}}">
-        <view class="animatebtn" data-route="shareCreate" data-authorise="1" bindtap="navigateTo">
+        <view class="animatebtn" data-route="share/create" data-authorise="1" bindtap="navigateTo">
           <ui-icon type="fenxiang" color="#fff" size="20px;"></ui-icon>
         </view>
-        <view class="animatebtn" data-route="knowCreate" data-authorise="1" bindtap="navigateTo">
+        <view class="animatebtn" data-route="knowledge/create" data-authorise="1" bindtap="navigateTo">
           <ui-icon type="wendang" color="#fff" size="20px;"></ui-icon>
         </view>
       </view>
       <view class="{{animatebtngroup}}" hidden="{{!show}}">
-        <view class="animatebtn" data-route="quesCreate" data-authorise="1" bindtap="navigateTo">
+        <view class="animatebtn" data-route="question/create" data-authorise="1" bindtap="navigateTo">
           <ui-icon type="dengpao" color="#fff" size="20px;"></ui-icon>
         </view>
       </view>
@@ -367,7 +367,7 @@ export default {
           that.checkAuthenticApply(that.data.uid, route)
       } else {
           wx.navigateTo({
-              url: '../upload/' + route + "?uid=" + that.data.uid
+              url: '../' + route + "?uid=" + that.data.uid
           })
       }
   },
@@ -379,7 +379,7 @@ export default {
       if (authid) {
         // Do something with return value
         wx.navigateTo({
-          url: '../upload/' + route + '?uid=' + uid
+          url: '../' + route + '?uid=' + uid
         })
       } else {
         wx.request({
@@ -399,16 +399,16 @@ export default {
                   data: res.data.id
                 })
                 wx.navigateTo({
-                  url: '../upload/' + route + '?uid=' + uid
+                  url: '../' + route + '?uid=' + uid
                 })
               } else {
                 wx.navigateTo({
-                  url: '../upload/authstat?uid=' + uid
+                  url: '../person/authstat?uid=' + uid
                 })
               }
             } else {
               wx.navigateTo({
-                url: '../upload/authentic?uid=' + uid
+                url: '../person/authentic?uid=' + uid
               })
             }
           }

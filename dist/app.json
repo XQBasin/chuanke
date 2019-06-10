@@ -10,9 +10,14 @@
     "pages/category/experience",
     "pages/person/index",
     "pages/person/follow",
-    "pages/upload/shareCreate",
-    "pages/upload/authentic",
-    "pages/upload/authstat"
+    "pages/person/authentic",
+    "pages/person/authstat",
+    "pages/share/create",
+    "pages/share/comments",
+    "pages/knowledge/create",
+    "pages/knowledge/comments",
+    "pages/question/create",
+    "pages/question/comments"
   ],
   "window": {
     "backgroundTextStyle": "light",

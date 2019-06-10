@@ -1,0 +1,89 @@
+<view>
+  <!-- 自定义导航栏 -->
+  <ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#FFFFFF'} }}" _pid="{{_pid}}">
+    <view class="nav_bar ui-row" style="height:{{DEFAULT_HEADER_HEIGHT}}px;">
+      <view class="nav-bar-col ui-col ui-col-align-left align-left valign-middle" bindtap="navigateBack" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-left valign-middle">
+          <view class="containertitle">
+            <view class="dingwei">
+              <span type="zuojiantou" color="#333333" size="20px;" class="ui-icon icon-zuojiantou" style="color: #333333;font-size: 20px;px;"></span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col valign-middle" style="">
+        <view class="ui-col-content valign-middle">
+          <view class="nav-bar-title">问题发布</view>
+        </view>
+      </view>
+      <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">
+        <view class="ui-col-content align-right valign-middle">
+        </view>
+      </view>
+    </view>
+  </ui-nav-bar>
+  <view style="height:{{NAV_HEIGHT}}"></view>
+  <!-- 发布 -->
+  <form bindsubmit="formSubmit">
+    <view class="content">
+      <input name="id" value="{{id}}" hidden></input>
+      <input name="uid" value="{{uid}}" hidden></input>
+      <input name="production" value="{{serverSrc}}" hidden></input>
+      <view class="textarea">
+        <textarea placeholder="请在此描述你的问题吧~" name="content" value="{{content}}" focus="{{onFocus}}" maxlength="500" style="width:100%;" bindinput="handleContentInput"></textarea>
+        <view class="des">{{contentCount}}/500</view>
+      </view>
+      <view class="yewu-column">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <view class="weui-uploader">
+              <view class="weui-uploader__hd">
+                <view class="weui-uploader__title">选择图片</view>
+                <view class="weui-uploader__info" style="color:#007BFF;">{{files.length}}/{{count}}</view>
+              </view>
+              <view class="weui-uploader__bd">
+                <view class="weui-uploader__files" id="uploaderFiles">
+                  <block wx:for="{{files}}" wx:key="*this">
+                    <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                      <image class="weui-uploader__img" style="border-radius:5px; width: 80px;" src="{{item}}" />
+                    </view>
+                  </block>
+                </view>
+                <view class="weui-uploader__input-box">
+                  <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="share-switch">
+        <view class="label">是否匿名</view>
+        <view class="des">
+          <switch bindchange="openChange" name="open" checked="{{open}}" color="#007BFF"></switch>
+        </view>
+      </view>
+    </view>
+    <!-- 公众号关注向导 -->
+    <official-account></official-account>
+    <!-- 底部授权信息 -->
+    <view class="footer">
+      <view class="page__bd page__bd_spacing">
+        <view class="weui-footer">
+          <view class="weui-footer__links">
+            <button open-type="contact" bindcontact="handleContact" class="weui-footer__link">传客科技</button>
+          </view>
+          <view class="weui-footer__text">Copyright © 2008-2019 fcdaddy.com</view>
+        </view>
+      </view>
+    </view>
+    <!-- 底部导航 -->
+    <ui-fixed-view bottom="0" left="0" right="0" _pid="{{_pid}}">
+      <view class="groupsources">
+        <button class="button-style-huodong" form-type="submit"><text>确认发布</text></button>
+      </view>
+    </ui-fixed-view>
+    <!-- 导航占位 -->
+    <view style="height:52px;"></view>
+  </form>
+</view>
