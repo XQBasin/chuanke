@@ -13,7 +13,7 @@
       </view>
       <view class="nav-bar-col ui-col valign-middle" style="">
         <view class="ui-col-content valign-middle">
-          <view class="nav-bar-title">消息评论</view>
+          <view class="nav-bar-title">回答问题</view>
         </view>
       </view>
       <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">
@@ -28,29 +28,29 @@
   <view class="sj_tab_panel_item">
     <view class="sj_flex_wrp">
       <view class="sj_bc_green">
-        <image src="{{social.userInfo.avatar}}" />
+        <image src="{{question.userInfo.avatar}}" />
       </view>
       <view class="sj_bc_red">
         <view class="sj_title">
-          <view>{{social.userInfo.name}}</view>
+          <view>{{question.userInfo.name}}</view>
           <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
         </view>
         <view class="sj_description">
-          <view>{{dateUtil.formatTime(social.timestamp, 'M/D h:m:s')}}</view>
+          <view>{{dateUtil.formatTime(question.timestamp, 'M/D h:m:s')}}</view>
           <view>128粉丝</view>
         </view>
       </view>
     </view>
     <view class="sj_flex_des">
-      {{social.content}}
+      {{question.content}}
     </view>
     <!-- 作品展示 -->
-    <view wx:if="{{social.production[0]}}" class="weui-cell__bd">
+    <view wx:if="{{question.production[0]}}" class="weui-cell__bd">
       <view class="weui-uploader">
         <view class="weui-uploader__bd">
           <view class="weui-uploader__files" id="uploaderFiles">
-            <block wx:for="{{social.production}}" wx:key="*this">
-              <view class="weui-uploader__file" data-urls="{{social.production}}" bindtap="previewImage" id="{{item}}">
+            <block wx:for="{{question.production}}" wx:key="*this">
+              <view class="weui-uploader__file" data-urls="{{question.production}}" bindtap="previewImage" id="{{item}}">
                 <image class="weui-uploader__img" style="border-radius:5px; width: 200px;" src="{{item}}" mode="widthFix" />
               </view>
             </block>
@@ -59,32 +59,32 @@
       </view>
     </view>
     <!-- 被转发消息 -->
-    <view class="sj_flex_zfdes" wx:if="{{social.spsocial}}">
+    <view class="sj_flex_zfdes" wx:if="{{question.spquestion}}">
       <view class="sj_flex_wrp">
         <view class="sj_bc_green">
-          <image src="{{social.spsocial.userInfo.avatar}}" />
+          <image src="{{question.spquestion.userInfo.avatar}}" />
         </view>
         <view class="sj_bc_red">
           <view class="sj_title">
-            <view>{{social.spsocial.userInfo.name}}</view>
+            <view>{{question.spquestion.userInfo.name}}</view>
             <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
           </view>
           <view class="sj_description">
-            <view>{{dateUtil.formatTime(social.spsocial.timestamp, 'M/D h:m:s')}}</view>
+            <view>{{dateUtil.formatTime(question.spquestion.timestamp, 'M/D h:m:s')}}</view>
             <view>128粉丝</view>
           </view>
         </view>
       </view>
       <view class="sj_flex_des">
-        {{social.spsocial.content}}
+        {{question.spquestion.content}}
       </view>
       <!-- 作品展示 -->
-      <view wx:if="{{social.spsocial.production[0]}}" class="weui-cell__bd">
+      <view wx:if="{{question.spquestion.production[0]}}" class="weui-cell__bd">
         <view class="weui-uploader">
           <view class="weui-uploader__bd">
             <view class="weui-uploader__files" id="uploaderFiles">
-              <block wx:for="{{social.spsocial.production}}" wx:key="*this">
-                <view class="weui-uploader__file" data-urls="{{social.spsocial.production}}" bindtap="previewImage" id="{{item}}">
+              <block wx:for="{{question.spquestion.production}}" wx:key="*this">
+                <view class="weui-uploader__file" data-urls="{{question.spquestion.production}}" bindtap="previewImage" id="{{item}}">
                   <image class="weui-uploader__img" style="border-radius:5px; width: 200px;" src="{{item}}" mode="widthFix" />
                 </view>
               </block>
@@ -100,9 +100,9 @@
     <view wx:else=""></view>
     <view class="{{fixedNav}}">
       <ui-tabs index="{{index}}" ink-bar="true" catchchange="handleChange" active-tab-style="{{activeTabStyle}}" _pid="{{_pid}}">
-        <ui-tab _pid="{{_pid}}">评论（{{comtotalNum}}）</ui-tab>
-        <ui-tab _pid="{{_pid}}">转发（{{sharfilm.length}}）</ui-tab>
-        <ui-tab _pid="{{_pid}}">点赞（{{lovefilm.length}}）</ui-tab>
+        <ui-tab _pid="{{_pid}}">{{question.comnum}} 评论</ui-tab>
+        <ui-tab _pid="{{_pid}}">{{question.shanum}} 转发</ui-tab>
+        <ui-tab _pid="{{_pid}}">{{question.likenum}} 点赞</ui-tab>
       </ui-tabs>
     </view>
     <view id="tabitems">
@@ -119,8 +119,8 @@
                 <view class="pl_description">
                   <view class="pl_des_left">{{com.userInfo.name}}</view>
                   <view class="pl_des_center">{{dateUtil.formatTime(com.timestamp, 'M/D h:m:s')}}</view>
-                  <view wx:if="{{ com.reply }}" class="pl_des_right" data-plshow="{{true}}" data-parentid="{{com.id}}" data-level="1" data-touser="@ {{com.userInfo.name}}" bindtap="openPLPopup">
-                    回复 <span type="huifucopy" color="#FFD100" size="12px;" class="ui-icon icon-huifucopy" style="color: #FFD100;font-size: 12px;px;"></span>
+                  <view wx:if="{{ com.reply }}" class="pl_des_right" data-plshow="{{true}}" data-pid="{{com.id}}" data-level="1" data-touser="@ {{com.userInfo.name}}" bindtap="openPLPopup">
+                    回复 <span type="huifucopy" color="#007BFF" size="12px;" class="ui-icon icon-huifucopy" style="color: #007BFF;font-size: 12px;px;"></span>
                   </view>
                 </view>
               </view>
@@ -136,8 +136,8 @@
                     <view class="pl_description">
                       <view class="pl_des_left">{{comchild.userInfo.name}}</view>
                       <view class="pl_des_center">{{dateUtil.formatTime(comchild.timestamp, 'M/D h:m:s')}}</view>
-                      <view wx:if="{{ comchild.reply }}" class="pl_des_right" data-plshow="{{true}}" data-parentid="{{com.id}}" data-level="2" data-touser="@ {{comchild.userInfo.name}}" bindtap="openPLPopup">
-                        回复 <span type="huifucopy" color="#FFD100" size="12px;" class="ui-icon icon-huifucopy" style="color: #FFD100;font-size: 12px;px;"></span>
+                      <view wx:if="{{ comchild.reply }}" class="pl_des_right" data-plshow="{{true}}" data-pid="{{com.id}}" data-level="2" data-touser="@ {{comchild.userInfo.name}}" bindtap="openPLPopup">
+                        回复 <span type="huifucopy" color="#007BFF" size="12px;" class="ui-icon icon-huifucopy" style="color: #007BFF;font-size: 12px;px;"></span>
                       </view>
                     </view>
                   </view>
@@ -203,7 +203,7 @@
     <view class="page__bd page__bd_spacing">
       <view class="weui-footer">
         <view class="weui-footer__links">
-          <button open-type="contact" bindcontact="handleContact" class="weui-footer_link">方寸奶爸</button>
+          <button open-type="contact" bindcontact="handleContact" class="weui-footer__link">传客科技</button>
         </view>
         <view class="weui-footer__text">Copyright © 2008-2019 fcdaddy.com</view>
       </view>
@@ -215,7 +215,7 @@
   <ui-fixed-view bottom="0" left="0" right="0" _pid="{{_pid}}">
     <view class="pl_bar">
       <view>
-        <button class="pl-btn" data-plshow="{{true}}" data-parentid="0" data-level="0" data-touser="说点什么吧~" data-bindtap="openPLPopup" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+        <button class="pl-btn" data-plshow="{{true}}" data-pid="0" data-level="0" data-touser="说点什么吧~" data-bindtap="openPLPopup" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
           <span type="wodefankui" color="#888888" size="14px;" class="ui-icon icon-wodefankui" style="color: #888888;font-size: 14px;px;"> 评论</span>
         </button>
       </view>
@@ -234,7 +234,7 @@
   <!-- 评论POP -->
   <ui-popup show="{{plshow}}" position="bottom" _pid="{{_pid}}">
     <view class="pocket_input">
-      <input name="parentid" value="{{cpid}}" hidden></input>
+      <input name="pid" value="{{cpid}}" hidden></input>
       <input class="input_style" name="content" value="{{content}}" placeholder="{{place}}" placeholder-class="input-placeholder" focus="{{plfocus}}" cursor-spacing="16" confirm-type="send" bindconfirm="plFormSubmit"></input>
       <view class="groupsources">
         <view class="share-switch">
@@ -249,7 +249,7 @@
   <!-- 转发POP -->
   <ui-popup show="{{zfshow}}" position="bottom" _pid="{{_pid}}">
     <view class="pocket_input">
-      <input name="socialid" value="{{social.id}}" hidden></input>
+      <input name="questionid" value="{{question.id}}" hidden></input>
       <input class="input_style" name="content" value="{{content}}" placeholder="{{zface}}" placeholder-class="input-placeholder" focus="{{zffocus}}" cursor-spacing="16" confirm-type="send" bindconfirm="zfFormSubmit"></input>
       <view class="groupsources">
         <view class="share-switch">

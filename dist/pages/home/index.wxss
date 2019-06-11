@@ -43,7 +43,7 @@
 .head .block .active {
   font-weight: bold;
   font-size: 36rpx;
-  color: #222222;
+  color: #333333;
 }
 .head .block .line {
   width: 100%;
@@ -184,7 +184,7 @@
   margin: 10px;
   box-shadow: 0 3px 6px 0 #f0f0f0;
 }
-.aw_tab_panel_item .aw_flex_wrp {
+.aw_flex_wrp {
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: nowrap;
@@ -192,36 +192,36 @@
   align-items: center;
   padding: 5px 0px;
 }
-.aw_tab_panel_item .aw_bc_green {
+.aw_bc_green {
   width: 45px;
   height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.aw_tab_panel_item .aw_bc_green image {
+.aw_bc_green image {
   width: 40px;
   height: 40px;
   border-radius: 50%;
 }
-.aw_tab_panel_item .aw_bc_red {
+.aw_bc_red {
   height: 45px;
   width: 85%;
 }
-.aw_tab_panel_item .aw_title {
+.aw_title {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: nowrap;
-  color: #007BFF;
+  color: #ffd100;
   font-size: 14px;
 }
-.aw_tab_panel_item .aw_title view {
+.aw_title view {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.aw_tab_panel_item .aw_description {
+.aw_description {
   display: flex;
   margin-top: 5px;
   flex-direction: row;
@@ -230,12 +230,12 @@
   color: #848484;
   font-size: 12px;
 }
-.aw_tab_panel_item .aw_description view {
+.aw_description view {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.aw_tab_panel_item .aw_description_btn {
+.aw_description_btn {
   display: flex;
   margin-top: 5px;
   flex-direction: row;
@@ -243,17 +243,17 @@
   color: #848484;
   font-size: 12px;
 }
-.aw_tab_panel_item .aw_description_btn .fenxiang-btn {
+.aw_description_btn .fenxiang-btn {
   border: none;
   background-color: #FFFFFF;
 }
-.aw_tab_panel_item .aw_description_btn .fenxiang-btn::after {
+.aw_description_btn .fenxiang-btn::after {
   border: none;
 }
-.aw_tab_panel_item .aw_flex_des {
+.aw_flex_des {
   margin: 5px;
 }
-.aw_tab_panel_item .aw_flex_zfdes {
+.aw_flex_zfdes {
   font-size: 13px;
   padding: 10px;
   border-radius: 10px;
@@ -278,4 +278,11 @@
   justify-content: center;
   margin-bottom: 5px;
   box-shadow: 0 3px 6px 0 #b7daff;
+}
+.animatebtn .kefu-btn {
+  background: none;
+  border: none;
+}
+.animatebtn .kefu-btn::after {
+  border: none;
 }

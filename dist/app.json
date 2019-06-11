@@ -14,14 +14,12 @@
     "pages/person/authstat",
     "pages/share/create",
     "pages/share/comments",
-    "pages/knowledge/create",
-    "pages/knowledge/comments",
     "pages/question/create",
     "pages/question/comments"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "backgroundColor": "#F4F4F4",
+    "backgroundColor": "#fff",
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "传客",
     "navigationBarTextStyle": "black",

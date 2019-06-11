@@ -13,7 +13,7 @@
       </view>
       <view class="nav-bar-col ui-col valign-middle" style="">
         <view class="ui-col-content valign-middle">
-          <view class="nav-bar-title">问题发布</view>
+          <view class="nav-bar-title">开始提问</view>
         </view>
       </view>
       <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">

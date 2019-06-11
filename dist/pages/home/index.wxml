@@ -9,7 +9,7 @@
       </view>
       <view class="nav-bar-col ui-col valign-middle" style="">
         <view class="ui-col-content valign-middle">
-          <view class="nav-bar-title">传客共享</view>
+          <view class="nav-bar-title"></view>
         </view>
       </view>
       <view class="nav-bar-col ui-col ui-col-align-right align-right valign-middle" style="flex:0 0 100pxpx;">
@@ -27,26 +27,27 @@
     </view>
   </view>
   <!-- 分享 -->
+  <wxs module="dateUtil" src="../../static/utils/util.wxs"></wxs>
   <view class="content {{touchanimate}}" wx:if="{{checkedId==0}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
-    <view class="tab-panel-item" wx:key="activitykey" wx:for="{{list}}">
+    <view class="tab-panel-item" wx:key="sharekey" wx:for="{{shares}}">
       <view class="flex-acwrp">
         <view class="ac_green">
-          <image src="{{item.img}}" />
+          <image src="{{item.userInfo.avatar}}" />
         </view>
         <view class="ac_red">
           <view class="ac_title">
-            <view>111</view>
+            <view>{{item.userInfo.username}}</view>
             <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
           </view>
           <view class="ac_description">
-            <view>发布时间：1111</view>
-            <view>123粉丝</view>
+            <view>发布时间：{{dateUtil.formatTime(item.timestamp, 'M/D h:m:s')}}</view>
+            <view>{{item.userInfo.point}}粉丝</view>
           </view>
         </view>
       </view>
-      <view class="flex-wrp" data-id="{{activity.id}}" bindtap="getActInfo">
+      <view class="flex-wrp" data-id="{{item.id}}" bindtap="getShareInfo">
         <view class="fx_green">
-          <image src="{{item.img}}" mode="aspectFill" />
+          <image src="{{item.image}}" mode="aspectFill" />
         </view>
         <view class="fx_title">
           {{item.title}}
@@ -55,96 +56,56 @@
       <view class="fx_description_btn">
         <view class="info">
           <view class="show">
-            <span type="liulan" color="#c7c7c7" size="30rpx;" class="ui-icon icon-liulan" style="color: #c7c7c7;font-size: 30rpx;px;"></span>
-            <text>233</text>
+            <span type="faxianliulan" color="#c7c7c7" size="30rpx;" class="ui-icon icon-faxianliulan" style="color: #c7c7c7;font-size: 30rpx;px;"></span>
+            <text>{{item.viewnum}}</text>
             <span type="jushoucang" color="#c7c7c7" size="30rpx;" class="ui-icon icon-jushoucang" style="color: #c7c7c7;font-size: 30rpx;px;"></span>
-            <text>3666</text>
+            <text>{{item.lovenum}}</text>
             <span type="xiazai" color="#c7c7c7" size="30rpx;" class="ui-icon icon-xiazai" style="color: #c7c7c7;font-size: 30rpx;px;"></span>
-            <text>3666</text>
+            <text>{{item.downum}}</text>
           </view>
         </view>
       </view>
     </view>
     <!-- 加载更多 -->
-    <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+    <view class="weui-loadmore" hidden="{{isHideShareLoadMore}}">
       <view class="weui-loading"></view>
       <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
     </view>
-    <ui-divider wx:if="{{isHideLoadMore}}" padding="20" _pid="{{_pid}}">我是有底线的</ui-divider>
-  </view>
-  <!-- 经验 -->
-  <view class="content {{touchanimate}}" wx:if="{{checkedId==1}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
-    <view class="aw_tab_panel_item" wx:key="socialkey">
-      <view class="aw_flex_wrp">
-        <view class="aw_bc_green">
-          <image src="../../static/image/home/create.png" />
-        </view>
-        <view class="aw_bc_red">
-          <view class="aw_title">
-            <view>Basin</view>
-            <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
-          </view>
-          <view class="aw_description">
-            <view>{{dateUtil.formatTime(social.timestamp, 'M/D h:m:s')}}2018/9/15</view>
-            <view>128粉丝</view>
-          </view>
-        </view>
-      </view>
-      <view class="aw_flex_des" data-id="{{social.id}}" bindtap="getSocInfo">
-        经验分享描述
-      </view>
-      <!-- 消息菜单 -->
-      <view class="aw_description_btn">
-        <view>
-          <button class="fenxiang-btn">
-            <span type="liulan" color="#888888" size="14px;" class="ui-icon icon-liulan" style="color: #888888;font-size: 14px;px;"> 222</span>
-          </button>
-        </view>
-        <view>
-          <button class="fenxiang-btn">
-            <span type="jushoucang" color="#888888" size="14px;" class="ui-icon icon-jushoucang" style="color: #888888;font-size: 14px;px;"> 111</span>
-          </button>
-        </view>
-      </view>
-    </view>
-    <!-- 加载更多 -->
-    <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
-      <view class="weui-loading"></view>
-      <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
-    </view>
-    <ui-divider wx:if="{{isHideLoadMore}}" padding="20" _pid="{{_pid}}">我是有底线的</ui-divider>
+    <ui-divider wx:if="{{isHideShareLoadMore}}" padding="20" _pid="{{_pid}}">我是有底线的</ui-divider>
   </view>
   <!-- 爱问知识人 -->
-  <view class="content {{touchanimate}}" wx:if="{{checkedId==2}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
-    <view class="aw_tab_panel_item" wx:key="socialkey">
+  <view class="content {{touchanimate}}" wx:if="{{checkedId==1}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+    <view class="aw_tab_panel_item" wx:key="questionkey" wx:for="{{questions}}" wx:for-item="question">
       <view class="aw_flex_wrp">
         <view class="aw_bc_green">
-          <image src="../../static/image/home/create.png" />
+          <image src="{{question.userInfo.avatar}}" />
+          <image src="../../static/image/default/man.png" hidden />
+          <image src="../../static/image/default/woman.png" hidden />
         </view>
         <view class="aw_bc_red">
           <view class="aw_title">
-            <view>Basin</view>
+            <view>{{question.userInfo.name}}</view>
             <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
           </view>
           <view class="aw_description">
-            <view>{{dateUtil.formatTime(social.timestamp, 'M/D h:m:s')}}2018/9/15</view>
+            <view>{{dateUtil.formatTime(question.timestamp, 'M/D h:m:s')}}</view>
             <view>128粉丝</view>
           </view>
         </view>
       </view>
-      <view class="aw_flex_des" data-id="{{social.id}}" bindtap="getSocInfo">
-        爱问问题展示
+      <view class="aw_flex_des" data-id="{{question.id}}" bindtap="getQuestionInfo">
+        {{question.content}}
       </view>
       <!-- 作品展示 -->
-      <view wx:if="{{social.production[0]}}" class="weui-cell__bd" data-id="{{social.id}}" bindtap="getSocInfo">
+      <view wx:if="{{question.production[0]}}" class="weui-cell__bd" data-id="{{question.id}}" bindtap="getQuestionInfo">
         <view class="weui-uploader">
           <view class="weui-uploader__bd">
             <view class="weui-uploader__files" id="uploaderFiles">
-              <block wx:for="{{social.production}}" wx:key="*this">
-                <view wx:if="{{social.production.length > 1}}" class="weui-uploader__file" data-urls="{{social.production}}" bindtap="previewImage" id="{{item}}">
+              <block wx:for="{{question.production}}" wx:key="*this">
+                <view wx:if="{{question.production.length > 1}}" class="weui-uploader__file">
                   <image class="weui-uploader__img" style="border-radius:5px; width: 80px; height: 80px;" src="{{item}}" mode="widthFix" />
                 </view>
-                <view wx:else="" class="weui-uploader__file" data-urls="{{social.production}}" bindtap="previewImage" id="{{item}}">
+                <view wx:else="" class="weui-uploader__file">
                   <image class="weui-uploader__img" style="border-radius:5px; width: 200px;" src="{{item}}" mode="widthFix" />
                 </view>
               </block>
@@ -152,26 +113,69 @@
           </view>
         </view>
       </view>
+      <!-- 被转发消息 -->
+      <view class="aw_flex_zfdes" wx:if="{{question.spquestion}}">
+        <view class="aw_flex_wrp">
+          <view class="aw_bc_green">
+            <image src="{{question.spquestion.userInfo.avatar}}" />
+          </view>
+          <view class="aw_bc_red">
+            <view class="aw_title">
+              <view>{{question.spquestion.userInfo.name}}</view>
+              <view><span type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;color: #888888;font-size: 14px;px;" size="14px;" class="ui-icon icon-xiangxiajiantou"></span></view>
+            </view>
+            <view class="aw_description">
+              <view>{{dateUtil.formatTime(question.spquestion.timestamp, 'M/D h:m:s')}}</view>
+              <view>128粉丝</view>
+            </view>
+          </view>
+        </view>
+        <view class="aw_flex_des" data-id="{{question.spquestion.id}}" bindtap="getQuestionInfo">
+          {{question.spquestion.content}}
+        </view>
+        <!-- 作品展示 -->
+        <view wx:if="{{question.spquestion.production[0]}}" class="weui-cell__bd" data-id="{{question.spquestion.id}}" bindtap="getQuestionInfo">
+          <view class="weui-uploader">
+            <view class="weui-uploader__bd">
+              <view class="weui-uploader__files" id="uploaderFiles">
+                <block wx:for="{{question.spquestion.production}}" wx:key="*this">
+                  <view wx:if="{{question.spquestion.production.length > 1}}" class="weui-uploader__file">
+                    <image class="weui-uploader__img" style="border-radius:5px; width: 80px; height: 80px;" src="{{item}}" mode="widthFix" />
+                  </view>
+                  <view wx:else="" class="weui-uploader__file">
+                    <image class="weui-uploader__img" style="border-radius:5px; width: 200px;" src="{{item}}" mode="widthFix" />
+                  </view>
+                </block>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
       <!-- 消息菜单 -->
-      <view class="aw_description_btn">
+      <view class="aw_description_btn" data-id="{{question.id}}" bindtap="getQuestionInfo">
         <view>
           <button class="fenxiang-btn">
-            <span type="wodefankui" color="#888888" size="14px;" class="ui-icon icon-wodefankui" style="color: #888888;font-size: 14px;px;"> 222</span>
+            <span type="wodefankui" color="#888888" size="14px;" class="ui-icon icon-wodefankui" style="color: #888888;font-size: 14px;px;"> {{question.comnum}}</span>
           </button>
         </view>
         <view>
           <button class="fenxiang-btn">
-            <span type="jushoucang" color="#888888" size="14px;" class="ui-icon icon-jushoucang" style="color: #888888;font-size: 14px;px;"> 111</span>
+            <span type="jushoucang" color="#888888" size="14px;" class="ui-icon icon-jushoucang" style="color: #888888;font-size: 14px;px;"> {{question.likenum}}</span>
+          </button>
+        </view>
+        <view>
+          <button class="fenxiang-btn">
+            <span type="fenxiang" color="#888888" size="14px;" class="ui-icon icon-fenxiang" style="color: #888888;font-size: 14px;px;"> {{question.shanum}}</span>
           </button>
         </view>
       </view>
     </view>
     <!-- 加载更多 -->
-    <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+    <view class="weui-loadmore" hidden="{{isHideQuestLoadMore}}">
       <view class="weui-loading"></view>
       <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
     </view>
-    <ui-divider wx:if="{{isHideLoadMore}}" padding="20" _pid="{{_pid}}">我是有底线的</ui-divider>
+    <ui-divider wx:if="{{isHideQuestLoadMore}}" padding="20" _pid="{{_pid}}">我是有底线的</ui-divider>
   </view>
   <!-- 发布按钮 -->
   <view class="fixedanimate">
@@ -179,13 +183,15 @@
       <view class="animatebtn" data-route="share/create" data-authorise="1" bindtap="navigateTo">
         <span type="fenxiang" color="#fff" size="20px;" class="ui-icon icon-fenxiang" style="color: #fff;font-size: 20px;px;"></span>
       </view>
-      <view class="animatebtn" data-route="knowledge/create" data-authorise="1" bindtap="navigateTo">
-        <span type="wendang" color="#fff" size="20px;" class="ui-icon icon-wendang" style="color: #fff;font-size: 20px;px;"></span>
+      <view class="animatebtn" data-route="question/create" data-authorise="1" bindtap="navigateTo">
+        <span type="dengpao" color="#fff" size="20px;" class="ui-icon icon-dengpao" style="color: #fff;font-size: 20px;px;"></span>
       </view>
     </view>
     <view class="{{animatebtngroup}}" hidden="{{!show}}">
-      <view class="animatebtn" data-route="question/create" data-authorise="1" bindtap="navigateTo">
-        <span type="dengpao" color="#fff" size="20px;" class="ui-icon icon-dengpao" style="color: #fff;font-size: 20px;px;"></span>
+      <view class="animatebtn">
+        <button class="kefu-btn" open-type="contact" bindcontact="handleContact">
+          <span type="kefu" color="#fff" size="20px;" class="ui-icon icon-kefu" style="color: #fff;font-size: 20px;px;"></span>
+        </button>
       </view>
     </view>
     <view class="animatebtn" bindtap="openAnimate">

@@ -8,14 +8,15 @@ exports.default = Page({
         NAV_HEIGHT: wx.STATUS_BAR_HEIGHT + wx.DEFAULT_HEADER_HEIGHT,
         DEFAULT_HEADER_HEIGHT: wx.DEFAULT_HEADER_HEIGHT,
         uid: '', // 用户标识
-        social: {}, // 消息对象
+        question: {}, // 消息对象
         fixedNav: '', // 绝对定位关闭
         fixedHid: true, // 导航占位影藏
         index: 0, // tab初始索引
-        socialid: '', // 消息标识
+        pageSzie: 10, // 默认页面大小
+        questionid: '', // 消息标识
         comfilm: [], // 初始显示论坛数据
         comfield: [], // 条件字段标识
-        comcurrentpage: 1, // 当前页码
+        comcurrentPage: 1, // 当前页码
         comtotalNum: 0, // 总评论数量
         comtotalPage: 0, // 总页码
         isHideComLoadMore: false, // 默认显示加载更多
@@ -32,41 +33,32 @@ exports.default = Page({
         cpid: 0, // 评论消息标识
         open: 'true', // 默认开启匿名
         activeTabStyle: {
-            'color': '#ffd100',
-            'font-size': '17px',
-            'font-weight': 600
+            'color': '#007BFF'
         }
     },
     onLoad: function onLoad(options) {
         // 自动登录并返回登录信息
-        this.autoLogin(this);
+        this.autoRegist(this);
         // 获取消息详情
-        this.getSocial(options.socialid);
+        this.getQuestion(options.questionid);
         // 分页获取评论列表
         this.setData({
-            socialid: options.socialid,
-            comfield: this.data.comfield.concat({
-                key: 'status',
-                value: 1
-            }, {
-                key: 'parentid',
-                value: 0
-            })
+            questionid: options.questionid
         });
-        this.getCommentsForPage(this.data.comfield, options.socialid, this.data.comcurrentpage);
+        this.getCommentsForPage(options.questionid, this.data.comcurrentPage);
         wx.showShareMenu({
             withShareTicket: true
         });
     },
 
-    // 自动登录
-    autoLogin: function autoLogin(thisobj) {
+    // 自动注册并返回注册标识
+    autoRegist: function autoRegist(thisobj) {
         wx.login({
             success: function success(res) {
                 if (res.code) {
                     //发起网络请求
                     wx.request({
-                        url: 'https://wx.taoyuantoday.com/mini.Wesocial/wxQuickLogin.html',
+                        url: 'https://ck.taoyuantoday.com/mini/Question/autoRegist',
                         data: {
                             code: res.code
                         },
@@ -92,7 +84,7 @@ exports.default = Page({
     onPullDownRefresh: function onPullDownRefresh() {
         wx.showNavigationBarLoading(); //在标题栏中显示加载
         //模拟加载
-        this.getCommentsForPage(this.data.comfield, this.data.socialid, 1);
+        this.getCommentsForPage(this.data.questionid, 1);
         setTimeout(function () {
             // complete
             wx.hideNavigationBarLoading(); //完成停止加载
@@ -101,12 +93,12 @@ exports.default = Page({
     },
     //加载更多
     onReachBottom: function onReachBottom() {
-        if (this.data.comcurrentpage >= this.data.comtotalPage) {
+        if (this.data.comcurrentPage >= this.data.comtotalPage) {
             this.setData({
                 isHideComLoadMore: true
             });
         } else {
-            this.getCommentsForPage(this.data.comfield, this.data.socialid, parseInt(this.data.comcurrentpage) + 1, true);
+            this.getCommentsForPage(this.data.questionid, parseInt(this.data.comcurrentPage) + 1, true);
         }
     },
     // 获取用户基本信息
@@ -118,7 +110,7 @@ exports.default = Page({
                 title: '温馨提示',
                 content: '请先允许授权再继续！',
                 showCancel: false,
-                confirmColor: '#FFD100',
+                confirmColor: '#007BFF',
                 confirmText: '我知道啦',
                 success: function success(res) {
                     if (res.confirm) {
@@ -135,7 +127,7 @@ exports.default = Page({
     updateUser: function updateUser(userInfo, uid, e) {
         var that = this;
         wx.request({
-            url: 'https://wx.taoyuantoday.com/mini.Wesocial/updateUser.html',
+            url: 'https://ck.taoyuantoday.com/mini/Question/updateUser',
             data: {
                 userInfo: userInfo,
                 uid: uid
@@ -155,12 +147,12 @@ exports.default = Page({
         });
     },
     // 消息详情
-    getSocial: function getSocial(socialid) {
+    getQuestion: function getQuestion(questionid) {
         var that = this;
         wx.request({
-            url: 'https://wx.taoyuantoday.com/mini.Wesocial/getSocial.html',
+            url: 'https://ck.taoyuantoday.com/mini/Question/getQuestion',
             data: {
-                socialid: socialid
+                questionid: questionid
             },
             header: {
                 'content-type': 'application/json' // 默认值
@@ -168,7 +160,7 @@ exports.default = Page({
             success: function success(res) {
                 if (res.data) {
                     that.setData({
-                        social: res.data
+                        question: res.data
                     });
                 }
             }
@@ -189,19 +181,19 @@ exports.default = Page({
         switch (index) {
             case 0:
                 if (this.data.comfilm.length == 0) {
-                    this.getCommentsForPage(this.data.comfield, this.data.socialid, 1);
+                    this.getCommentsForPage(this.data.questionid, 1);
                 }
                 break;
             case 1:
                 if (this.data.sharfilm.length == 0) {
                     // 以后根据需要调整为分页查询
-                    this.getShares(this.data.socialid);
+                    this.getShares(this.data.questionid);
                 }
                 break;
             case 2:
                 if (this.data.lovefilm.length == 0) {
                     // 以后根据需要调整为分页查询
-                    this.getLikes(this.data.socialid);
+                    this.getLikes(this.data.questionid);
                 }
                 break;
             default:
@@ -231,13 +223,13 @@ exports.default = Page({
     // 打开评论组件
     openPLPopup: function openPLPopup(e) {
         var plshow = e.currentTarget.dataset.plshow;
-        var parentid = e.currentTarget.dataset.parentid;
+        var pid = e.currentTarget.dataset.pid;
         var touser = e.currentTarget.dataset.touser;
         var level = e.currentTarget.dataset.level;
         this.setData({
             plshow: plshow,
             plfocus: true,
-            cpid: parentid,
+            cpid: pid,
             place: touser,
             level: level,
             content: ''
@@ -278,12 +270,12 @@ exports.default = Page({
             mask: true
         });
         wx.request({
-            url: 'https://wx.taoyuantoday.com/mini.Wesocial/comments.html',
+            url: 'https://ck.taoyuantoday.com/mini/Question/comments',
             data: {
                 uid: that.data.uid,
-                socialid: that.data.social.id,
+                questionid: that.data.question.id,
                 content: content,
-                parentid: that.data.cpid,
+                pid: that.data.cpid,
                 open: that.data.open
             },
             header: {
@@ -298,7 +290,7 @@ exports.default = Page({
                         icon: 'success',
                         duration: 2000
                     });
-                    that.getCommentsForPage(that.data.comfield, that.data.socialid, 1);
+                    that.getCommentsForPage(that.data.questionid, 1);
                     that.setData({
                         plshow: false
                     });
@@ -325,10 +317,10 @@ exports.default = Page({
             mask: true
         });
         wx.request({
-            url: 'https://wx.taoyuantoday.com/mini.Wesocial/share.html',
+            url: 'https://ck.taoyuantoday.com/mini/Question/share',
             data: {
                 uid: that.data.uid,
-                socialid: that.data.social.id,
+                questionid: that.data.question.id,
                 content: content,
                 open: that.data.open
             },
@@ -344,7 +336,7 @@ exports.default = Page({
                         icon: 'success',
                         duration: 2000
                     });
-                    that.getShares(that.data.social.id);
+                    that.getShares(that.data.question.id);
                     that.setData({
                         zfshow: false
                     });
@@ -364,12 +356,12 @@ exports.default = Page({
     // 点赞
     giveLike: function giveLike(e) {
         var that = this;
-        var socialid = that.data.social.id;
+        var questionid = that.data.question.id;
         var uid = that.data.uid;
         wx.request({
-            url: 'https://wx.taoyuantoday.com/mini.Wesocial/giveLike.html',
+            url: 'https://ck.taoyuantoday.com/mini/Question/giveLike',
             data: {
-                socialid: socialid,
+                questionid: questionid,
                 uid: uid
             },
             header: {
@@ -382,7 +374,7 @@ exports.default = Page({
                         icon: 'success',
                         duration: 2000
                     });
-                    that.getLikes(socialid);
+                    that.getLikes(questionid);
                 } else {
                     wx.showToast({
                         title: res.data.message,
@@ -394,14 +386,14 @@ exports.default = Page({
         });
     },
     // 分页获取评论列表
-    getCommentsForPage: function getCommentsForPage(comfield, socialid, comcurrentpage, concat) {
+    getCommentsForPage: function getCommentsForPage(questionid, comcurrentPage, concat) {
         var that = this;
         wx.request({
-            url: 'https://wx.taoyuantoday.com/mini.Wesocial/getCommentsForPage.html',
+            url: 'https://ck.taoyuantoday.com/mini/Question/getCommentsForPage',
             data: {
-                comfield: comfield,
-                socialid: socialid,
-                comcurrentpage: comcurrentpage
+                questionid: questionid,
+                comcurrentPage: comcurrentPage,
+                pageSzie: that.data.pageSzie
             },
             header: {
                 'content-type': 'application/json' // 默认值
@@ -410,7 +402,7 @@ exports.default = Page({
                 if (res.data.state) {
                     if (concat) {
                         that.setData({
-                            comcurrentpage: res.data.comcurrentpage,
+                            comcurrentPage: res.data.comcurrentPage,
                             comfilm: that.data.comfilm.concat(res.data.comfilm),
                             comtotalNum: res.data.comtotalNum,
                             comtotalPage: res.data.comtotalPage
@@ -420,14 +412,14 @@ exports.default = Page({
                             comfilm: null
                         });
                         that.setData({
-                            comcurrentpage: res.data.comcurrentpage,
+                            comcurrentPage: res.data.comcurrentPage,
                             comfilm: res.data.comfilm,
                             comtotalNum: res.data.comtotalNum,
                             comtotalPage: res.data.comtotalPage
                         });
                     }
                 }
-                if (that.data.comcurrentpage >= that.data.comtotalPage) {
+                if (that.data.comcurrentPage >= that.data.comtotalPage) {
                     that.setData({
                         isHideComLoadMore: true
                     });
@@ -436,12 +428,12 @@ exports.default = Page({
         });
     },
     // 转发列表
-    getShares: function getShares(socialid) {
+    getShares: function getShares(questionid) {
         var that = this;
         wx.request({
-            url: 'https://wx.taoyuantoday.com/mini.Wesocial/getShares.html',
+            url: 'https://ck.taoyuantoday.com/mini/Question/getShares',
             data: {
-                socialid: socialid
+                questionid: questionid
             },
             header: {
                 'content-type': 'application/json' // 默认值
@@ -456,12 +448,12 @@ exports.default = Page({
         });
     },
     // 点赞列表
-    getLikes: function getLikes(socialid) {
+    getLikes: function getLikes(questionid) {
         var that = this;
         wx.request({
-            url: 'https://wx.taoyuantoday.com/mini.Wesocial/getLikes.html',
+            url: 'https://ck.taoyuantoday.com/mini/Question/getLikes',
             data: {
-                socialid: socialid
+                questionid: questionid
             },
             header: {
                 'content-type': 'application/json' // 默认值

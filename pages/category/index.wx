@@ -73,7 +73,7 @@ export default {
             {title:'机械业',type:['PHP','JAVA','javascript','PHP','JAVA','javascript']}
         ],
         list1:[
-            {title:'666',type:['PHP','JAVA','javascript','PHP','JAVA','javascript']},
+            {title:'666',type:['PHP','JAVA','javascript','PHP','JAVA','javascript11']},
             {title:'666888',type:['PHP','JAVA','javascript','PHP','JAVA','javascript']},
             {title:'机械业',type:['PHP','JAVA','javascript','PHP','JAVA','javascript']}
         ]

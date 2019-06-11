@@ -11,7 +11,7 @@
                     </view>
                 </ui-col>
                 <ui-col vertical-align="middle" class="nav-bar-col">
-                    <view class="nav-bar-title">问题发布</view>
+                    <view class="nav-bar-title">开始提问</view>
                 </ui-col>
                 <ui-col vertical-align="middle" class="nav-bar-col" align="right"  width="100px">
                 </ui-col>

@@ -7,7 +7,7 @@
                 <view class="containertitle"></view>
             </ui-col>
             <ui-col vertical-align="middle" class="nav-bar-col">
-                <view class="nav-bar-title">传客共享</view>
+                <view class="nav-bar-title"></view>
             </ui-col>
             <ui-col vertical-align="middle" class="nav-bar-col" align="right"  width="100px">
             </ui-col>
@@ -22,151 +22,155 @@
       </view>
     </view>
     <!-- 分享 -->
+    <wxs module="dateUtil" src="../../static/utils/util.wxs"></wxs>
     <view class='content {{touchanimate}}' wx:if="{{checkedId==0}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
-      <view class="tab-panel-item" wx:key="activitykey" wx:for="{{list}}">
+      <view class="tab-panel-item" wx:key="sharekey" wx:for="{{shares}}">
           <view class="flex-acwrp">
               <view class="ac_green">
-                  <image src="{{item.img}}"/>
+                  <image src="{{item.userInfo.avatar}}"/>
               </view>
               <view class="ac_red">
                   <view class='ac_title'>
-                      <view>111</view>
+                      <view>{{item.userInfo.username}}</view>
                       <view><ui-icon type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;" size="14px;"></ui-icon></view>
                   </view>
                   <view class='ac_description'>
-                      <view>发布时间：1111</view>
-                      <view>123粉丝</view>
+                      <view>发布时间：{{dateUtil.formatTime(item.timestamp, 'M/D h:m:s')}}</view>
+                      <view>{{item.userInfo.point}}粉丝</view>
                   </view>
               </view>
           </view>
-          <view class="flex-wrp" data-id="{{activity.id}}" bindtap='getActInfo'>
+          <view class="flex-wrp" data-id="{{item.id}}" bindtap='getShareInfo'>
               <view class="fx_green">
-                  <image src="{{item.img}}" mode="aspectFill"/>
+                <image src="{{item.image}}" mode="aspectFill"/>
               </view>
               <view class="fx_title">
-                  {{item.title}}
+                {{item.title}}
               </view>
           </view>
           <view class='fx_description_btn'>
               <view class="info">
                 <view class="show">
-                  <ui-icon type="liulan" color="#c7c7c7" size="30rpx;"></ui-icon>
-                  <text>233</text>
+                  <ui-icon type="faxianliulan" color="#c7c7c7" size="30rpx;"></ui-icon>
+                  <text>{{item.viewnum}}</text>
                   <ui-icon type="jushoucang" color="#c7c7c7" size="30rpx;"></ui-icon>
-                  <text>3666</text>
+                  <text>{{item.lovenum}}</text>
                   <ui-icon type="xiazai" color="#c7c7c7" size="30rpx;"></ui-icon>
-                  <text>3666</text>
+                  <text>{{item.downum}}</text>
                 </view>
               </view>
           </view>
       </view>
       <!-- 加载更多 -->
-      <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+      <view class="weui-loadmore" hidden="{{isHideShareLoadMore}}">
           <view class="weui-loading"></view>
           <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
       </view>
-      <ui-divider wx:if="{{isHideLoadMore}}" padding="20">我是有底线的</ui-divider>
-    </view>
-    <!-- 经验 -->
-    <view class="content {{touchanimate}}" wx:if="{{checkedId==1}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
-      <view class="aw_tab_panel_item" wx:key="socialkey">
-        <view class="aw_flex_wrp">
-            <view class="aw_bc_green">
-                <image src="../../static/image/home/create.png"/>
-            </view>
-            <view class="aw_bc_red">
-                <view class='aw_title'>
-                    <view>Basin</view>
-                    <view><ui-icon type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;" size="14px;"></ui-icon></view>
-                </view>
-                <view class='aw_description'>
-                    <view>{{dateUtil.formatTime(social.timestamp, 'M/D h:m:s')}}2018/9/15</view>
-                    <view>128粉丝</view>
-                </view>
-            </view>
-        </view>
-        <view class="aw_flex_des" data-id="{{social.id}}" bindtap="getSocInfo">
-          经验分享描述
-        </view>
-        <!-- 消息菜单 -->
-        <view class='aw_description_btn'>
-            <view>
-                <button class="fenxiang-btn">
-                    <ui-icon type="liulan" color="#888888" size="14px;"> 222</ui-icon>
-                </button>
-            </view>
-            <view>
-                <button class="fenxiang-btn">
-                    <ui-icon type="jushoucang" color="#888888" size="14px;"> 111</ui-icon>
-                </button>
-            </view>
-        </view>
-      </view>
-      <!-- 加载更多 -->
-      <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
-          <view class="weui-loading"></view>
-          <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
-      </view>
-      <ui-divider wx:if="{{isHideLoadMore}}" padding="20">我是有底线的</ui-divider>
+      <ui-divider wx:if="{{isHideShareLoadMore}}" padding="20">我是有底线的</ui-divider>
     </view>
     <!-- 爱问知识人 -->
-    <view class="content {{touchanimate}}" wx:if="{{checkedId==2}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
-      <view class="aw_tab_panel_item" wx:key="socialkey">
-        <view class="aw_flex_wrp">
-            <view class="aw_bc_green">
-                <image src="../../static/image/home/create.png"/>
-            </view>
-            <view class="aw_bc_red">
-                <view class='aw_title'>
-                    <view>Basin</view>
-                    <view><ui-icon type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;" size="14px;"></ui-icon></view>
-                </view>
-                <view class='aw_description'>
-                    <view>{{dateUtil.formatTime(social.timestamp, 'M/D h:m:s')}}2018/9/15</view>
-                    <view>128粉丝</view>
-                </view>
-            </view>
-        </view>
-        <view class="aw_flex_des" data-id="{{social.id}}" bindtap="getSocInfo">
-          爱问问题展示
-        </view>
-        <!-- 作品展示 -->
-        <view wx:if="{{social.production[0]}}" class="weui-cell__bd" data-id="{{social.id}}" bindtap="getSocInfo">
-            <view class="weui-uploader">
-                <view class="weui-uploader__bd">
-                    <view class="weui-uploader__files" id="uploaderFiles">
-                        <block wx:for="{{social.production}}" wx:key="*this">
-                            <view wx:if="{{social.production.length > 1}}" class="weui-uploader__file" data-urls="{{social.production}}" bindtap="previewImage" id="{{item}}">
-                                <image class="weui-uploader__img" style="border-radius:5px; width: 80px; height: 80px;" src="{{item}}" mode="widthFix" />
-                            </view>
-                            <view wx:else class="weui-uploader__file" data-urls="{{social.production}}" bindtap="previewImage" id="{{item}}">
-                                <image class="weui-uploader__img" style="border-radius:5px; width: 200px;" src="{{item}}" mode="widthFix" />
-                            </view>
-                        </block>
-                    </view>
-                </view>
-            </view>
-        </view>
-        <!-- 消息菜单 -->
-        <view class='aw_description_btn'>
-            <view>
-                <button class="fenxiang-btn">
-                    <ui-icon type="wodefankui" color="#888888" size="14px;"> 222</ui-icon>
-                </button>
-            </view>
-            <view>
-                <button class="fenxiang-btn">
-                    <ui-icon type="jushoucang" color="#888888" size="14px;"> 111</ui-icon>
-                </button>
-            </view>
-        </view>
+    <view class="content {{touchanimate}}" wx:if="{{checkedId==1}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+      <view class="aw_tab_panel_item" wx:key="questionkey" wx:for="{{questions}}" wx:for-item="question">
+          <view class="aw_flex_wrp">
+              <view class="aw_bc_green">
+                  <image src="{{question.userInfo.avatar}}"/>
+                  <image src="../../static/image/default/man.png" hidden/>
+                  <image src="../../static/image/default/woman.png" hidden/>
+              </view>
+              <view class="aw_bc_red">
+                  <view class='aw_title'>
+                      <view>{{question.userInfo.name}}</view>
+                      <view><ui-icon type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;" size="14px;"></ui-icon></view>
+                  </view>
+                  <view class='aw_description'>
+                      <view>{{dateUtil.formatTime(question.timestamp, 'M/D h:m:s')}}</view>
+                      <view>128粉丝</view>
+                  </view>
+              </view>
+          </view>
+          <view class="aw_flex_des" data-id="{{question.id}}" bindtap="getQuestionInfo">
+              {{question.content}}
+          </view>
+          <!-- 作品展示 -->
+          <view wx:if="{{question.production[0]}}" class="weui-cell__bd" data-id="{{question.id}}" bindtap="getQuestionInfo">
+              <view class="weui-uploader">
+                  <view class="weui-uploader__bd">
+                      <view class="weui-uploader__files" id="uploaderFiles">
+                          <block wx:for="{{question.production}}" wx:key="*this">
+                              <view wx:if="{{question.production.length > 1}}" class="weui-uploader__file">
+                                  <image class="weui-uploader__img" style="border-radius:5px; width: 80px; height: 80px;" src="{{item}}" mode="widthFix" />
+                              </view>
+                              <view wx:else class="weui-uploader__file">
+                                  <image class="weui-uploader__img" style="border-radius:5px; width: 200px;" src="{{item}}" mode="widthFix" />
+                              </view>
+                          </block>
+                      </view>
+                  </view>
+              </view>
+          </view>
+          <!-- 被转发消息 -->
+          <view class="aw_flex_zfdes" wx:if="{{question.spquestion}}">
+              <view class="aw_flex_wrp">
+                  <view class="aw_bc_green">
+                      <image src="{{question.spquestion.userInfo.avatar}}"/>
+                  </view>
+                  <view class="aw_bc_red">
+                      <view class='aw_title'>
+                          <view>{{question.spquestion.userInfo.name}}</view>
+                          <view><ui-icon type="xiangxiajiantou" color="#888888" style="margin:0px 0px 0px 2px;" size="14px;"></ui-icon></view>
+                      </view>
+                      <view class='aw_description'>
+                          <view>{{dateUtil.formatTime(question.spquestion.timestamp, 'M/D h:m:s')}}</view>
+                          <view>128粉丝</view>
+                      </view>
+                  </view>
+              </view>
+              <view class="aw_flex_des" data-id="{{question.spquestion.id}}" bindtap="getQuestionInfo">
+                  {{question.spquestion.content}}
+              </view>
+              <!-- 作品展示 -->
+              <view wx:if="{{question.spquestion.production[0]}}" class="weui-cell__bd" data-id="{{question.spquestion.id}}" bindtap="getQuestionInfo">
+                  <view class="weui-uploader">
+                      <view class="weui-uploader__bd">
+                          <view class="weui-uploader__files" id="uploaderFiles">
+                              <block wx:for="{{question.spquestion.production}}" wx:key="*this">
+                                  <view wx:if="{{question.spquestion.production.length > 1}}" class="weui-uploader__file">
+                                      <image class="weui-uploader__img" style="border-radius:5px; width: 80px; height: 80px;" src="{{item}}" mode="widthFix" />
+                                  </view>
+                                  <view wx:else class="weui-uploader__file">
+                                      <image class="weui-uploader__img" style="border-radius:5px; width: 200px;" src="{{item}}" mode="widthFix" />
+                                  </view>
+                              </block>
+                          </view>
+                      </view>
+                  </view>
+              </view>
+          </view>
+          <!-- 消息菜单 -->
+          <view class='aw_description_btn' data-id="{{question.id}}" bindtap="getQuestionInfo">
+              <view>
+                  <button class="fenxiang-btn">
+                      <ui-icon type="wodefankui" color="#888888" size="14px;"> {{question.comnum}}</ui-icon>
+                  </button>
+              </view>
+              <view>
+                  <button class="fenxiang-btn">
+                      <ui-icon type="jushoucang" color="#888888" size="14px;"> {{question.likenum}}</ui-icon>
+                  </button>
+              </view>
+              <view>
+                  <button class="fenxiang-btn">
+                      <ui-icon type="fenxiang" color="#888888" size="14px;"> {{question.shanum}}</ui-icon>
+                  </button>
+              </view>
+          </view>
       </view>
       <!-- 加载更多 -->
-      <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+      <view class="weui-loadmore" hidden="{{isHideQuestLoadMore}}">
           <view class="weui-loading"></view>
           <view class="weui-loadmore__tips" style="font-size:13px; color:#848484;">加载中...</view>
       </view>
-      <ui-divider wx:if="{{isHideLoadMore}}" padding="20">我是有底线的</ui-divider>
+      <ui-divider wx:if="{{isHideQuestLoadMore}}" padding="20">我是有底线的</ui-divider>
     </view>
     <!-- 发布按钮 -->
     <view class="fixedanimate">
@@ -174,13 +178,15 @@
         <view class="animatebtn" data-route="share/create" data-authorise="1" bindtap="navigateTo">
           <ui-icon type="fenxiang" color="#fff" size="20px;"></ui-icon>
         </view>
-        <view class="animatebtn" data-route="knowledge/create" data-authorise="1" bindtap="navigateTo">
-          <ui-icon type="wendang" color="#fff" size="20px;"></ui-icon>
+        <view class="animatebtn" data-route="question/create" data-authorise="1" bindtap="navigateTo">
+          <ui-icon type="dengpao" color="#fff" size="20px;"></ui-icon>
         </view>
       </view>
       <view class="{{animatebtngroup}}" hidden="{{!show}}">
-        <view class="animatebtn" data-route="question/create" data-authorise="1" bindtap="navigateTo">
-          <ui-icon type="dengpao" color="#fff" size="20px;"></ui-icon>
+        <view class="animatebtn">
+          <button class="kefu-btn" open-type="contact" bindcontact="handleContact">
+            <ui-icon type="kefu" color="#fff" size="20px;"></ui-icon>
+          </button>
         </view>
       </view>
       <view class="animatebtn" bindtap="openAnimate">
@@ -221,38 +227,58 @@ export default {
   config: {
     navigationBarTitleText: '首页',
     navigationBarTextStyle: 'black',
+    enablePullDownRefresh: true,
   },
   data: {
     NAV_HEIGHT:wx.STATUS_BAR_HEIGHT+wx.DEFAULT_HEADER_HEIGHT+'px',
     DEFAULT_HEADER_HEIGHT: wx.DEFAULT_HEADER_HEIGHT,
-    uid: '',                                    // 当前用户标识
-    headTitle: ['分享','经验','爱问知识人'],      // 顶部选择标题
-    checkedId: 0,                               // 顶部选择序号Id
-    list: [
-      {title:'php中文网vip特权会员学习指南',img:'../../static/image/home/create.png'},
-      {title:'2019春招PHP面试题（附答案）',img:'../../static/image/home/create.png'},
-      {title:'PHP使用统计和市场定位最新报告',img:'../../static/image/home/create.png'},
-      {title:'php中文网《玉女心经》公益PHP培训系列课程汇总',img:'../../static/image/home/create.png'},
-    ],
+    uid: '',                                      // 当前用户标识
+    headTitle: ['分享','爱问知识人'],              // 顶部选择标题
+    checkedId: 0,                                 // 顶部选择序号Id
+    shares: [],                                   // 分享列表
+    shareField: [],                               // 分享条件字段
+    shareCurrentPage: 1,                          // 当前页码
+    sharePageSzie: 2,                             // 分享页面大小
+    shareTotalPage: 0,                            // 总页码
+    isHideShareLoadMore: false,                   // 加载更多分享状态
+    questions: [],                                // 提问列表
+    questField: [],                               // 分享条件字段
+    questCurrentPage: 1,                          // 当前页码
+    questPageSzie: 2,                             // 分享页面大小
+    questTotalPage: 0,                            // 总页码
+    isHideQuestLoadMore: false,                   // 加载更多分享状态
     show: false,
     animatebtngroup: 'animatebtngroup',
-    isHideLoadMore:true,          //加载更多状态
-    touchanimate: 'animated rubberBand',
+    touchanimate: 'animated bounce',
   },
   onLoad(options) {
     // 自动登录并返回登录信息
-    this.autoLogin(this)
-    // 获取兼职列表
-    // this.getRecommpart(1)
+    this.autoRegist(this)
+    // 获取活动列表
+    this.getSharesForPage(this.data.shareField, this.data.shareCurrentPage)
     wx.showShareMenu({
       withShareTicket: true
     })
   },
   // 顶部选择
   check(e) {
+    let checkedId = e.currentTarget.dataset.sid
     this.setData({
-      checkedId:e.currentTarget.dataset.sid
+      checkedId: checkedId
     })
+    this.swipper(checkedId)
+  },
+  // 滑动加载
+  swipper(index) {
+    switch(index) {
+      case 0:
+          this.getSharesForPage(this.data.shareField, 1)
+        break;
+      case 1:
+          this.getQuestionsForPage(this.data.questField, 1)
+        break;
+      default:
+    }
   },
   // 打开发布按钮
   openAnimate (e) {
@@ -295,11 +321,12 @@ export default {
           checkedId: this.data.checkedId + 1,
           touchanimate: 'animated fadeInRight'
         })
+        this.swipper(this.data.checkedId)
       }
       if (this.data.checkedId == this.data.headTitle.length - 1) {
         this.setData({
           checkedId: this.data.headTitle.length - 1,
-          touchanimate: 'animated rubberBand'
+          touchanimate: 'animated bounce'
         })
       }
       clearInterval(number);
@@ -315,7 +342,7 @@ export default {
       }
       if (this.data.checkedId == 0) {
         this.setData({
-          touchanimate: 'animated rubberBand'
+          touchanimate: 'animated bounce'
         })
       }
       clearInterval(number);
@@ -329,14 +356,14 @@ export default {
     clearInterval(number);
     time = 0;
   },
-  // 自动登录
-  autoLogin (thisobj) {
+  // 自动注册并返回注册标识
+  autoRegist (thisobj) {
     wx.login({
       success(res) {
         if (res.code) {
           //发起网络请求
           wx.request({
-            url: 'https://ck.taoyuantoday.com/mini/Index/autoRegist.html',
+            url: 'https://ck.taoyuantoday.com/mini/Index/autoRegist',
             data: {
               code: res.code
             },
@@ -418,6 +445,141 @@ export default {
       // Do something when catch error
     }
   },
+  //下拉刷新
+  onPullDownRefresh:function() {
+      wx.showNavigationBarLoading() //在标题栏中显示加载
+      //模拟加载
+      this.swipper(this.data.checkedId)
+      setTimeout(function() {
+          // complete
+          wx.hideNavigationBarLoading() //完成停止加载
+          wx.stopPullDownRefresh() //停止下拉刷新
+      }, 1500);
+  },
+  //加载更多
+  onReachBottom: function () {
+    switch(this.data.checkedId) {
+      case 0:
+          if (this.data.shareCurrentPage >= this.data.shareTotalPage) {
+              this.setData({
+                  isHideShareLoadMore: true,
+              })
+          } else {
+              this.getSharesForPage(this.data.shareField, parseInt(this.data.shareCurrentPage) + 1, true)
+          }
+          break;
+      case 1:
+          if (this.data.questCurrentPage >= this.data.questTotalPage) {
+              this.setData({
+                  isHideQuestLoadMore: true,
+              })
+          } else {
+              this.getQuestionsForPage(this.data.questField, parseInt(this.data.questCurrentPage) + 1, true)
+          }
+          break;
+      default:
+    }
+  },
+  // 活动列表
+  getSharesForPage: function (field, currentPage, concat) {
+      var that = this;
+      wx.request({
+          url: 'https://ck.taoyuantoday.com/mini/Share/getSharesForPage',
+          data: {
+              field: field,
+              currentPage: currentPage,
+              pageSzie: that.data.sharePageSzie,
+          },
+          header: {
+              'content-type': 'application/json' // 默认值
+          },
+          success(res) {
+              if (res.data.state) {
+                  if (concat) {
+                      that.setData({
+                          shareCurrentPage: res.data.currentPage,
+                          shares: that.data.shares.concat(res.data.shares),
+                          shareTotalPage: res.data.totalPage,
+                      })
+                  } else {
+                      that.setData({
+                          shares: null,
+                      })
+                      that.setData({
+                          shareCurrentPage: res.data.currentPage,
+                          shares: res.data.shares,
+                          shareTotalPage: res.data.totalPage,
+                      })
+                  }
+              } else {
+                  that.setData({
+                      shares: null,
+                  })
+                  that.setData({
+                      shareCurrentPage: res.data.currentPage,
+                      shares: res.data.shares,
+                      shareTotalPage: res.data.totalPage,
+                  })
+              }
+          }
+      })
+  },
+  // 活动列表
+  getQuestionsForPage: function (field, currentPage, concat) {
+      var that = this;
+      wx.request({
+          url: 'https://ck.taoyuantoday.com/mini/Question/getQuestionsForPage',
+          data: {
+              field: field,
+              currentPage: currentPage,
+              pageSzie: that.data.questPageSzie,
+          },
+          header: {
+              'content-type': 'application/json' // 默认值
+          },
+          success(res) {
+              if (res.data.state) {
+                  if (concat) {
+                      that.setData({
+                          questCurrentPage: res.data.currentPage,
+                          questions: that.data.questions.concat(res.data.questions),
+                          questTotalPage: res.data.totalPage,
+                      })
+                  } else {
+                      that.setData({
+                          questions: null,
+                      })
+                      that.setData({
+                          questCurrentPage: res.data.currentPage,
+                          questions: res.data.questions,
+                          questTotalPage: res.data.totalPage,
+                      })
+                  }
+              } else {
+                  that.setData({
+                      questions: null,
+                  })
+                  that.setData({
+                      questCurrentPage: res.data.currentPage,
+                      questions: res.data.questions,
+                      questTotalPage: res.data.totalPage,
+                  })
+              }
+          }
+      })
+  },
+  // 查看社交信息详情
+  getQuestionInfo: function (option) {
+      let questionid = option.currentTarget.dataset.id
+      wx.navigateTo({
+          url: '../question/comments?questionid='+questionid
+      })
+  },
+  // 客服消息回调
+  handleContact (e) {
+    console.log(e.path)
+    console.log(e.query)
+  }
 }
 </script>
 
@@ -444,7 +606,7 @@ export default {
     .active {
       font-weight: bold;
       font-size: 36rpx;
-      color: #222222;
+      color: #333333;
     }
     .line{
       width: 100%;
@@ -569,80 +731,80 @@ export default {
 }
 // 经验
 .aw_tab_panel_item {
-  background: #FFFFFF;
-  border-radius: 5px;
-  padding: 5px 10px;
-  margin: 10px;
-  box-shadow: 0 3px 6px 0 rgb(240, 240, 240);
-  .aw_flex_wrp {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      flex-wrap: nowrap;
-      .mix-flex-y-center();
-      padding: 5px 0px;
-  }
-  .aw_bc_green {
-      width: 45px;
-      height: 45px;
-      .mix-flex-center();
-  }
-  .aw_bc_green image {
-      width:40px; 
-      height:40px;
-      border-radius: 50%;
-  }
-  .aw_bc_red {
-      height: 45px;
-      width: 85%;
-  }
-  .aw_title {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      flex-wrap: nowrap;
-      color: #007BFF;
-      font-size: 14px;
-  }
-  .aw_title view {
-      .mix-text-overflow();
-  }
-  .aw_description {
-      display: flex;
-      margin-top: 5px;
-      flex-direction: row;
-      justify-content: space-between;
-      flex-wrap: nowrap;
-      color: #848484;
-      font-size: 12px;
-      view {
-          .mix-text-overflow();
-      }
-  }
-  .aw_description_btn {
-      display: flex;
-      margin-top: 5px;
-      flex-direction: row;
-      justify-content: flex-end;
-      color: #848484;
-      font-size: 12px;
-      .fenxiang-btn {
-          border: none;
-          background-color: #FFFFFF;
-      }
-      .fenxiang-btn::after {
-          border: none;
-      }
-  }
-  .aw_flex_des {
-      margin: 5px;
-  }
-  .aw_flex_zfdes {
-      font-size: 13px;
-      padding: 10px;
-      border-radius: 10px;
-      background-color: #F4F4F4;
-  }
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 10px;
+    box-shadow: 0 3px 6px 0 rgb(240, 240, 240);
+}
+.aw_flex_wrp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    .mix-flex-y-center();
+    padding: 5px 0px;
+}
+.aw_bc_green {
+    width: 45px;
+    height: 45px;
+    .mix-flex-center();
+}
+.aw_bc_green image {
+    width:40px; 
+    height:40px;
+    border-radius: 50%;
+}
+.aw_bc_red {
+    height: 45px;
+    width: 85%;
+}
+.aw_title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    color: #ffd100;
+    font-size: 14px;
+}
+.aw_title view {
+    .mix-text-overflow();
+}
+.aw_description {
+    display: flex;
+    margin-top: 5px;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    color: #848484;
+    font-size: 12px;
+    view {
+        .mix-text-overflow();
+    }
+}
+.aw_description_btn {
+    display: flex;
+    margin-top: 5px;
+    flex-direction: row;
+    justify-content: flex-end;
+    color: #848484;
+    font-size: 12px;
+    .fenxiang-btn {
+        border: none;
+        background-color: #FFFFFF;
+    }
+    .fenxiang-btn::after {
+        border: none;
+    }
+}
+.aw_flex_des {
+    margin: 5px;
+}
+.aw_flex_zfdes {
+    font-size: 13px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #F4F4F4;
 }
 // 动画按钮
 .fixedanimate {
@@ -662,6 +824,12 @@ export default {
   .mix-flex-center();
   margin-bottom: 5px;
   box-shadow: 0 3px 6px 0 rgb(183, 218, 255);
-  
+  .kefu-btn {
+    background: none;
+    border: none;
+  }
+  .kefu-btn::after {
+    border: none
+  }
 }
 </style>

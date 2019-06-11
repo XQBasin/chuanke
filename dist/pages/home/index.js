@@ -20,19 +20,29 @@ exports.default = Page({
     NAV_HEIGHT: wx.STATUS_BAR_HEIGHT + wx.DEFAULT_HEADER_HEIGHT + 'px',
     DEFAULT_HEADER_HEIGHT: wx.DEFAULT_HEADER_HEIGHT,
     uid: '', // 当前用户标识
-    headTitle: ['分享', '经验', '爱问知识人'], // 顶部选择标题
+    headTitle: ['分享', '爱问知识人'], // 顶部选择标题
     checkedId: 0, // 顶部选择序号Id
-    list: [{ title: 'php中文网vip特权会员学习指南', img: '../../static/image/home/create.png' }, { title: '2019春招PHP面试题（附答案）', img: '../../static/image/home/create.png' }, { title: 'PHP使用统计和市场定位最新报告', img: '../../static/image/home/create.png' }, { title: 'php中文网《玉女心经》公益PHP培训系列课程汇总', img: '../../static/image/home/create.png' }],
+    shares: [], // 分享列表
+    shareField: [], // 分享条件字段
+    shareCurrentPage: 1, // 当前页码
+    sharePageSzie: 2, // 分享页面大小
+    shareTotalPage: 0, // 总页码
+    isHideShareLoadMore: false, // 加载更多分享状态
+    questions: [], // 提问列表
+    questField: [], // 分享条件字段
+    questCurrentPage: 1, // 当前页码
+    questPageSzie: 2, // 分享页面大小
+    questTotalPage: 0, // 总页码
+    isHideQuestLoadMore: false, // 加载更多分享状态
     show: false,
     animatebtngroup: 'animatebtngroup',
-    isHideLoadMore: true, //加载更多状态
-    touchanimate: 'animated rubberBand'
+    touchanimate: 'animated bounce'
   },
   onLoad: function onLoad(options) {
     // 自动登录并返回登录信息
-    this.autoLogin(this);
-    // 获取兼职列表
-    // this.getRecommpart(1)
+    this.autoRegist(this);
+    // 获取活动列表
+    this.getSharesForPage(this.data.shareField, this.data.shareCurrentPage);
     wx.showShareMenu({
       withShareTicket: true
     });
@@ -40,9 +50,24 @@ exports.default = Page({
 
   // 顶部选择
   check: function check(e) {
+    var checkedId = e.currentTarget.dataset.sid;
     this.setData({
-      checkedId: e.currentTarget.dataset.sid
+      checkedId: checkedId
     });
+    this.swipper(checkedId);
+  },
+
+  // 滑动加载
+  swipper: function swipper(index) {
+    switch (index) {
+      case 0:
+        this.getSharesForPage(this.data.shareField, 1);
+        break;
+      case 1:
+        this.getQuestionsForPage(this.data.questField, 1);
+        break;
+      default:
+    }
   },
 
   // 打开发布按钮
@@ -89,11 +114,12 @@ exports.default = Page({
           checkedId: this.data.checkedId + 1,
           touchanimate: 'animated fadeInRight'
         });
+        this.swipper(this.data.checkedId);
       }
       if (this.data.checkedId == this.data.headTitle.length - 1) {
         this.setData({
           checkedId: this.data.headTitle.length - 1,
-          touchanimate: 'animated rubberBand'
+          touchanimate: 'animated bounce'
         });
       }
       clearInterval(number);
@@ -109,7 +135,7 @@ exports.default = Page({
       }
       if (this.data.checkedId == 0) {
         this.setData({
-          touchanimate: 'animated rubberBand'
+          touchanimate: 'animated bounce'
         });
       }
       clearInterval(number);
@@ -123,14 +149,14 @@ exports.default = Page({
     clearInterval(number);
     time = 0;
   },
-  // 自动登录
-  autoLogin: function autoLogin(thisobj) {
+  // 自动注册并返回注册标识
+  autoRegist: function autoRegist(thisobj) {
     wx.login({
       success: function success(res) {
         if (res.code) {
           //发起网络请求
           wx.request({
-            url: 'https://ck.taoyuantoday.com/mini/Index/autoRegist.html',
+            url: 'https://ck.taoyuantoday.com/mini/Index/autoRegist',
             data: {
               code: res.code
             },
@@ -212,5 +238,140 @@ exports.default = Page({
     } catch (e) {
       // Do something when catch error
     }
+  },
+  //下拉刷新
+  onPullDownRefresh: function onPullDownRefresh() {
+    wx.showNavigationBarLoading(); //在标题栏中显示加载
+    //模拟加载
+    this.swipper(this.data.checkedId);
+    setTimeout(function () {
+      // complete
+      wx.hideNavigationBarLoading(); //完成停止加载
+      wx.stopPullDownRefresh(); //停止下拉刷新
+    }, 1500);
+  },
+  //加载更多
+  onReachBottom: function onReachBottom() {
+    switch (this.data.checkedId) {
+      case 0:
+        if (this.data.shareCurrentPage >= this.data.shareTotalPage) {
+          this.setData({
+            isHideShareLoadMore: true
+          });
+        } else {
+          this.getSharesForPage(this.data.shareField, parseInt(this.data.shareCurrentPage) + 1, true);
+        }
+        break;
+      case 1:
+        if (this.data.questCurrentPage >= this.data.questTotalPage) {
+          this.setData({
+            isHideQuestLoadMore: true
+          });
+        } else {
+          this.getQuestionsForPage(this.data.questField, parseInt(this.data.questCurrentPage) + 1, true);
+        }
+        break;
+      default:
+    }
+  },
+  // 活动列表
+  getSharesForPage: function getSharesForPage(field, currentPage, concat) {
+    var that = this;
+    wx.request({
+      url: 'https://ck.taoyuantoday.com/mini/Share/getSharesForPage',
+      data: {
+        field: field,
+        currentPage: currentPage,
+        pageSzie: that.data.sharePageSzie
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function success(res) {
+        if (res.data.state) {
+          if (concat) {
+            that.setData({
+              shareCurrentPage: res.data.currentPage,
+              shares: that.data.shares.concat(res.data.shares),
+              shareTotalPage: res.data.totalPage
+            });
+          } else {
+            that.setData({
+              shares: null
+            });
+            that.setData({
+              shareCurrentPage: res.data.currentPage,
+              shares: res.data.shares,
+              shareTotalPage: res.data.totalPage
+            });
+          }
+        } else {
+          that.setData({
+            shares: null
+          });
+          that.setData({
+            shareCurrentPage: res.data.currentPage,
+            shares: res.data.shares,
+            shareTotalPage: res.data.totalPage
+          });
+        }
+      }
+    });
+  },
+  // 活动列表
+  getQuestionsForPage: function getQuestionsForPage(field, currentPage, concat) {
+    var that = this;
+    wx.request({
+      url: 'https://ck.taoyuantoday.com/mini/Question/getQuestionsForPage',
+      data: {
+        field: field,
+        currentPage: currentPage,
+        pageSzie: that.data.questPageSzie
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function success(res) {
+        if (res.data.state) {
+          if (concat) {
+            that.setData({
+              questCurrentPage: res.data.currentPage,
+              questions: that.data.questions.concat(res.data.questions),
+              questTotalPage: res.data.totalPage
+            });
+          } else {
+            that.setData({
+              questions: null
+            });
+            that.setData({
+              questCurrentPage: res.data.currentPage,
+              questions: res.data.questions,
+              questTotalPage: res.data.totalPage
+            });
+          }
+        } else {
+          that.setData({
+            questions: null
+          });
+          that.setData({
+            questCurrentPage: res.data.currentPage,
+            questions: res.data.questions,
+            questTotalPage: res.data.totalPage
+          });
+        }
+      }
+    });
+  },
+  // 查看社交信息详情
+  getQuestionInfo: function getQuestionInfo(option) {
+    var questionid = option.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '../question/comments?questionid=' + questionid
+    });
+  },
+  // 客服消息回调
+  handleContact: function handleContact(e) {
+    console.log(e.path);
+    console.log(e.query);
   }
 });

@@ -26,16 +26,13 @@ export default {
       // 分享模块
       'pages/share/create',
       'pages/share/comments',
-      // 经验模块
-      'pages/knowledge/create',
-      'pages/knowledge/comments',
-      // 分享模块
+      // 提问模块
       'pages/question/create',
       'pages/question/comments',
     ],
     window: {
       backgroundTextStyle: 'dark',
-      backgroundColor: '#F4F4F4',
+      backgroundColor: "#fff",
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#ffffff',
       navigationBarTitleText: '传客',

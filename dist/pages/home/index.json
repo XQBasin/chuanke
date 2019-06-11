@@ -4,5 +4,6 @@
     "ui-divider": "../../packages/touchui-wx-components/ui-divider/dist/index"
   },
   "navigationBarTitleText": "首页",
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true
 }
